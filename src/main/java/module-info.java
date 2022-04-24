@@ -3,6 +3,6 @@ module application.messengerproject {
     requires javafx.fxml;
 
 
-    opens application.messengerproject to javafx.fxml;
-    exports application.messengerproject;
+    opens Application to javafx.fxml;
+    exports Application;
 }
