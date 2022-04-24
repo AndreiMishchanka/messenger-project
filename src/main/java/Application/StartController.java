@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 
 public class StartController {
     @FXML
@@ -16,12 +17,22 @@ public class StartController {
     private Button signUpButton;
     @FXML
     private PasswordField userPassword;
+    @FXML
+    private Label errorOutput;
 
     @FXML
-    protected void onloginButtonClick() {        
-        User user = Database.getUser(userLogin.getText(), userPassword.getText());
-        System.out.print(user.getNickname());
-        // System.out.print(userLogin.getText());
-        // System.out.print(userPassword.getText());
+    protected void onloginButtonClick() {   
+        User user = null;
+        try {
+            user = Database.getUser(userLogin.getText(), userPassword.getText());
+        }catch(Database.IncorrectPasswordException e) {
+            errorOutput.setTextFill(Color.web("#dd0e0e", 0.8));
+            errorOutput.setText("INCORRECT PASSWORD");            
+        }catch(Exception e) {
+            e.printStackTrace();
+            return;
+        }             
+        
+        // System.out.print(user.getNickname());        
     }
 }

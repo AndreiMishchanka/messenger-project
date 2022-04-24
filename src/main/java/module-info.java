@@ -1,4 +1,4 @@
-module application.messengerproject {
+module Application.messengerproject {
     requires javafx.controls;
     requires javafx.fxml;
 
