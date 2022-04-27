@@ -1,6 +1,7 @@
 package Data;
 
 public class User {
+    public static User MainUser = null;
     private String nickname;
 
     private User(String Nickname) {
