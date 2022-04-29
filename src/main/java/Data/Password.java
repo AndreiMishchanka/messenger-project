@@ -14,11 +14,11 @@ public class Password {
 
 
     Password(String newPassword) throws Exception{
-        if(password == null || password.length() == 0 || password.length() > 100){
+        if(newPassword == null || newPassword.length() == 0 || newPassword.length() > 100){
             throw new Database.IncorrectPasswordException();
         }
-        for(int posPassword = 0; posPassword < password.length() ; posPassword++){
-            checkIncorrectPasswordChar(password.charAt(posPassword));
+        for(int posPassword = 0; posPassword < newPassword.length() ; posPassword++){
+            checkIncorrectPasswordChar(newPassword.charAt(posPassword));
         }
     }
     
