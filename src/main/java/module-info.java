@@ -11,4 +11,7 @@ module Application.messengerproject {
     opens Application.Scenes.LoginPage to javafx.fxml;
     exports Application.Scenes.LoginPage;
 
+    opens Application.Scenes.Messanger to javafx.fxml;
+    exports Application.Scenes.Messanger;
+
 }

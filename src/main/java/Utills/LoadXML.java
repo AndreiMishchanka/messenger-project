@@ -8,7 +8,7 @@ import Application.StartApplication;
 
 public class LoadXML {
     public static FXMLLoader load(String path) {
-        FXMLLoader loader = new FXMLLoader();        
+        FXMLLoader loader = new FXMLLoader();              
         loader.setLocation(StartApplication.class.getResource(path));        
         try {
             loader.load();
