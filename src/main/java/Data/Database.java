@@ -6,13 +6,16 @@ import java.util.ArrayList;
 import Data.SQLBase.SqlCommunicate;
 
 public class Database {
+
     public static class IncorrectPasswordException extends Exception {}
     public static class IncorrectUserException extends Exception {}
     public static class UserAlreadyRegistred extends Exception {}
 
     static public User getUser(String nickname, String password) throws Exception{
-        if (password == null || password.length() == 0) {
-            throw new IncorrectPasswordException();
+        try{
+            Password passwordCheck = new Password(password);
+        }catch(Exception e){
+            throw e;
         }
         try {
             String query = "select * from users where nickname = '" + nickname + "' and password = '" + password + "';";                        
@@ -37,8 +40,10 @@ public class Database {
     }
 
     static public void registerUser (String nickname, String password) throws Exception {
-        if (password == null || password.length() == 0) {
-            throw new IncorrectPasswordException();
+        try{
+            Password passwordCheck = new Password(password);
+        }catch(Exception e){
+            throw e;
         }
         String query = "select * from users where nickname = '" + nickname + "';";          
         if (SqlCommunicate.execute(query).size() - 1 > 0) {
