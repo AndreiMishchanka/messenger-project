@@ -38,13 +38,22 @@ public class SignUpController extends StartApplication {
     }
 
     @FXML
-    protected void onregisterButtonClick() {   
-        User user = null;
-        try {            
-            user = Database.getUser(userLogin.getText(), userPassword.getText());
+    protected void onregisterButtonClick() {           
+        if (!userPassword.getText().equals(userPasswordConfirm.getText())) {            
+            errorOutput.setTextFill(Color.web("#dd0e0e", 0.8));            
+            errorOutput.setText("PASSWORDS not equals");            
+            return;
+        }
+        try {        
+            Database.registerUser(userLogin.getText(), userPassword.getText());    
+            errorOutput.setTextFill(Color.web("#1EA624", 0.8));
+            errorOutput.setText("User was registred");            
         }catch(Database.IncorrectPasswordException e) {
             errorOutput.setTextFill(Color.web("#dd0e0e", 0.8));
             errorOutput.setText("INCORRECT PASSWORD");            
+        }catch(Database.UserAlreadyRegistred e) {
+            errorOutput.setTextFill(Color.web("#dd0e0e", 0.8));
+            errorOutput.setText("User already registred");            
         }catch(Exception e) {
             e.printStackTrace();
             return;

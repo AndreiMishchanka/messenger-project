@@ -29,10 +29,15 @@ public class StartController extends StartApplication{
     protected void onloginButtonClick() {   
         User user = null;
         try {
-            user = Database.getUser(userLogin.getText(), userPassword.getText());            
+            user = Database.getUser(userLogin.getText(), userPassword.getText());  
+            errorOutput.setTextFill(Color.web("#1EA624", 0.8));
+            errorOutput.setText("OK");                      
         }catch(Database.IncorrectPasswordException e) {
             errorOutput.setTextFill(Color.web("#dd0e0e", 0.8));
             errorOutput.setText("INCORRECT PASSWORD");            
+        }catch(Database.IncorrectUserException e) {
+            errorOutput.setTextFill(Color.web("#dd0e0e", 0.8));
+            errorOutput.setText("INCORRECT USER");            
         }catch(Exception e) {
             e.printStackTrace();
             return;

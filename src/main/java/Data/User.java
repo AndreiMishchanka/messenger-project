@@ -16,4 +16,8 @@ public class User {
         return new User(nickname);
     }
 
+    public static User makeUserFromBase(String nickname) {
+        return new User(nickname);
+    }
+
 }

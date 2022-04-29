@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import Data.SQLBase.SqlCommunicate;
 import Utills.LoadXML;
 
 public class StartApplication extends Application {
@@ -32,7 +33,16 @@ public class StartApplication extends Application {
         primaryStage.show();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
+
+        try{
+            SqlCommunicate.connect("jdbc:postgresql://localhost:5432/postgres", "postgres", "1234");            
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        
         launch();
+
+        SqlCommunicate.disconnect();
     }
 }
