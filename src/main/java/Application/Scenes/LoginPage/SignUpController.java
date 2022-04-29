@@ -37,23 +37,24 @@ public class SignUpController extends StartApplication {
         }  
     }
 
+    private void setError(String colorString, String errorText) {
+        errorOutput.setTextFill(Color.web(colorString, 0.8));
+        errorOutput.setText(errorText);
+    }
+
     @FXML
     protected void onregisterButtonClick() {           
-        if (!userPassword.getText().equals(userPasswordConfirm.getText())) {            
-            errorOutput.setTextFill(Color.web("#dd0e0e", 0.8));            
-            errorOutput.setText("PASSWORDS not equals");            
+        if (!userPassword.getText().equals(userPasswordConfirm.getText())) {  
+            setError("#dd0e0e", "PASSWORDS not equals");                      
             return;
         }
         try {        
             Database.registerUser(userLogin.getText(), userPassword.getText());    
-            errorOutput.setTextFill(Color.web("#1EA624", 0.8));
-            errorOutput.setText("User was registred");            
+            setError("#1EA624", "User was registred");                                  
         }catch(Database.IncorrectPasswordException e) {
-            errorOutput.setTextFill(Color.web("#dd0e0e", 0.8));
-            errorOutput.setText("INCORRECT PASSWORD");            
+            setError("#dd0e0e", "INCORRECT PASSWORD");               
         }catch(Database.UserAlreadyRegistred e) {
-            errorOutput.setTextFill(Color.web("#dd0e0e", 0.8));
-            errorOutput.setText("User already registred");            
+            setError("#dd0e0e", "User already registred");                           
         }catch(Exception e) {
             e.printStackTrace();
             return;
