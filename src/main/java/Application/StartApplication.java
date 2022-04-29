@@ -26,7 +26,7 @@ public class StartApplication extends Application {
     
     @Override
     public void start(Stage stage) throws IOException {
-        StartApplication.primaryStage = stage;                
+        StartApplication.primaryStage = stage;               
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
         primaryStage.setTitle("TCSsenger");
         primaryStage.setScene(new Scene(root, 600, 600));

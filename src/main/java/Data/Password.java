@@ -3,18 +3,9 @@ package Data;
 public class Password {
     String password;
 
-    static String correctChars = ".!,?-+";
+    static String correctChars = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm.!,?-+";
 
     static public void checkIncorrectPasswordChar(Character x) throws Exception{
-        if(x >= 'A' && x <= 'Z'){
-            return;
-        }
-        if(x >= 'a' && x <= 'z'){
-            return;
-        }
-        if(x >= '0' && x <= '9'){
-            return;
-        }
         if(correctChars.indexOf(x) != -1){
             return;
         }
