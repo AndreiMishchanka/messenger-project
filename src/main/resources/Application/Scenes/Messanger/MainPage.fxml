@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.gluonhq.charm.glisten.control.Icon?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Scenes.Messanger.MainPageController">
+   <children>
+      <VBox layoutY="36.0" prefHeight="564.0" prefWidth="159.0" />
+      <TextField prefHeight="35.0" prefWidth="136.0" />
+      <Icon content="SCANNER" layoutX="133.0" prefHeight="35.0" prefWidth="28.0" />
+   </children>
+</Pane>
