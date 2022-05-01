@@ -113,4 +113,8 @@ public class Database {
         
     }
 
+    static void sendMessage(String text, String nicknameFrom, String nicknameTo) throws Exception{
+
+    }
+
 }
