@@ -32,8 +32,9 @@ public class ChatViewController {
         messagesList.hminProperty(); //set scroll coursor to the bottom
     }
 
-    public void makeChatToUser(User currentUser) {
+    public void makeChatToUser(User currentUser) throws Exception {
         currentFriend = currentUser;
+        printMessages();
     }
 
     void refresh() {
@@ -61,6 +62,7 @@ public class ChatViewController {
         for (ArrayList < Message > currentMessage : currentMessages) {
              fieldForMessages.getChildren().add(makeMessage(currentMessage));
         }
+        fieldForMessages.getChildren().removeAll(fieldForMessages.getChildren());
     }
 
 }
