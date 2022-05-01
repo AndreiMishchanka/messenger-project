@@ -29,9 +29,8 @@ public class StartController extends StartApplication{
     protected void onloginButtonClick() {           
         try {
             User.MainUser = Database.getUser(userLogin.getText(), userPassword.getText());  
-            // errorOutput.setTextFill(Color.web("#1EA624", 0.8));
-            // errorOutput.setText("OK"); 
-            FXMLLoader loader = LoadXML.load("Scenes/Messanger/MainPage.fxml");      
+            FXMLLoader loader = LoadXML.load("Scenes/ChatView/ChatView.fxml");      
+            System.out.print("Scenes/ChatView/ChatView.fxml");
             setScene(loader);                       
         }catch(Database.IncorrectPasswordException e) {
             errorOutput.setTextFill(Color.web("#dd0e0e", 0.8));

@@ -91,19 +91,26 @@ public class Database {
      * .get(i).get(1) -> message
     */
     static public ArrayList<ArrayList<Message>> getMessages(String with) throws Exception{
+       
+
         if (User.MainUser == null) {
             return null;
         }
+      
+        
         if (SqlCommunicate.execute("select * from users where nickname = '" + with + "';").get(0).get(0) == "0") {
             return null;
         }
+        //return null;
 
-        // ArrayList<ArrayList<String>> arr = 
-
-        ArrayList<ArrayList<Message>> output = new ArrayList<>();        
+   //      ArrayList<ArrayList<String>> arr = 
+        
+        ArrayList<ArrayList<Message>> output = new ArrayList<>();   
+        output.add(new ArrayList<Message>());     
         output.get(0).add(Message.generateMessage(1, "|1|", 1, 1, null));
         output.get(0).add(Message.generateMessage(1, "Hello", 0, 0, null));
         return output;
+        
     }
 
 }
