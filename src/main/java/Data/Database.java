@@ -58,4 +58,32 @@ public class Database {
 
     }
 
+    static public ArrayList<User> getChats() throws Exception{
+        if (User.MainUser == null) {
+            return null;
+        }
+        ArrayList<User> output = new ArrayList<>();
+        ArrayList<ArrayList<String>> arr = SqlCommunicate.execute("select * from users where nickname != '" + User.MainUser.getNickname() + "';");
+        for (int i = 1; i < arr.size(); i++) {
+            output.add(getUserById(Integer.parseInt(arr.get(i).get(0))));
+        }        
+        return output;
+    }
+
+    /** 
+     * return ArrayList<ArrayList<Message>>
+     * .get(i) -> return ArrayList<Message>, size of this List 2
+     * .get(i).get(0) -> contains message with text "|1|" - it's not our message, and "|0|" - if we wrote this message
+     * .get(i).get(1) -> message
+    */
+    static public ArrayList<ArrayList<Message>> getMessages(String with) throws Exception{
+        if (SqlCommunicate.execute("select * from users where nickname = '" + with + "';").get(0).get(0) == "0") {
+            return null;
+        }
+        ArrayList<ArrayList<Message>> output = new ArrayList<>();        
+        output.get(0).add(Message.generateMessage("|1|"));
+        output.get(0).add(Message.generateMessage("Hello"));
+        return output;
+    }
+
 }

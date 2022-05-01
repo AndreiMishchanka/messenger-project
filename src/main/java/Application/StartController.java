@@ -26,10 +26,9 @@ public class StartController extends StartApplication{
     private Label errorOutput;
 
     @FXML
-    protected void onloginButtonClick() {   
-        User user = null;
+    protected void onloginButtonClick() {           
         try {
-            user = Database.getUser(userLogin.getText(), userPassword.getText());  
+            User.MainUser = Database.getUser(userLogin.getText(), userPassword.getText());  
             // errorOutput.setTextFill(Color.web("#1EA624", 0.8));
             // errorOutput.setText("OK"); 
             FXMLLoader loader = LoadXML.load("Scenes/Messanger/MainPage.fxml");      
