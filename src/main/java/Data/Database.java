@@ -28,6 +28,11 @@ public class Database {
         throw new IncorrectUserException();
     }
 
+    static public int getIdByNick(String nickname) throws Exception{        
+        String query = "select * from users where nickname = '" + nickname + "';";                        
+        return Integer.parseInt(SqlCommunicate.execute(query).get(1).get(0));
+    }
+
     static public User getUserById(int id) throws Exception{        
         try {
             String query = "select * from users where id = " + id + ";";
@@ -70,6 +75,15 @@ public class Database {
         return output;
     }
 
+    static public boolean isUserConsist(String nickname) throws Exception{
+        
+        String query = "select * from users where nickname = '" + nickname + "';";   
+        if (SqlCommunicate.execute(query).size() < 2) {
+            return false;                     
+        }
+        return true;
+    }
+
     /** 
      * return ArrayList<ArrayList<Message>>
      * .get(i) -> return ArrayList<Message>, size of this List 2
@@ -77,12 +91,18 @@ public class Database {
      * .get(i).get(1) -> message
     */
     static public ArrayList<ArrayList<Message>> getMessages(String with) throws Exception{
+        if (User.MainUser == null) {
+            return null;
+        }
         if (SqlCommunicate.execute("select * from users where nickname = '" + with + "';").get(0).get(0) == "0") {
             return null;
         }
+
+        // ArrayList<ArrayList<String>> arr = 
+
         ArrayList<ArrayList<Message>> output = new ArrayList<>();        
-        output.get(0).add(Message.generateMessage("|1|"));
-        output.get(0).add(Message.generateMessage("Hello"));
+        output.get(0).add(Message.generateMessage(1, "|1|", 1, 1, null));
+        output.get(0).add(Message.generateMessage(1, "Hello", 0, 0, null));
         return output;
     }
 
