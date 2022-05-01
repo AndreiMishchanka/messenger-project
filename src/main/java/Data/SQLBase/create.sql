@@ -16,5 +16,5 @@ create table messages
 );
 
 create unique index messages_id_uindex
-    on messages (id);
+    on messages(id);
 
