@@ -54,6 +54,9 @@ public class ChatViewController {
         
     }
 
+
+    
+
     Label makeMessage(ArrayList < Message > currentMessage) {
         StringBuilder text = new StringBuilder();
         if (Objects.equals(currentMessage.get(0).getText(), "|0|")) {
