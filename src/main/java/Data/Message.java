@@ -28,4 +28,16 @@ public class Message {
     public String getTime() {
         return time.toString();
     }
+    
+    public int getId() {
+        return id;
+    }
+
+    public int getFromUser() {
+        return fromUser;
+    }
+
+    public int getToUser() {
+        return toUser;
+    }
 }
