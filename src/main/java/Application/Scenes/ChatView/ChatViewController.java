@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -71,7 +72,7 @@ public class ChatViewController {
         textMessage.setMinWidth(3);
         textMessage.setMaxWidth(300);
         textMessage.setMinHeight(1);
-        textMessage.setMaxHeight(100);
+        textMessage.setMaxHeight(1000);
         textMessage.setFont(Font.font("Arial", 20));
         textMessage.setWrapText(true);
         return textMessage;
@@ -148,6 +149,9 @@ public class ChatViewController {
     }
 
     public void initialize() throws Exception{
+        fieldForMessages.setMaxHeight(100000);
+        messagesList.setMaxHeight(100000);
+        //fieldForMessages.set
         ArrayList<User> users;
         try{
             users = Database.getChats(); 
