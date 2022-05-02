@@ -30,7 +30,6 @@ public class StartController extends StartApplication{
         try {
             User.MainUser = Database.getUser(userLogin.getText(), userPassword.getText());  
             FXMLLoader loader = LoadXML.load("Scenes/ChatView/ChatView.fxml");      
-            System.out.print("Scenes/ChatView/ChatView.fxml");
             setScene(loader);                       
         }catch(Database.IncorrectPasswordException e) {
             errorOutput.setTextFill(Color.web("#dd0e0e", 0.8));

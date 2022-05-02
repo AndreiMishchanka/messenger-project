@@ -1,11 +1,11 @@
 package Application.Scenes.ChatView;
 
-import Data.Database;
-import Data.Message;
-import Data.User;
+import Data.*;
+import Utills.LoadXML;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -20,6 +20,8 @@ import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import Application.StartApplication;
 
 import static Data.Database.getMessages;
 
@@ -53,9 +55,6 @@ public class ChatViewController {
     void refresh() {
         
     }
-
-
-    
 
     Label makeMessage(ArrayList < Message > currentMessage) {
         StringBuilder text = new StringBuilder();
@@ -138,8 +137,14 @@ public class ChatViewController {
         }
         //chats.set
         chats.setSpacing(10);
-       
+        if(currentFriend != null){
+            makeChatToUser(currentFriend);
+        }
     }
-
+    
+    public void goToSettings(){
+        FXMLLoader loader = LoadXML.load("Scenes/Settings/SettingsPage.fxml");      
+        StartApplication.setScene(loader);    
+    }
 
 }
