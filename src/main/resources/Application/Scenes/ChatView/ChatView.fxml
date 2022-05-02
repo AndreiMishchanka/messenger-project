@@ -25,7 +25,7 @@
                   <Font size="9.0" />
                </font></TextField>
             <Button fx:id="settings" layoutX="14.0" layoutY="556.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="40.0" prefWidth="42.0" text="S" />
-            <Button layoutX="5.0" layoutY="13.0" minWidth="27.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="Search">
+            <Button layoutX="5.0" layoutY="13.0" minWidth="27.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="42.0" text="Search">
                <font>
                   <Font size="7.0" />
                </font>

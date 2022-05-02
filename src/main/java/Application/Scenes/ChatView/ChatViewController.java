@@ -96,7 +96,7 @@ public class ChatViewController {
         }
     }
 
-    void sendingMessage() throws Exception {
+    public void sendingMessage() throws Exception {
         String text = textOfSending.getText();
         sendMessage(text, User.MainUser.getNickname(), currentFriend.getNickname());
         textOfSending.clear();
@@ -154,14 +154,15 @@ public class ChatViewController {
         scrolling.setHbarPolicy(ScrollBarPolicy.NEVER);
         scrolling.setVbarPolicy(ScrollBarPolicy.NEVER);
         for(User user : users){
+            System.out.print(user.getNickname());
             Button userButton = generateUserField(user);
             chats.getChildren().add(userButton);
         }
         //chats.set
         chats.setSpacing(10);
-        if(currentFriend != null){
-            makeChatToUser(currentFriend);
-        }
+      //  if(currentFriend != null){
+      //      makeChatToUser(currentFriend);
+       // }
     }
     
     public void goToSettings(){

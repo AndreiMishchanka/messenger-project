@@ -101,9 +101,6 @@ public class Database {
         if (SqlCommunicate.execute("select * from users where nickname = '" + with + "';").get(0).get(0) == "0") {
             return null;
         }
-        //return null;
-
-   //      ArrayList<ArrayList<String>> arr = 
         
         ArrayList<ArrayList<Message>> output = new ArrayList<>();   
         output.add(new ArrayList<Message>());     
@@ -113,7 +110,8 @@ public class Database {
         
     }
 
-    public static void sendMessage(String text, String nicknameFrom, String nicknameTo) throws Exception{ //add time checking please
+    public static void sendMessage(String text, String nicknameFrom, String nicknameTo) throws Exception{ 
+        //add time checking please
 
     }
 
