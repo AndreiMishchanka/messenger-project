@@ -79,6 +79,7 @@ public class ChatViewController {
         ArrayList< ArrayList < Message > > currentMessages = getMessages(currentFriend.getNickname());
         //System.out.print(currentMessages);
         Label emptyChatLabel = new Label();
+        fieldForMessages.getChildren().add(emptyChatLabel);
         if (currentMessages == null || currentMessages.isEmpty()) {
             emptyChatLabel.setText("Start a conversation! Write first message to " + currentFriend.getNickname() + '!');
             emptyChatLabel.setLayoutX(300);
@@ -160,9 +161,9 @@ public class ChatViewController {
         }
         //chats.set
         chats.setSpacing(10);
-      //  if(currentFriend != null){
-      //      makeChatToUser(currentFriend);
-       // }
+        if(currentFriend != null){
+            makeChatToUser(currentFriend);
+        }
     }
     
     public void goToSettings(){
