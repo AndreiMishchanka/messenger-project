@@ -1,6 +1,7 @@
 package Data;
 
 import java.sql.SQLData;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import Data.SQLBase.SqlCommunicate;
@@ -101,14 +102,29 @@ public class Database {
         if (SqlCommunicate.execute("select * from users where nickname = '" + with + "';").get(0).get(0) == "0") {
             return null;
         }
-        //return null;
 
-   //      ArrayList<ArrayList<String>> arr = 
-        
         ArrayList<ArrayList<Message>> output = new ArrayList<>();   
-        output.add(new ArrayList<Message>());     
-        output.get(0).add(Message.generateMessage(1, "|1|", 1, 1, null));
-        output.get(0).add(Message.generateMessage(1, "Hello", 0, 0, null));
+
+        String query = "select * from messages where (fuser = " + getIdByNick(User.MainUser.getNickname())
+                                                    + " AND tuser = " + getIdByNick(with) + ") OR (fuser = " + getIdByNick(with)
+                                                    + " AND tuser = " + getIdByNick(User.MainUser.getNickname()) + ");";
+
+        ArrayList<ArrayList<String>> arr = SqlCommunicate.execute(query);
+
+        for (int i = 1; i < arr.size(); i++) {            
+            output.add(new ArrayList<Message>());     
+            String tp = "|1|";
+            int id = Integer.parseInt(arr.get(i).get(0));
+            String text = arr.get(i).get(1);
+            int fuser = Integer.parseInt(arr.get(i).get(2));
+            int tuser = Integer.parseInt(arr.get(i).get(3));            
+            Timestamp tm = Timestamp.valueOf(arr.get(i).get(4));
+            if (fuser != getIdByNick(with)) tp = "|0|";            
+            output.get(i - 1).add(Message.generateMessage(0, tp, 1, 1, null));            
+            output.get(i - 1).add(Message.generateMessage(id, text, fuser, tuser, tm));
+        }
+        
+                
         return output;
         
     }
