@@ -102,11 +102,7 @@ public class Database {
         if (SqlCommunicate.execute("select * from users where nickname = '" + with + "';").get(0).get(0) == "0") {
             return null;
         }
-<<<<<<< HEAD
         
-=======
-
->>>>>>> 7a98cf2 (add work(get) with messages in Database)
         ArrayList<ArrayList<Message>> output = new ArrayList<>();   
 
         String query = "select * from messages where (fuser = " + getIdByNick(User.MainUser.getNickname())
