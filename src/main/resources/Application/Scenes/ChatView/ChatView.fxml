@@ -20,13 +20,21 @@
                   <VBox fx:id="chats" prefHeight="374.0" prefWidth="165.0" />
                </content>
             </ScrollPane>
-            <TextField fx:id="searchInChats" layoutX="5.0" prefHeight="40.0" prefWidth="144.0" />
+            <TextField fx:id="searchInChats" layoutX="58.0" layoutY="13.0" prefHeight="25.0" prefWidth="92.0" promptText="Write user name">
+               <font>
+                  <Font size="9.0" />
+               </font></TextField>
             <Button fx:id="settings" layoutX="14.0" layoutY="556.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="40.0" prefWidth="42.0" text="S" />
+            <Button layoutX="5.0" layoutY="13.0" minWidth="27.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="27.0" text="Search">
+               <font>
+                  <Font size="7.0" />
+               </font>
+            </Button>
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
             <Button fx:id="usersNick" layoutX="50.0" layoutY="-2.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="389.0" text="user_name" />
-            <TextField layoutY="555.0" prefHeight="42.0" prefWidth="379.0" promptText="Write a messege...">
+            <TextField fx:id="textOfSending" layoutY="555.0" prefHeight="42.0" prefWidth="379.0" promptText="Write a messege...">
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
@@ -34,7 +42,7 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </TextField>
-            <Button layoutX="379.0" layoutY="554.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="60.0" text="SEND">
+            <Button fx:id="sendMessageButton" layoutX="379.0" layoutY="554.0" mnemonicParsing="false" onAction="#sendingMessage" prefHeight="42.0" prefWidth="60.0" text="SEND">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
