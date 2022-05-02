@@ -72,6 +72,8 @@ public class ChatViewController {
         textMessage.setMaxWidth(300);
         textMessage.setMinHeight(1);
         textMessage.setMaxHeight(100);
+        textMessage.setFont(Font.font("Arial", 20));
+        textMessage.setWrapText(true);
         return textMessage;
     }
 
