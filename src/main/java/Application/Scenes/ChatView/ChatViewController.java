@@ -24,15 +24,14 @@ import java.util.Objects;
 import Application.StartApplication;
 
 import static Data.Database.getMessages;
+import static Data.Database.sendMessage;
 
 public class ChatViewController {
     
     @FXML
     private VBox fieldForMessages;
-
     @FXML
     private ScrollPane messagesList;
-
     @FXML
     private Button usersNick;
     @FXML
@@ -41,6 +40,10 @@ public class ChatViewController {
     public TextField searchInChats;
     @FXML
     public ScrollPane scrolling;
+    @FXML
+    private TextField textOfSending;
+    @FXML
+    private Button sendMessageButton;
 
     static User currentFriend = null;
 
@@ -49,7 +52,7 @@ public class ChatViewController {
         usersNick.setText(currentFriend.getNickname());
         fieldForMessages.getChildren().removeAll(fieldForMessages.getChildren());
         printMessages();
-        messagesList.hminProperty(); //set scroll coursor to the bottom
+        //messagesList.hminProperty(); //in future : set scroll coursor to the bottom
     }
 
     void refresh() {
@@ -75,9 +78,28 @@ public class ChatViewController {
     void printMessages() throws Exception {
         ArrayList< ArrayList < Message > > currentMessages = getMessages(currentFriend.getNickname());
         //System.out.print(currentMessages);
-        for (ArrayList < Message > currentMessage : currentMessages) {
-             fieldForMessages.getChildren().add(makeMessage(currentMessage));
+        Label emptyChatLabel = new Label();
+        if (currentMessages == null || currentMessages.isEmpty()) {
+            emptyChatLabel.setText("Start a conversation! Write first message to " + currentFriend.getNickname() + '!');
+            emptyChatLabel.setLayoutX(300);
+            emptyChatLabel.setLayoutY(300);
+            emptyChatLabel.setMinHeight(1);
+            emptyChatLabel.setMaxHeight(100);
+            emptyChatLabel.setMinWidth(1);
+            emptyChatLabel.setMinWidth(100);
+            emptyChatLabel.setFont(Font.font(20));
+        } else {
+            emptyChatLabel.setText("");
+            for (ArrayList<Message> currentMessage : currentMessages) {
+                fieldForMessages.getChildren().add(makeMessage(currentMessage));
+            }
         }
+    }
+
+    void sendingMessage() throws Exception {
+        String text = textOfSending.getText();
+        sendMessage(text, User.MainUser.getNickname(), currentFriend.getNickname());
+        textOfSending.clear();
     }
 
     class TakeUserHandler implements EventHandler<ActionEvent> {
