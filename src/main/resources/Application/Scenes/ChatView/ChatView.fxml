@@ -54,7 +54,7 @@
             </ImageView>
             <ScrollPane fx:id="messagesList" layoutY="43.0" prefHeight="510.0" prefWidth="438.0">
                <content>
-                  <VBox fx:id="fieldForMessages" prefHeight="509.0" prefWidth="435.0" />
+                  <VBox fx:id="fieldForMessages" prefHeight="420.0" prefWidth="435.0" />
                </content>
             </ScrollPane>
          </children></AnchorPane>

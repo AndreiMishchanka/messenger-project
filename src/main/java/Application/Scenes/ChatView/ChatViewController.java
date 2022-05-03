@@ -69,28 +69,27 @@ public class ChatViewController {
         }                                             
         text.append(" (" + currentMessage.get(1).getTime() + ") : " + currentMessage.get(1).getText());
         Label textMessage = new Label(text.toString());
-        textMessage.setMinWidth(3);
-        textMessage.setMaxWidth(300);
-        textMessage.setMinHeight(1);
-        textMessage.setMaxHeight(1000);
-        textMessage.setFont(Font.font("Arial", 20));
+       // textMessage.setMinWidth(3);
+       // textMessage.setMaxWidth(300);
+       // textMessage.setMinHeight(1);
+       // textMessage.setMaxHeight(1000);
+        textMessage.setFont(Font.font("Arial", 15));
         textMessage.setWrapText(true);
         return textMessage;
     }
 
     void printMessages() throws Exception {
         ArrayList< ArrayList < Message > > currentMessages = getMessages(currentFriend.getNickname());
-        //System.out.print(currentMessages);
         Label emptyChatLabel = new Label();
         fieldForMessages.getChildren().add(emptyChatLabel);
         if (currentMessages == null || currentMessages.isEmpty()) {
             emptyChatLabel.setText("Start a conversation! Write first message to " + currentFriend.getNickname() + '!');
-            emptyChatLabel.setLayoutX(300);
-            emptyChatLabel.setLayoutY(300);
-            emptyChatLabel.setMinHeight(1);
-            emptyChatLabel.setMaxHeight(100);
-            emptyChatLabel.setMinWidth(1);
-            emptyChatLabel.setMinWidth(100);
+           // emptyChatLabel.setLayoutX(300);
+           // emptyChatLabel.setLayoutY(300);
+           // emptyChatLabel.setMinHeight(1);
+           // emptyChatLabel.setMaxHeight(100);
+           // emptyChatLabel.setMinWidth(1);
+           // emptyChatLabel.setMinWidth(100);
             emptyChatLabel.setFont(Font.font(20));
         } else {
             emptyChatLabel.setText("");
@@ -149,9 +148,9 @@ public class ChatViewController {
     }
 
     public void initialize() throws Exception{
-        fieldForMessages.setMaxHeight(100000);
-        messagesList.setMaxHeight(100000);
-        //fieldForMessages.set
+        messagesList.setHbarPolicy(ScrollBarPolicy.NEVER);
+        messagesList.setVbarPolicy(ScrollBarPolicy.NEVER);
+        fieldForMessages.setSpacing(10);
         ArrayList<User> users;
         try{
             users = Database.getChats(); 
