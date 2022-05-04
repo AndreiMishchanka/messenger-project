@@ -54,7 +54,12 @@ public class ChatViewController {
         fieldForMessages.getChildren().removeAll(fieldForMessages.getChildren());
         printMessages();
         //messagesList.hminProperty(); //in future : set scroll coursor to the bottom
-        messagesList.vvalueProperty().bind(fieldForMessages.heightProperty());
+        //messagesList.vvalueProperty().bind(fieldForMessages.heightProperty());
+        messagesList.needsLayoutProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue) {
+                messagesList.setVvalue(1.0);
+            }
+        });
     }
 
     void refresh() {
