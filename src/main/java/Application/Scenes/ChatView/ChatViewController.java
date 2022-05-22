@@ -1,29 +1,34 @@
 package Application.Scenes.ChatView;
 
-import Data.*;
+import Application.StartApplication;
+import Data.Database;
+import Data.Message;
+import Data.User;
 import Utills.LoadXML;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
+import javafx.scene.SubScene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Objects;
-
-import Application.StartApplication;
+import java.util.SplittableRandom;
 
 import static Data.Database.getMessages;
 import static Data.Database.sendMessage;
@@ -52,11 +57,50 @@ public class ChatViewController {
     static User currentFriend = null;
 
     @FXML
+    private Button settings;
+
+    @FXML
     private SplitPane splitPanePageForChats;
 
+    static Text s = new Text();
+
+    static {
+        s.setFont(Font.font(15));
+    }
+
+    public void setAllSize(){
+        splitPanePageForChats.setDividerPosition(0, 180.0/StartApplication.stageWidth);
+        scrolling.setPrefHeight(StartApplication.stageHeight-120);
+        settings.setLayoutY(StartApplication.stageHeight-75);
+        sendMessageButton.setLayoutY(StartApplication.stageHeight-75);
+        sendMessageButton.setLayoutX(StartApplication.stageWidth-70-180);
+        textOfSending.setLayoutY(StartApplication.stageHeight-75);
+        textOfSending.setLayoutX(0);
+        textOfSending.setPrefWidth(StartApplication.stageWidth-70-180);
+        messagesList.setPrefHeight(StartApplication.stageHeight-120);
+        messagesList.setPrefWidth(StartApplication.stageWidth-190);
+        fieldForMessages.setPrefWidth(StartApplication.stageWidth-200);
+        usersNick.setPrefWidth(fieldForMessages.getPrefWidth() - friendAvatar.getFitWidth());
+        s.setWrappingWidth(fieldForMessages.getPrefWidth());
+    }
+
+    public void setMessageField(){
+        fieldForMessages.setPrefHeight(1);
+        double sum = 0;
+        for(Node field : fieldForMessages.getChildren()){
+            Label text = (Label) field;
+            s.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
+            s.setText(text.getText());
+            double h = s.getLayoutBounds().getHeight();
+            sum += h + 10.0;
+        }
+        fieldForMessages.setPrefHeight(sum);
+    }
 
     public void changeSizes(){
-        splitPanePageForChats.setDividerPosition(0, 180.0/StartApplication.stageWidth);
+        setAllSize();
+        setMessageField();
+
     }
 
     ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{
@@ -67,13 +111,13 @@ public class ChatViewController {
 
 
     public void makeChatToUser(User currentUser) throws Exception {
+        if(currentFriend == currentUser) return;
         Image a = new Image(StartApplication.class.getResource("Images/default.png").toString());
         friendAvatar.setImage(a);
         currentFriend = currentUser;
         usersNick.setText(currentFriend.getNickname());
         fieldForMessages.getChildren().removeAll(fieldForMessages.getChildren());
         printMessages();
-        // messagesList.heightProperty().addListener(observable -> messagesList.setVvalue(1D));
     }
 
 
@@ -86,7 +130,7 @@ public class ChatViewController {
         }
         text.append(" (" + currentMessage.get(1).getTime() + ") : " + currentMessage.get(1).getText());
         Label textMessage = new Label(text.toString());
-        textMessage.setFont(Font.font("Arial", 15));
+        textMessage.setFont(Font.font(15));
         textMessage.setWrapText(true);
         return textMessage;
     }
@@ -99,10 +143,12 @@ public class ChatViewController {
             emptyChatLabel.setText("Start a conversation! Write first message to " + currentFriend.getNickname() + '!');
             emptyChatLabel.setFont(Font.font(20));
         } else {
-            emptyChatLabel.setText("");
+            fieldForMessages.getChildren().removeAll(fieldForMessages.getChildren());
             for (ArrayList<Message> currentMessage : currentMessages) {
                 fieldForMessages.getChildren().add(makeMessage(currentMessage));
             }
+            changeSizes();
+
         }
     }
 
@@ -125,7 +171,7 @@ public class ChatViewController {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            System.out.print(user.getNickname());
+
         }
 
     }
@@ -139,8 +185,8 @@ public class ChatViewController {
         gc.setFill(Color.WHITE);
         gc.setLineWidth(1);
         gc.fillRect(0, 0, 160, 30);
-        gc.setFill(Color.RED);
-        gc.fillRect(5, 5, 20, 20);
+        Image a = new Image(StartApplication.class.getResource("Images/default.png").toString());
+        gc.drawImage(a, 5, 5, 15, 15);
         gc.setFill(Color.BLACK);
         gc.setFont(new Font(15));
         gc.fillText(
@@ -156,11 +202,6 @@ public class ChatViewController {
     }
 
     public void initialize() throws Exception{
-        ///change_size
-        StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);
-        StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
-        changeSizes();
-
         ///init users
         messagesList.setHbarPolicy(ScrollBarPolicy.NEVER);
         messagesList.setVbarPolicy(ScrollBarPolicy.NEVER);
@@ -174,12 +215,18 @@ public class ChatViewController {
         scrolling.setHbarPolicy(ScrollBarPolicy.NEVER);
         scrolling.setVbarPolicy(ScrollBarPolicy.NEVER);
         for(User user : users){
-            System.out.print(user.getNickname());
             Button userButton = generateUserField(user);
             chats.getChildren().add(userButton);
         }
-        //chats.set
         chats.setSpacing(10);
+
+        ///change_size
+        changeSizes();
+        StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);
+        StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
+
+        //chats.set
+
         if(currentFriend != null){
             makeChatToUser(currentFriend);
         }

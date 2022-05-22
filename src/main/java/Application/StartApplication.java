@@ -35,6 +35,8 @@ public class StartApplication extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
         primaryStage.setTitle("TCSsenger");
         primaryStage.setScene(new Scene(root, 600, 600));
+        primaryStage.setMinHeight(600);
+        primaryStage.setMinWidth(600);
         primaryStage.show();
     }
 
