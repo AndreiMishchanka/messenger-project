@@ -12,7 +12,8 @@ create table messages
     text       varchar(1000) not null,
     fUser int           not null,
     tUser   int           not null,
-    tm         timestamp     not null
+    tm DATETIME NOT NULL
+                DEFAULT CURRENT_TIMESTAMP, 
 );
 
 create unique index messages_id_uindex
