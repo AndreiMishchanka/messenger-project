@@ -67,8 +67,8 @@ public class ChatViewController {
 
 
     public void makeChatToUser(User currentUser) throws Exception {
-        //Image a = new Image("Images/default.png");
-       // friendAvatar.setImage(a);
+        Image a = new Image(StartApplication.class.getResource("Images/default.png").toString());
+        friendAvatar.setImage(a);
         currentFriend = currentUser;
         usersNick.setText(currentFriend.getNickname());
         fieldForMessages.getChildren().removeAll(fieldForMessages.getChildren());
@@ -76,9 +76,6 @@ public class ChatViewController {
         // messagesList.heightProperty().addListener(observable -> messagesList.setVvalue(1D));
     }
 
-    void refresh() {
-
-    }
 
     Label makeMessage(ArrayList < Message > currentMessage) {
         StringBuilder text = new StringBuilder();

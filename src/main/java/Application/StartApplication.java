@@ -7,6 +7,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
 
 import Data.SQLBase.SqlCommunicate;
 import Utills.LoadXML;
@@ -38,7 +41,8 @@ public class StartApplication extends Application {
     public static void main(String[] args){
 
         try{
-            SqlCommunicate.connect("jdbc:postgresql://localhost:5432/postgres", "postgres", "1234");            
+            SqlCommunicate.connect("jdbc:postgresql://localhost:5432/postgres", "postgres", "1234");                                    
+            // SqlCommunicate.connect("jdbc:sqlserver://tcsenger.database.windows.net:1433", "postgres@tcsenger", "Tcs12345");            
         }catch(Exception e) {
             e.printStackTrace();
         }
