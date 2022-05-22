@@ -11,11 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -54,8 +51,12 @@ public class ChatViewController {
 
     static User currentFriend = null;
 
-    public void changeSizes(){
+    @FXML
+    private SplitPane splitPanePageForChats;
 
+
+    public void changeSizes(){
+        splitPanePageForChats.setDividerPosition(0, 180.0/StartApplication.stageWidth);
     }
 
     ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{
@@ -191,8 +192,5 @@ public class ChatViewController {
         FXMLLoader loader = LoadXML.load("Scenes/Settings/SettingsPage.fxml");
         StartApplication.setScene(loader);
     }
-
-
-
 
 }
