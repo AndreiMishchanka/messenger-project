@@ -8,7 +8,7 @@ public class SqlCommunicate  {
     public static void connect(String serverAddres, String user, String password) throws Exception {
         try {
             // Class.forName("com.postgresql.jdbc.Driver");
-            db = DriverManager.getConnection(serverAddres, user, password);
+            db = DriverManager.getConnection(serverAddres, user, password);            
         } catch (Exception e) {            
             e.printStackTrace();            
             System.err.println("Error connecting to the database: " + e.getClass().getName() + e.getMessage());

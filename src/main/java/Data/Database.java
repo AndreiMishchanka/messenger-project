@@ -134,12 +134,12 @@ public class Database {
 
         if (isUserConsist(nicknameFrom) && isUserConsist(nicknameTo) && User.MainUser.getNickname().equals(nicknameFrom)) {
             int id = SqlCommunicate.execute("select * from messages;").size();
-            Message nw = Message.generateMessage(id, text, getIdByNick(nicknameFrom), getIdByNick(nicknameTo), new Timestamp(System.currentTimeMillis()));
-            SqlCommunicate.update("insert into messages values(" + nw.getId() 
+            Message nw = Message.generateMessage(id, text, getIdByNick(nicknameFrom), getIdByNick(nicknameTo), new Timestamp(System.currentTimeMillis()));        
+            SqlCommunicate.update("insert into messages(id, text, fuser, tuser) values(" + nw.getId() 
                                                                  + ", '" + nw.getText() 
                                                                  + "', " + nw.getFromUser()
                                                                  + ", " + nw.getToUser()
-                                                                 + ", '" + nw.getTime() + "');");
+                                                                 + ");");
         }
 
     }
