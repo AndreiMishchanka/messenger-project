@@ -35,20 +35,17 @@ public class StartApplication extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
         primaryStage.setTitle("TCSsenger");
         primaryStage.setScene(new Scene(root, 600, 600));
-        primaryStage.setMinHeight(600);
-        primaryStage.setMinWidth(600);
         primaryStage.show();
     }
 
     public static void main(String[] args){
-
         try{
-            // SqlCommunicate.connect("jdbc:postgresql://localhost:5432/postgres", "postgres", "1234");                                    
-            SqlCommunicate.connect("jdbc:sqlserver://tcsenger.database.windows.net:1433;;databaseName=TCSenger ", "postgres", "Tcs12345");                        
+            // SqlCommunicate.connect("jdbc:postgresql://localhost:5432/postgres", "postgres", "1234");
+            SqlCommunicate.connect("jdbc:sqlserver://tcsenger.database.windows.net:1433;;databaseName=TCSenger ", "postgres", "Tcs12345");
         }catch(Exception e) {
             e.printStackTrace();
         }
-        
+
         launch();
 
         SqlCommunicate.disconnect();

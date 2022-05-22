@@ -1,0 +1,249 @@
+Index: target/classes/Data/SQLBase/create.sql
+===================================================================
+diff --git a/target/classes/Data/SQLBase/create.sql b/target/classes/Data/SQLBase/create.sql
+deleted file mode 100644
+--- a/target/classes/Data/SQLBase/create.sql	(revision f9df8419d2823179a163f601a5f4474566c3c476)
++++ /dev/null	(revision f9df8419d2823179a163f601a5f4474566c3c476)
+@@ -1,21 +0,0 @@
+-create table users (
+-    id integer primary key,
+-    nickname varchar(100) not null,
+-    password varchar(100) not null
+-);
+-
+-create table messages
+-(
+-    id         int           not null
+-        constraint messages_pk
+-            primary key,
+-    text       varchar(1000) not null,
+-    fUser int           not null,
+-    tUser   int           not null,
+-    tm DATETIME NOT NULL
+-                DEFAULT CURRENT_TIMESTAMP, 
+-);
+-
+-create unique index messages_id_uindex
+-    on messages(id);
+-
+Index: target/classes/Application/Scenes/Settings/SettingsPage.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.PasswordField?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.Pane?>\r\n\r\n\r\n<Pane maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\" prefHeight=\"599.0\" prefWidth=\"600.0\" xmlns=\"http://javafx.com/javafx/18\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"Application.Scenes.Settings.SettingsPageController\">\r\n   <children>\r\n      <Button fx:id=\"Back\" layoutX=\"14.0\" layoutY=\"555.0\" mnemonicParsing=\"false\" onAction=\"#fromSettingsToChats\" prefHeight=\"31.0\" prefWidth=\"61.0\" text=\"Back\" />\r\n      <ImageView fx:id=\"avatar\" fitHeight=\"150.0\" fitWidth=\"150.0\" layoutX=\"29.0\" layoutY=\"52.0\" pickOnBounds=\"true\" preserveRatio=\"true\" />\r\n      <TextField fx:id=\"nicknameChange\" layoutX=\"199.0\" layoutY=\"53.0\" prefHeight=\"31.0\" prefWidth=\"202.0\" />\r\n      <Button layoutX=\"415.0\" layoutY=\"53.0\" mnemonicParsing=\"false\" onAction=\"#tryChangeNickname\" prefHeight=\"31.0\" prefWidth=\"50.0\" text=\"Save\" />\r\n      <Label layoutX=\"199.0\" layoutY=\"36.0\" prefHeight=\"17.0\" prefWidth=\"202.0\" text=\"Here you can change your nickname\" />\r\n      <Label layoutX=\"199.0\" layoutY=\"127.0\" prefHeight=\"17.0\" prefWidth=\"202.0\" text=\"Here you can change your password\" />\r\n      <Button layoutX=\"415.0\" layoutY=\"193.0\" mnemonicParsing=\"false\" onAction=\"#tryChangePassword\" prefHeight=\"31.0\" prefWidth=\"50.0\" text=\"Save\" />\r\n      <PasswordField layoutX=\"199.0\" layoutY=\"150.0\" prefHeight=\"31.0\" prefWidth=\"202.0\" promptText=\"Write your old password\" />\r\n      <PasswordField layoutX=\"199.0\" layoutY=\"193.0\" prefHeight=\"31.0\" prefWidth=\"202.0\" promptText=\"Write new password\" />\r\n      <Label fx:id=\"nicknameError\" layoutX=\"199.0\" layoutY=\"84.0\" prefHeight=\"24.0\" prefWidth=\"202.0\" />\r\n      <Label fx:id=\"passwordError\" layoutX=\"199.0\" layoutY=\"224.0\" prefHeight=\"24.0\" prefWidth=\"202.0\" />\r\n   </children>\r\n</Pane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/target/classes/Application/Scenes/Settings/SettingsPage.fxml b/target/classes/Application/Scenes/Settings/SettingsPage.fxml
+--- a/target/classes/Application/Scenes/Settings/SettingsPage.fxml	(revision f9df8419d2823179a163f601a5f4474566c3c476)
++++ b/target/classes/Application/Scenes/Settings/SettingsPage.fxml	(date 1653250360482)
+@@ -6,20 +6,27 @@
+ <?import javafx.scene.control.TextField?>
+ <?import javafx.scene.image.ImageView?>
+ <?import javafx.scene.layout.Pane?>
+-
++<?import javafx.scene.text.Font?>
+ 
+ <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Scenes.Settings.SettingsPageController">
+    <children>
+       <Button fx:id="Back" layoutX="14.0" layoutY="555.0" mnemonicParsing="false" onAction="#fromSettingsToChats" prefHeight="31.0" prefWidth="61.0" text="Back" />
+-      <ImageView fx:id="avatar" fitHeight="150.0" fitWidth="150.0" layoutX="29.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
+-      <TextField fx:id="nicknameChange" layoutX="199.0" layoutY="53.0" prefHeight="31.0" prefWidth="202.0" />
+-      <Button layoutX="415.0" layoutY="53.0" mnemonicParsing="false" onAction="#tryChangeNickname" prefHeight="31.0" prefWidth="50.0" text="Save" />
+-      <Label layoutX="199.0" layoutY="36.0" prefHeight="17.0" prefWidth="202.0" text="Here you can change your nickname" />
+-      <Label layoutX="199.0" layoutY="127.0" prefHeight="17.0" prefWidth="202.0" text="Here you can change your password" />
+-      <Button layoutX="415.0" layoutY="193.0" mnemonicParsing="false" onAction="#tryChangePassword" prefHeight="31.0" prefWidth="50.0" text="Save" />
+-      <PasswordField layoutX="199.0" layoutY="150.0" prefHeight="31.0" prefWidth="202.0" promptText="Write your old password" />
+-      <PasswordField layoutX="199.0" layoutY="193.0" prefHeight="31.0" prefWidth="202.0" promptText="Write new password" />
+-      <Label fx:id="nicknameError" layoutX="199.0" layoutY="84.0" prefHeight="24.0" prefWidth="202.0" />
+-      <Label fx:id="passwordError" layoutX="199.0" layoutY="224.0" prefHeight="24.0" prefWidth="202.0" />
++      <ImageView fx:id="avatar" fitHeight="179.0" fitWidth="202.0" layoutX="45.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
++      <TextField fx:id="nicknameChange" layoutX="272.0" layoutY="57.0" prefHeight="31.0" prefWidth="202.0" />
++      <Button layoutX="488.0" layoutY="57.0" mnemonicParsing="false" onAction="#tryChangeNickname" prefHeight="31.0" prefWidth="50.0" text="Save" />
++      <Label layoutX="272.0" layoutY="40.0" prefHeight="17.0" prefWidth="202.0" text="Here you can change your nickname" />
++      <Label layoutX="272.0" layoutY="131.0" prefHeight="17.0" prefWidth="202.0" text="Here you can change your password" />
++      <Button layoutX="488.0" layoutY="197.0" mnemonicParsing="false" onAction="#tryChangePassword" prefHeight="31.0" prefWidth="50.0" text="Save" />
++      <PasswordField layoutX="272.0" layoutY="154.0" prefHeight="31.0" prefWidth="202.0" promptText="Write your old password" />
++      <PasswordField layoutX="272.0" layoutY="197.0" prefHeight="31.0" prefWidth="202.0" promptText="Write new password" />
++      <Label fx:id="nicknameError" layoutX="272.0" layoutY="88.0" prefHeight="24.0" prefWidth="202.0" />
++      <Label fx:id="passwordError" layoutX="272.0" layoutY="228.0" prefHeight="24.0" prefWidth="202.0" />
++      <TextField fx:id="imageURL" layoutX="45.0" layoutY="237.0" prefHeight="31.0" prefWidth="202.0" promptText="Write URL to upload new profile image">
++         <font>
++            <Font size="10.0" />
++         </font>
++      </TextField>
++      <Button fx:id="uploadImageButton" layoutX="45.0" layoutY="275.0" mnemonicParsing="false" onAction="#tryChangeAvatar" prefHeight="17.0" prefWidth="77.0" text="Upload" />
++      <Label fx:id="URLError" layoutX="134.0" layoutY="276.0" prefHeight="24.0" prefWidth="114.0" />
+    </children>
+ </Pane>
+Index: src/main/resources/Application/Scenes/Settings/SettingsPage.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.PasswordField?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.Pane?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<Pane maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" minHeight=\"-Infinity\" minWidth=\"-Infinity\" prefHeight=\"599.0\" prefWidth=\"600.0\" xmlns=\"http://javafx.com/javafx/18\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"Application.Scenes.Settings.SettingsPageController\">\r\n   <children>\r\n      <Button fx:id=\"Back\" layoutX=\"14.0\" layoutY=\"555.0\" mnemonicParsing=\"false\" onAction=\"#fromSettingsToChats\" prefHeight=\"31.0\" prefWidth=\"61.0\" text=\"Back\" />\r\n      <ImageView fx:id=\"avatar\" fitHeight=\"179.0\" fitWidth=\"202.0\" layoutX=\"45.0\" layoutY=\"42.0\" pickOnBounds=\"true\" preserveRatio=\"true\" />\r\n      <TextField fx:id=\"nicknameChange\" layoutX=\"272.0\" layoutY=\"57.0\" prefHeight=\"31.0\" prefWidth=\"202.0\" />\r\n      <Button layoutX=\"488.0\" layoutY=\"57.0\" mnemonicParsing=\"false\" onAction=\"#tryChangeNickname\" prefHeight=\"31.0\" prefWidth=\"50.0\" text=\"Save\" />\r\n      <Label layoutX=\"272.0\" layoutY=\"40.0\" prefHeight=\"17.0\" prefWidth=\"202.0\" text=\"Here you can change your nickname\" />\r\n      <Label layoutX=\"272.0\" layoutY=\"131.0\" prefHeight=\"17.0\" prefWidth=\"202.0\" text=\"Here you can change your password\" />\r\n      <Button layoutX=\"488.0\" layoutY=\"197.0\" mnemonicParsing=\"false\" onAction=\"#tryChangePassword\" prefHeight=\"31.0\" prefWidth=\"50.0\" text=\"Save\" />\r\n      <PasswordField layoutX=\"272.0\" layoutY=\"154.0\" prefHeight=\"31.0\" prefWidth=\"202.0\" promptText=\"Write your old password\" />\r\n      <PasswordField layoutX=\"272.0\" layoutY=\"197.0\" prefHeight=\"31.0\" prefWidth=\"202.0\" promptText=\"Write new password\" />\r\n      <Label fx:id=\"nicknameError\" layoutX=\"272.0\" layoutY=\"88.0\" prefHeight=\"24.0\" prefWidth=\"202.0\" />\r\n      <Label fx:id=\"passwordError\" layoutX=\"272.0\" layoutY=\"228.0\" prefHeight=\"24.0\" prefWidth=\"202.0\" />\r\n      <TextField fx:id=\"imageURL\" layoutX=\"45.0\" layoutY=\"237.0\" prefHeight=\"31.0\" prefWidth=\"202.0\" promptText=\"Write URL to upload new profile image\">\r\n         <font>\r\n            <Font size=\"10.0\" />\r\n         </font>\r\n      </TextField>\r\n      <Button fx:id=\"uploadImageButton\" layoutX=\"45.0\" layoutY=\"275.0\" mnemonicParsing=\"false\" onAction=\"#tryChangeAvatar\" prefHeight=\"17.0\" prefWidth=\"77.0\" text=\"Upload\" />\r\n   </children>\r\n</Pane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/Application/Scenes/Settings/SettingsPage.fxml b/src/main/resources/Application/Scenes/Settings/SettingsPage.fxml
+--- a/src/main/resources/Application/Scenes/Settings/SettingsPage.fxml	(revision f9df8419d2823179a163f601a5f4474566c3c476)
++++ b/src/main/resources/Application/Scenes/Settings/SettingsPage.fxml	(date 1653250360482)
+@@ -27,5 +27,6 @@
+          </font>
+       </TextField>
+       <Button fx:id="uploadImageButton" layoutX="45.0" layoutY="275.0" mnemonicParsing="false" onAction="#tryChangeAvatar" prefHeight="17.0" prefWidth="77.0" text="Upload" />
++      <Label fx:id="URLError" layoutX="134.0" layoutY="276.0" prefHeight="24.0" prefWidth="114.0" />
+    </children>
+ </Pane>
+Index: .idea/libraries/jar_files.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/libraries/jar_files.xml b/.idea/libraries/jar_files.xml
+new file mode 100644
+--- /dev/null	(date 1653244064659)
++++ b/.idea/libraries/jar_files.xml	(date 1653244064659)
+@@ -0,0 +1,10 @@
++<component name="libraryTable">
++  <library name="jar_files">
++    <CLASSES>
++      <root url="file://$PROJECT_DIR$/src/main/java/Application/Scenes/Settings/jar_files" />
++    </CLASSES>
++    <JAVADOC />
++    <SOURCES />
++    <jarDirectory url="file://$PROJECT_DIR$/src/main/java/Application/Scenes/Settings/jar_files" recursive="false" />
++  </library>
++</component>
+\ No newline at end of file
+Index: src/main/java/module-info.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>module Application.messengerproject {\r\n    requires javafx.controls;\r\n    requires javafx.fxml;\r\n    requires java.sql;\r\n    requires java.desktop;\r\n    requires javafx.swing;\r\n\r\n\r\n    opens Application to javafx.fxml;\r\n    exports Application;\r\n\r\n    opens Application.Scenes.ChatView to javafx.fxml;\r\n    exports Application.Scenes.ChatView;\r\n    \r\n    opens Application.Scenes.LoginPage to javafx.fxml;\r\n    exports Application.Scenes.LoginPage;\r\n\r\n    opens Application.Scenes.Settings to javafx.fxml;\r\n    exports Application.Scenes.Settings;\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/module-info.java b/src/main/java/module-info.java
+--- a/src/main/java/module-info.java	(revision f9df8419d2823179a163f601a5f4474566c3c476)
++++ b/src/main/java/module-info.java	(date 1653244676995)
+@@ -4,6 +4,7 @@
+     requires java.sql;
+     requires java.desktop;
+     requires javafx.swing;
++//    requires javafx.swing;
+ 
+ 
+     opens Application to javafx.fxml;
+Index: src/main/java/Application/StartApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Application;\r\n\r\nimport javafx.application.Application;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.scene.Parent;\r\nimport javafx.scene.Scene;\r\nimport javafx.stage.Stage;\r\n\r\nimport java.io.IOException;\r\nimport java.sql.Connection;\r\nimport java.sql.Driver;\r\nimport java.sql.DriverManager;\r\n\r\nimport Data.SQLBase.SqlCommunicate;\r\nimport Utills.LoadXML;\r\n\r\npublic class StartApplication extends Application {\r\n    public static Stage primaryStage;\r\n    public static double stageWidth = 600;\r\n    public static double stageHeight = 600;\r\n\r\n    public static void setScene(FXMLLoader loader) {\r\n        Parent root = loader.getRoot();\r\n        ((Stage) primaryStage.getScene().getWindow()).setScene(new Scene(root, stageWidth, stageHeight));\r\n    }\r\n\r\n    public static void goBack() {\r\n        FXMLLoader loader = LoadXML.load(\"hello-view.fxml\");\r\n        setScene(loader);\r\n    }\r\n    \r\n    @Override\r\n    public void start(Stage stage) throws IOException {\r\n        StartApplication.primaryStage = stage;               \r\n        Parent root = FXMLLoader.load(getClass().getResource(\"hello-view.fxml\"));\r\n        primaryStage.setTitle(\"TCSsenger\");\r\n        primaryStage.setScene(new Scene(root, 600, 600));\r\n        primaryStage.show();\r\n    }\r\n\r\n    public static void main(String[] args){\r\n\r\n        try{\r\n            // SqlCommunicate.connect(\"jdbc:postgresql://localhost:5432/postgres\", \"postgres\", \"1234\");                                    \r\n            SqlCommunicate.connect(\"jdbc:sqlserver://tcsenger.database.windows.net:1433;;databaseName=TCSenger \", \"postgres\", \"Tcs12345\");                        \r\n        }catch(Exception e) {\r\n            e.printStackTrace();\r\n        }\r\n        \r\n        launch();\r\n\r\n        SqlCommunicate.disconnect();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Application/StartApplication.java b/src/main/java/Application/StartApplication.java
+--- a/src/main/java/Application/StartApplication.java	(revision f9df8419d2823179a163f601a5f4474566c3c476)
++++ b/src/main/java/Application/StartApplication.java	(date 1653242375514)
+@@ -39,14 +39,13 @@
+     }
+ 
+     public static void main(String[] args){
+-
+         try{
+-            // SqlCommunicate.connect("jdbc:postgresql://localhost:5432/postgres", "postgres", "1234");                                    
+-            SqlCommunicate.connect("jdbc:sqlserver://tcsenger.database.windows.net:1433;;databaseName=TCSenger ", "postgres", "Tcs12345");                        
++            // SqlCommunicate.connect("jdbc:postgresql://localhost:5432/postgres", "postgres", "1234");
++            SqlCommunicate.connect("jdbc:sqlserver://tcsenger.database.windows.net:1433;;databaseName=TCSenger ", "postgres", "Tcs12345");
+         }catch(Exception e) {
+             e.printStackTrace();
+         }
+-        
++
+         launch();
+ 
+         SqlCommunicate.disconnect();
+Index: src/main/java/Application/Scenes/ChatView/ChatViewController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Application.Scenes.ChatView;\r\n\r\nimport Data.*;\r\nimport Utills.LoadXML;\r\nimport javafx.beans.value.ChangeListener;\r\nimport javafx.beans.value.ObservableValue;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.event.EventHandler;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.geometry.VPos;\r\nimport javafx.scene.canvas.Canvas;\r\nimport javafx.scene.canvas.GraphicsContext;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.control.ScrollPane.ScrollBarPolicy;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.layout.VBox;\r\nimport javafx.scene.paint.Color;\r\nimport javafx.scene.text.Font;\r\n\r\nimport java.lang.reflect.Field;\r\nimport java.util.ArrayList;\r\nimport java.util.Objects;\r\n\r\nimport Application.StartApplication;\r\n\r\nimport static Data.Database.getMessages;\r\nimport static Data.Database.sendMessage;\r\n\r\npublic class ChatViewController {\r\n\r\n    @FXML\r\n    private VBox fieldForMessages;\r\n    @FXML\r\n    private ScrollPane messagesList;\r\n    @FXML\r\n    private Button usersNick;\r\n    @FXML\r\n    public VBox chats;\r\n    @FXML\r\n    public TextField searchInChats;\r\n    @FXML\r\n    public ScrollPane scrolling;\r\n    @FXML\r\n    private TextField textOfSending;\r\n    @FXML\r\n    private Button sendMessageButton;\r\n    @FXML\r\n    private ImageView friendAvatar;\r\n\r\n    static User currentFriend = null;\r\n\r\n    @FXML\r\n    private SplitPane splitPanePageForChats;\r\n\r\n\r\n    public void changeSizes(){\r\n        splitPanePageForChats.setDividerPosition(0, 180.0/StartApplication.stageWidth);\r\n    }\r\n\r\n    ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{\r\n        StartApplication.stageWidth = StartApplication.primaryStage.getWidth();\r\n        StartApplication.stageHeight = StartApplication.primaryStage.getHeight();\r\n        changeSizes();\r\n    };\r\n\r\n\r\n    public void makeChatToUser(User currentUser) throws Exception {\r\n        Image a = getAvatar(currentUser);\r\n        friendAvatar.setImage(a);\r\n        currentFriend = currentUser;\r\n        usersNick.setText(currentFriend.getNickname());\r\n        fieldForMessages.getChildren().removeAll(fieldForMessages.getChildren());\r\n        printMessages();\r\n        // messagesList.heightProperty().addListener(observable -> messagesList.setVvalue(1D));\r\n    }\r\n\r\n\r\n    Label makeMessage(ArrayList < Message > currentMessage) {\r\n        StringBuilder text = new StringBuilder();\r\n        if (Objects.equals(currentMessage.get(0).getText(), \"|0|\")) {\r\n            text.append(\"You\");\r\n        } else {\r\n            text.append(currentFriend.getNickname());\r\n        }\r\n        text.append(\" (\" + currentMessage.get(1).getTime() + \") : \" + currentMessage.get(1).getText());\r\n        Label textMessage = new Label(text.toString());\r\n        textMessage.setFont(Font.font(\"Arial\", 15));\r\n        textMessage.setWrapText(true);\r\n        return textMessage;\r\n    }\r\n\r\n    void printMessages() throws Exception {\r\n        ArrayList< ArrayList < Message > > currentMessages = getMessages(currentFriend.getNickname());\r\n        Label emptyChatLabel = new Label();\r\n        fieldForMessages.getChildren().add(emptyChatLabel);\r\n        if (currentMessages == null || currentMessages.isEmpty()) {\r\n            emptyChatLabel.setText(\"Start a conversation! Write first message to \" + currentFriend.getNickname() + '!');\r\n            emptyChatLabel.setFont(Font.font(20));\r\n        } else {\r\n            emptyChatLabel.setText(\"\");\r\n            for (ArrayList<Message> currentMessage : currentMessages) {\r\n                fieldForMessages.getChildren().add(makeMessage(currentMessage));\r\n            }\r\n        }\r\n    }\r\n\r\n    public void sendingMessage() throws Exception {\r\n        String text = textOfSending.getText();\r\n        sendMessage(text, User.MainUser.getNickname(), currentFriend.getNickname());\r\n        textOfSending.clear();\r\n    }\r\n\r\n    class TakeUserHandler implements EventHandler<ActionEvent> {\r\n        private final User user;\r\n        TakeUserHandler(User new_user) {\r\n            this.user = new_user;\r\n        }\r\n        @Override\r\n        public void handle(ActionEvent event) {\r\n            try {\r\n                makeChatToUser(user);\r\n            } catch (Exception e) {\r\n                // TODO Auto-generated catch block\r\n                e.printStackTrace();\r\n            }\r\n            System.out.print(user.getNickname());\r\n        }\r\n\r\n    }\r\n\r\n    public static Image getAvatar(User user) {\r\n        Image avatar = new Image(StartApplication.class.getResource(\"Images/default.png\").toString());\r\n        String path = new String(\"Images/\" + user.getNickname() + \".png\");\r\n        if (StartApplication.class.getResource(path) == null) {\r\n            return avatar;\r\n        }\r\n        avatar = new Image(StartApplication.class.getResource(path).toString());\r\n        return avatar;\r\n    }\r\n\r\n    public Button generateUserField(User current){\r\n        Canvas canvas = new Canvas(160, 30);\r\n        GraphicsContext gc = canvas.getGraphicsContext2D();\r\n        gc.setTextBaseline(VPos.CENTER);\r\n        gc.setStroke(Color.BLACK);\r\n        gc.setFill(Color.WHITE);\r\n        gc.setLineWidth(1);\r\n        gc.fillRect(0, 0, 160, 30);\r\n        gc.setFill(Color.RED);\r\n        gc.fillRect(5, 5, 20, 20);\r\n        gc.setFill(Color.BLACK);\r\n        gc.setFont(new Font(15));\r\n        Image a = getAvatar(current);\r\n        gc.drawImage(a, 5, 5, 15, 15);\r\n        gc.fillText(\r\n                current.getNickname(),\r\n                Math.round(canvas.getWidth()  / 4),\r\n                Math.round(canvas.getHeight() / 2));\r\n        Button z1 = new Button(\"\");\r\n        z1.setMaxSize(162, 32);\r\n        z1.setMinSize(162, 32);\r\n        z1.setGraphic(canvas);\r\n        z1.setOnAction(new TakeUserHandler(current));\r\n        return z1;\r\n    }\r\n\r\n    public void initialize() throws Exception{\r\n        ///change_size\r\n        StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);\r\n        StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);\r\n        changeSizes();\r\n\r\n        ///init users\r\n        messagesList.setHbarPolicy(ScrollBarPolicy.NEVER);\r\n        messagesList.setVbarPolicy(ScrollBarPolicy.NEVER);\r\n        fieldForMessages.setSpacing(10);\r\n        ArrayList<User> users;\r\n        try{\r\n            users = Database.getChats();\r\n        }catch(Exception e){\r\n            return;\r\n        }\r\n        scrolling.setHbarPolicy(ScrollBarPolicy.NEVER);\r\n        scrolling.setVbarPolicy(ScrollBarPolicy.NEVER);\r\n        for(User user : users){\r\n            System.out.print(user.getNickname());\r\n            Button userButton = generateUserField(user);\r\n            chats.getChildren().add(userButton);\r\n        }\r\n        //chats.set\r\n        chats.setSpacing(10);\r\n        if(currentFriend != null){\r\n            makeChatToUser(currentFriend);\r\n        }\r\n    }\r\n\r\n    public void goToSettings(){\r\n        FXMLLoader loader = LoadXML.load(\"Scenes/Settings/SettingsPage.fxml\");\r\n        StartApplication.setScene(loader);\r\n\r\n    }\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Application/Scenes/ChatView/ChatViewController.java b/src/main/java/Application/Scenes/ChatView/ChatViewController.java
+--- a/src/main/java/Application/Scenes/ChatView/ChatViewController.java	(revision f9df8419d2823179a163f601a5f4474566c3c476)
++++ b/src/main/java/Application/Scenes/ChatView/ChatViewController.java	(date 1653242770647)
+@@ -148,7 +148,7 @@
+         gc.setFill(Color.WHITE);
+         gc.setLineWidth(1);
+         gc.fillRect(0, 0, 160, 30);
+-        gc.setFill(Color.RED);
++       // gc.setFill(Color.RED);
+         gc.fillRect(5, 5, 20, 20);
+         gc.setFill(Color.BLACK);
+         gc.setFont(new Font(15));
+Index: src/main/java/Application/Scenes/Settings/SettingsPageController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package Application.Scenes.Settings;\r\n\r\nimport java.awt.image.BufferedImage;\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.nio.file.Files;\r\nimport java.nio.file.Path;\r\n\r\nimport Application.Scenes.ChatView.ChatViewController;\r\nimport Application.StartApplication;\r\nimport Utills.LoadXML;\r\nimport javafx.beans.value.ChangeListener;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.scene.canvas.Canvas;\r\nimport javafx.scene.canvas.GraphicsContext;\r\nimport javafx.scene.chart.PieChart.Data;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.TextField;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.paint.Color;\r\nimport Data.*;\r\nimport Data.Database.UserAlreadyRegistred;\r\nimport Data.Database.IncorrectPasswordException;\r\nimport static Data.User.MainUser;\r\nimport javafx.embed.swing.SwingFXUtils;\r\nimport javax.imageio.ImageIO;\r\n\r\n\r\npublic class SettingsPageController {\r\n\r\n    public TextField nicknameChange;\r\n    public Label nicknameError;\r\n    public Label passwordError;\r\n    public ImageView avatar;\r\n\r\n    @FXML\r\n    private Button uploadImageButton;\r\n\r\n    @FXML\r\n    private TextField imageURL;\r\n\r\n    public void changeSizes(){\r\n\r\n    }\r\n\r\n    ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{\r\n        StartApplication.stageWidth = StartApplication.primaryStage.getWidth();\r\n        StartApplication.stageHeight = StartApplication.primaryStage.getHeight();\r\n        changeSizes();\r\n    };\r\n\r\n    public void initialize(){\r\n        ///change_size\r\n        avatar.setImage(ChatViewController.getAvatar(MainUser));\r\n        StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);\r\n        StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);\r\n        changeSizes();\r\n        nicknameChange.setText(MainUser.getNickname());\r\n    }\r\n\r\n    public void tryChangeNickname(){\r\n        try{\r\n            Database.changeNickname(nicknameChange.getText());\r\n            // throw new UserAlreadyRegistred();\r\n        }catch(Exception e){\r\n            nicknameError.setText(\"User with that nick is already exist\");\r\n            return;            \r\n        }\r\n        nicknameError.setTextFill(Color.web(\"#1EA624\", 0.8));\r\n        nicknameError.setText(\"Nickname has been changed\");\r\n\r\n    }\r\n\r\n    public void tryChangePassword(){\r\n        try{\r\n            throw new IncorrectPasswordException();\r\n        }catch(IncorrectPasswordException e){\r\n            passwordError.setText(\"Incorrect old password\");\r\n           // return;\r\n        }\r\n        try{\r\n            throw new IncorrectPasswordException();\r\n        }catch(IncorrectPasswordException e){\r\n            passwordError.setText(\"Incorrect new password\");\r\n            return;\r\n        }\r\n    }\r\n\r\n    public void tryChangeAvatar() throws IOException {\r\n        try {\r\n            Image newAvatar = new Image(imageURL.getText());\r\n            String path = new String(\"Images/\" + MainUser.getNickname() + \".png\");\r\n            if (StartApplication.class.getResource(path) != null) {\r\n                Files.delete(Path.of(path));\r\n             }\r\n            File newImage = new File(MainUser.getNickname() + \".png\");\r\n            ImageIO.write(SwingFXUtils.fromFXImage(newAvatar, null), \"png\", newImage);\r\n        } catch (Exception e) {\r\n            //INCORECT URL;\r\n        }\r\n    }\r\n\r\n    public void fromSettingsToChats(){\r\n        FXMLLoader loader = LoadXML.load(\"Scenes/ChatView/ChatView.fxml\");      \r\n        StartApplication.setScene(loader);   \r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/Application/Scenes/Settings/SettingsPageController.java b/src/main/java/Application/Scenes/Settings/SettingsPageController.java
+--- a/src/main/java/Application/Scenes/Settings/SettingsPageController.java	(revision f9df8419d2823179a163f601a5f4474566c3c476)
++++ b/src/main/java/Application/Scenes/Settings/SettingsPageController.java	(date 1653250349782)
+@@ -26,6 +26,8 @@
+ import Data.Database.IncorrectPasswordException;
+ import static Data.User.MainUser;
+ import javafx.embed.swing.SwingFXUtils;
++import javafx.stage.FileChooser;
++
+ import javax.imageio.ImageIO;
+ 
+ 
+@@ -42,6 +44,9 @@
+     @FXML
+     private TextField imageURL;
+ 
++    @FXML
++    private Label URLError;
++
+     public void changeSizes(){
+ 
+     }
+@@ -62,6 +67,7 @@
+     }
+ 
+     public void tryChangeNickname(){
++        File lastFile = new File("src/main/resources/Application/Images/" + MainUser.getNickname() + ".png");
+         try{
+             Database.changeNickname(nicknameChange.getText());
+             // throw new UserAlreadyRegistred();
+@@ -69,6 +75,10 @@
+             nicknameError.setText("User with that nick is already exist");
+             return;            
+         }
++        if (lastFile.exists()) {
++            String newPath = new String("src/main/resources/Application/Images/" + MainUser.getNickname() + ".png");
++            lastFile.renameTo(new File(newPath));
++        }
+         nicknameError.setTextFill(Color.web("#1EA624", 0.8));
+         nicknameError.setText("Nickname has been changed");
+ 
+@@ -92,15 +102,14 @@
+     public void tryChangeAvatar() throws IOException {
+         try {
+             Image newAvatar = new Image(imageURL.getText());
+-            String path = new String("Images/" + MainUser.getNickname() + ".png");
+-            if (StartApplication.class.getResource(path) != null) {
+-                Files.delete(Path.of(path));
+-             }
+-            File newImage = new File(MainUser.getNickname() + ".png");
++            File newImage = new File("src/main/resources/Application/Images/" + MainUser.getNickname() + ".png");
+             ImageIO.write(SwingFXUtils.fromFXImage(newAvatar, null), "png", newImage);
+         } catch (Exception e) {
+-            //INCORECT URL;
++            URLError.setText("Incorrect URL!");
++            return;
+         }
++        URLError.setTextFill(Color.web("#1EA624", 0.8));
++        URLError.setText("Avatar has changed!");
+     }
+ 
+     public void fromSettingsToChats(){

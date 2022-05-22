@@ -10,19 +10,49 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.microsoft.sqlserver:mssql-jdbc:10.2.0.jre11" level="project" />
+    <orderEntry type="library" name="Maven: org.postgresql:postgresql:42.3.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.checkerframework:checker-qual:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:18-ea+6" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:mac-aarch64:18-ea+6" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:18-ea+6" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:18-ea+6" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:mac-aarch64:18-ea+6" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:18-ea+6" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:18-ea+6" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:mac-aarch64:18-ea+6" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:18-ea+6" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:18-ea+6" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:mac-aarch64:18-ea+6" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:18-ea+6" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-api:5.8.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.opentest4j:opentest4j:1.2.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.8.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apiguardian:apiguardian-api:1.1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.jupiter:junit-jupiter-engine:5.8.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-engine:1.8.2" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/main/java/Application/Scenes/Settings/jar_files/javafx-base-19-ea+7-linux.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/main/java/Application/Scenes/Settings/jar_files/javafx-graphics-19-ea+7-linux.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/src/main/java/Application/Scenes/Settings/jar_files/javafx-swing-19-ea+7-linux.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
