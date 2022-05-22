@@ -7,6 +7,6 @@
 ## Change log
 
 - **Version 1.0**
-  - Local message sending
-  - sign up and sign in users
-  - basic settings 
+  - Local message sending. 
+  - Sign up and sign in users. 
+  - Basic settings.    
