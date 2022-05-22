@@ -13,10 +13,12 @@ import Utills.LoadXML;
 
 public class StartApplication extends Application {
     public static Stage primaryStage;
+    public static double stageWidth = 600;
+    public static double stageHeight = 600;
 
     public static void setScene(FXMLLoader loader) {
         Parent root = loader.getRoot();
-        ((Stage) primaryStage.getScene().getWindow()).setScene(new Scene(root, 600, 600));
+        ((Stage) primaryStage.getScene().getWindow()).setScene(new Scene(root, stageWidth, stageHeight));
     }
 
     public static void goBack() {

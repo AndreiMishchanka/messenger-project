@@ -2,6 +2,7 @@ package Application;
 
 import Data.*;
 import Utills.LoadXML;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,6 +25,24 @@ public class StartController extends StartApplication{
     private PasswordField userPassword;
     @FXML
     private Label errorOutput;
+
+    public void changeSizes(){
+
+    }
+
+    ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{
+        StartApplication.stageWidth = StartApplication.primaryStage.getWidth();
+        StartApplication.stageHeight = StartApplication.primaryStage.getHeight();
+        changeSizes();
+
+    };
+
+    public void initialize(){
+        ///change_size
+        StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);
+        StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
+        changeSizes();
+    }
 
     @FXML
     protected void onloginButtonClick() {           

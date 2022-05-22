@@ -4,6 +4,7 @@ import java.io.File;
 
 import Application.StartApplication;
 import Utills.LoadXML;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -24,10 +25,22 @@ public class SettingsPageController {
     public Label passwordError;
     public ImageView avatar;
 
+    public void changeSizes(){
+
+    }
+
+    ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{
+        StartApplication.stageWidth = StartApplication.primaryStage.getWidth();
+        StartApplication.stageHeight = StartApplication.primaryStage.getHeight();
+        changeSizes();
+    };
+
     public void initialize(){
+        ///change_size
+        StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);
+        StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
+        changeSizes();
         nicknameChange.setText(User.MainUser.getNickname());
-       // Image im = new Image("/resources/Application/Photo/image.jpg");
-       // avatar.setImage(im);
     }
 
     public void tryChangeNickname(){

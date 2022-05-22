@@ -4,6 +4,7 @@ import Application.StartApplication;
 import Data.Database;
 import Data.User;
 import Utills.LoadXML;
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +27,24 @@ public class SignUpController extends StartApplication {
     private Label errorOutput;
     @FXML
     private Button backButton;
+
+    public void changeSizes(){
+
+    }
+
+    ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{
+        StartApplication.stageWidth = StartApplication.primaryStage.getWidth();
+        StartApplication.stageHeight = StartApplication.primaryStage.getHeight();
+        changeSizes();
+    };
+
+
+    public void initialize(){
+        ///change_size
+        StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);
+        StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
+        changeSizes();
+    }
 
     @FXML
     protected void onbackButtonClick(){
