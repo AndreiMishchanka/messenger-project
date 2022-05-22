@@ -2,6 +2,7 @@ package Application.Scenes.ChatView;
 
 import Data.*;
 import Utills.LoadXML;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -28,7 +31,7 @@ import static Data.Database.getMessages;
 import static Data.Database.sendMessage;
 
 public class ChatViewController {
-    
+
     @FXML
     private VBox fieldForMessages;
     @FXML
@@ -45,19 +48,22 @@ public class ChatViewController {
     private TextField textOfSending;
     @FXML
     private Button sendMessageButton;
+    @FXML
+    private ImageView friendAvatar;
 
     static User currentFriend = null;
 
     public void makeChatToUser(User currentUser) throws Exception {
+        friendAvatar = new ImageView("src/main/resources/Images/default.png");
         currentFriend = currentUser;
         usersNick.setText(currentFriend.getNickname());
         fieldForMessages.getChildren().removeAll(fieldForMessages.getChildren());
         printMessages();
-        //messagesList.hminProperty(); //in future : set scroll coursor to the bottom
+        // messagesList.heightProperty().addListener(observable -> messagesList.setVvalue(1D));
     }
 
     void refresh() {
-        
+
     }
 
     Label makeMessage(ArrayList < Message > currentMessage) {
@@ -66,13 +72,9 @@ public class ChatViewController {
             text.append("You");
         } else {
             text.append(currentFriend.getNickname());
-        }                                             
+        }
         text.append(" (" + currentMessage.get(1).getTime() + ") : " + currentMessage.get(1).getText());
         Label textMessage = new Label(text.toString());
-       // textMessage.setMinWidth(3);
-       // textMessage.setMaxWidth(300);
-       // textMessage.setMinHeight(1);
-       // textMessage.setMaxHeight(1000);
         textMessage.setFont(Font.font("Arial", 15));
         textMessage.setWrapText(true);
         return textMessage;
@@ -84,12 +86,6 @@ public class ChatViewController {
         fieldForMessages.getChildren().add(emptyChatLabel);
         if (currentMessages == null || currentMessages.isEmpty()) {
             emptyChatLabel.setText("Start a conversation! Write first message to " + currentFriend.getNickname() + '!');
-           // emptyChatLabel.setLayoutX(300);
-           // emptyChatLabel.setLayoutY(300);
-           // emptyChatLabel.setMinHeight(1);
-           // emptyChatLabel.setMaxHeight(100);
-           // emptyChatLabel.setMinWidth(1);
-           // emptyChatLabel.setMinWidth(100);
             emptyChatLabel.setFont(Font.font(20));
         } else {
             emptyChatLabel.setText("");
@@ -123,6 +119,7 @@ public class ChatViewController {
 
     }
 
+
     public Button generateUserField(User current){
         Canvas canvas = new Canvas(160, 30);
         GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -136,11 +133,11 @@ public class ChatViewController {
         gc.setFill(Color.BLACK);
         gc.setFont(new Font(15));
         gc.fillText(
-        current.getNickname(), 
-        Math.round(canvas.getWidth()  / 4), 
-        Math.round(canvas.getHeight() / 2));
-        Button z1 = new Button(""); 
-        z1.setMaxSize(162, 32); 
+                current.getNickname(),
+                Math.round(canvas.getWidth()  / 4),
+                Math.round(canvas.getHeight() / 2));
+        Button z1 = new Button("");
+        z1.setMaxSize(162, 32);
         z1.setMinSize(162, 32);
         z1.setGraphic(canvas);
         z1.setOnAction(new TakeUserHandler(current));
@@ -153,7 +150,7 @@ public class ChatViewController {
         fieldForMessages.setSpacing(10);
         ArrayList<User> users;
         try{
-            users = Database.getChats(); 
+            users = Database.getChats();
         }catch(Exception e){
             return;
         }
@@ -170,10 +167,13 @@ public class ChatViewController {
             makeChatToUser(currentFriend);
         }
     }
-    
+
     public void goToSettings(){
-        FXMLLoader loader = LoadXML.load("Scenes/Settings/SettingsPage.fxml");      
-        StartApplication.setScene(loader);    
+        FXMLLoader loader = LoadXML.load("Scenes/Settings/SettingsPage.fxml");
+        StartApplication.setScene(loader);
     }
+
+
+
 
 }
