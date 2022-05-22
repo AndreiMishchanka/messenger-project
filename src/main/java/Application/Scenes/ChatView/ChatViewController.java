@@ -130,7 +130,7 @@ public class ChatViewController {
 
     }
 
-    public Image getAvatar(User user) {
+    public static Image getAvatar(User user) {
         Image avatar = new Image(StartApplication.class.getResource("Images/default.png").toString());
         String path = new String("Images/" + user.getNickname() + ".png");
         if (StartApplication.class.getResource(path) == null) {
@@ -199,6 +199,7 @@ public class ChatViewController {
     public void goToSettings(){
         FXMLLoader loader = LoadXML.load("Scenes/Settings/SettingsPage.fxml");
         StartApplication.setScene(loader);
+
     }
 
 }
