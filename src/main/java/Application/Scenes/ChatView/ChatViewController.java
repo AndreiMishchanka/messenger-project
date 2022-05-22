@@ -67,7 +67,7 @@ public class ChatViewController {
 
 
     public void makeChatToUser(User currentUser) throws Exception {
-        Image a = new Image(StartApplication.class.getResource("Images/default.png").toString());
+        Image a = getAvatar(currentUser);
         friendAvatar.setImage(a);
         currentFriend = currentUser;
         usersNick.setText(currentFriend.getNickname());
@@ -130,6 +130,15 @@ public class ChatViewController {
 
     }
 
+    public Image getAvatar(User user) {
+        Image avatar = new Image(StartApplication.class.getResource("Images/default.png").toString());
+        String path = new String("Images/" + user.getNickname() + ".png");
+        if (StartApplication.class.getResource(path) == null) {
+            return avatar;
+        }
+        avatar = new Image(StartApplication.class.getResource(path).toString());
+        return avatar;
+    }
 
     public Button generateUserField(User current){
         Canvas canvas = new Canvas(160, 30);
@@ -143,6 +152,8 @@ public class ChatViewController {
         gc.fillRect(5, 5, 20, 20);
         gc.setFill(Color.BLACK);
         gc.setFont(new Font(15));
+        Image a = getAvatar(current);
+        gc.drawImage(a, 5, 5, 15, 15);
         gc.fillText(
                 current.getNickname(),
                 Math.round(canvas.getWidth()  / 4),
