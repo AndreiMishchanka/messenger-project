@@ -2,7 +2,6 @@ package Application.Scenes.ChatView;
 
 import Data.*;
 import Utills.LoadXML;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -54,20 +53,9 @@ public class ChatViewController {
 
     static User currentFriend = null;
 
-    public void changeSizes(){
-
-    }
-
-    ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{
-        StartApplication.stageWidth = StartApplication.primaryStage.getWidth();
-        StartApplication.stageHeight = StartApplication.primaryStage.getHeight();
-        changeSizes();
-    };
-
-
-    public void makeChatToUser(User currentUser) throws Exception {
-        //Image a = new Image("Images/default.png");
-       // friendAvatar.setImage(a);
+    public void makeChatToUser(User currentUser) throws Exception {        
+        friendAvatar = new ImageView(StartApplication.class.getResource("Images/default.png").toString());
+        // friendAvatar.setLocation
         currentFriend = currentUser;
         usersNick.setText(currentFriend.getNickname());
         fieldForMessages.getChildren().removeAll(fieldForMessages.getChildren());
@@ -158,12 +146,6 @@ public class ChatViewController {
     }
 
     public void initialize() throws Exception{
-        ///change_size
-        StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);
-        StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
-        changeSizes();
-
-        ///init users
         messagesList.setHbarPolicy(ScrollBarPolicy.NEVER);
         messagesList.setVbarPolicy(ScrollBarPolicy.NEVER);
         fieldForMessages.setSpacing(10);
