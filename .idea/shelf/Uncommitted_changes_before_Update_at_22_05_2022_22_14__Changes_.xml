@@ -1,0 +1,84 @@
+<changelist name="Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]" date="1653250465218" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 22.05.2022 22:14 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Application/Scenes/ChatView/ChatViewController$TakeUserHandler.class" />
+    <option name="AFTER_PATH" value="target/classes/Application/Scenes/ChatView/ChatViewController$TakeUserHandler.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/ChatViewController$TakeUserHandler.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Application/StartApplication.class" />
+    <option name="AFTER_PATH" value="target/classes/Application/StartApplication.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/StartApplication.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Data/Message.class" />
+    <option name="AFTER_PATH" value="target/classes/Data/Message.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/Message.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Application/Scenes/ChatView/ChatViewController.class" />
+    <option name="AFTER_PATH" value="target/classes/Application/Scenes/ChatView/ChatViewController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/ChatViewController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Data/Database$UserAlreadyRegistred.class" />
+    <option name="AFTER_PATH" value="target/classes/Data/Database$UserAlreadyRegistred.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/Database$UserAlreadyRegistred.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/module-info.class" />
+    <option name="AFTER_PATH" value="target/classes/module-info.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/module-info.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Data/Password.class" />
+    <option name="AFTER_PATH" value="target/classes/Data/Password.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/Password.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Data/SQLBase/SqlCommunicate.class" />
+    <option name="AFTER_PATH" value="target/classes/Data/SQLBase/SqlCommunicate.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/SqlCommunicate.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Application/Scenes/LoginPage/SignUpController.class" />
+    <option name="AFTER_PATH" value="target/classes/Application/Scenes/LoginPage/SignUpController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/SignUpController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Application/StartController.class" />
+    <option name="AFTER_PATH" value="target/classes/Application/StartController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/StartController.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Data/Database$IncorrectPasswordException.class" />
+    <option name="AFTER_PATH" value="target/classes/Data/Database$IncorrectPasswordException.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/Database$IncorrectPasswordException.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Data/Database.class" />
+    <option name="AFTER_PATH" value="target/classes/Data/Database.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/Database.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Data/User.class" />
+    <option name="AFTER_PATH" value="target/classes/Data/User.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/User.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Utills/LoadXML.class" />
+    <option name="AFTER_PATH" value="target/classes/Utills/LoadXML.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/LoadXML.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Data/Database$IncorrectUserException.class" />
+    <option name="AFTER_PATH" value="target/classes/Data/Database$IncorrectUserException.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/Database$IncorrectUserException.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/Application/Scenes/Settings/SettingsPageController.class" />
+    <option name="AFTER_PATH" value="target/classes/Application/Scenes/Settings/SettingsPageController.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_22_05_2022_22_14_[Changes]/SettingsPageController.class" />
+  </binary>
+</changelist>

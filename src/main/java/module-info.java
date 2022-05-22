@@ -4,6 +4,7 @@ module Application.messengerproject {
     requires java.sql;
     requires java.desktop;
     requires javafx.swing;
+    //requires javafx.swing;
 
 
     opens Application to javafx.fxml;

@@ -65,10 +65,16 @@ public class ChatViewController {
         changeSizes();
     };
 
+    public static Image getAvatar(User user) {
+        if (StartApplication.class.getResource("Images/" + user.getNickname() + ".png") == null) {
+            return new Image(StartApplication.class.getResource("Images/default.png").toString());
+        }
+        return new Image(StartApplication.class.getResource("Images/" + user.getNickname() + ".png").toString());
+    }
+
 
     public void makeChatToUser(User currentUser) throws Exception {
-        Image a = getAvatar(currentUser);
-        friendAvatar.setImage(a);
+        friendAvatar.setImage(getAvatar(currentUser));
         currentFriend = currentUser;
         usersNick.setText(currentFriend.getNickname());
         fieldForMessages.getChildren().removeAll(fieldForMessages.getChildren());
@@ -125,20 +131,10 @@ public class ChatViewController {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            System.out.print(user.getNickname());
         }
 
     }
 
-    public static Image getAvatar(User user) {
-        Image avatar = new Image(StartApplication.class.getResource("Images/default.png").toString());
-        String path = new String("Images/" + user.getNickname() + ".png");
-        if (StartApplication.class.getResource(path) == null) {
-            return avatar;
-        }
-        avatar = new Image(StartApplication.class.getResource(path).toString());
-        return avatar;
-    }
 
     public Button generateUserField(User current){
         Canvas canvas = new Canvas(160, 30);
@@ -148,12 +144,11 @@ public class ChatViewController {
         gc.setFill(Color.WHITE);
         gc.setLineWidth(1);
         gc.fillRect(0, 0, 160, 30);
-        gc.setFill(Color.RED);
+       // gc.setFill(Color.RED);
         gc.fillRect(5, 5, 20, 20);
         gc.setFill(Color.BLACK);
         gc.setFont(new Font(15));
-        Image a = getAvatar(current);
-        gc.drawImage(a, 5, 5, 15, 15);
+        gc.drawImage(getAvatar(current), 5, 5, 20, 20);
         gc.fillText(
                 current.getNickname(),
                 Math.round(canvas.getWidth()  / 4),
@@ -199,7 +194,6 @@ public class ChatViewController {
     public void goToSettings(){
         FXMLLoader loader = LoadXML.load("Scenes/Settings/SettingsPage.fxml");
         StartApplication.setScene(loader);
-
     }
 
 }
