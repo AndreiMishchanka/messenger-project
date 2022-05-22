@@ -7,6 +7,7 @@ import Utills.LoadXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -30,12 +31,15 @@ public class SettingsPageController {
     }
 
     public void tryChangeNickname(){
-
         try{
-            throw new UserAlreadyRegistred();
-        }catch(UserAlreadyRegistred e){
+            Database.changeNickname(nicknameChange.getText());
+            // throw new UserAlreadyRegistred();
+        }catch(Exception e){
             nicknameError.setText("User with that nick is already exist");
+            return;            
         }
+        nicknameError.setTextFill(Color.web("#1EA624", 0.8));
+        nicknameError.setText("Nickname has been changed");
 
     }
 

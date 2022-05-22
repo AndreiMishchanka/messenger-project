@@ -144,4 +144,13 @@ public class Database {
 
     }
 
+    public static void changeNickname(String Nickname) throws Exception{
+        if (isUserConsist(Nickname)) {
+            throw new UserAlreadyRegistred();
+        }
+        //UPDATE users SET nickname = 'kostyaa' WHERE id = 3
+        SqlCommunicate.update("update users set nickname = '" + Nickname + "' where id = " + getIdByNick(User.MainUser.getNickname()) + ";");
+        User.MainUser = User.makeUserFromBase(Nickname);
+    }
+
 }
