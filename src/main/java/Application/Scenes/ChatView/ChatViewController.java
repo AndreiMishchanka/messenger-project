@@ -27,20 +27,21 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.SplittableRandom;
 
-import static Data.Database.getMessages;
+import static Data.Database.getMessagesAfterTime;
 import static Data.Database.sendMessage;
 
 public class ChatViewController {
 
     @FXML
-    private VBox fieldForMessages;
+    public VBox fieldForMessages;
     @FXML
-    private ScrollPane messagesList;
+    public ScrollPane messagesList;
     @FXML
-    private Button usersNick;
+    public Button usersNick;
     @FXML
     public VBox chats;
     @FXML
@@ -48,25 +49,27 @@ public class ChatViewController {
     @FXML
     public ScrollPane scrolling;
     @FXML
-    private TextField textOfSending;
+    public TextField textOfSending;
     @FXML
-    private Button sendMessageButton;
+    public Button sendMessageButton;
     @FXML
-    private ImageView friendAvatar;
+    public ImageView friendAvatar;
 
     static User currentFriend = null;
 
     @FXML
-    private Button settings;
+    public Button settings;
 
     @FXML
-    private SplitPane splitPanePageForChats;
+    public SplitPane splitPanePageForChats;
+    
+    static boolean on_start = false, on_end = false;
 
     static Text s = new Text();
-
-    static {
-        s.setFont(Font.font(15));
-    }
+    static public VBox friends = new VBox();
+    static public HashMap<Integer, ArrayList<String>> friendsMessages = null;
+    static public HashMap<Integer, ArrayList<ArrayList<Message>>> friendsArraysOfMessages = null;
+    static public HashMap<Integer, ArrayList<Double>> sizeOfMessages = null;
 
     public static Image getAvatar(User user) {
         if (StartApplication.class.getResource("Images/" + user.getNickname() + ".png") == null) {
@@ -74,7 +77,6 @@ public class ChatViewController {
         }
         return new Image(StartApplication.class.getResource("Images/" + user.getNickname() + ".png").toString());
     }
-
 
     public void setAllSize(){
         splitPanePageForChats.setDividerPosition(0, 180.0/StartApplication.stageWidth);
@@ -87,34 +89,20 @@ public class ChatViewController {
         textOfSending.setPrefWidth(StartApplication.stageWidth-70-180);
         messagesList.setPrefHeight(StartApplication.stageHeight-120);
         messagesList.setPrefWidth(StartApplication.stageWidth-190);
-        fieldForMessages.setPrefWidth(StartApplication.stageWidth-200);
         usersNick.setPrefWidth(fieldForMessages.getPrefWidth() - friendAvatar.getFitWidth());
-        s.setWrappingWidth(fieldForMessages.getPrefWidth());
-    }
-
-    public void setMessageField(){
-        fieldForMessages.setPrefHeight(1);
-        double sum = 0;
-        for(Node field : fieldForMessages.getChildren()){
-            Label text = (Label) field;
-            s.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
-            s.setText(text.getText());
-            double h = s.getLayoutBounds().getHeight();
-            sum += h + 10.0;
+        if(on_end){
+            fieldForMessages.setPrefWidth(StartApplication.stageWidth-200);
+            if(currentFriend != null){
+                fieldForMessages.setPrefHeight(sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400));
+            }
         }
-        fieldForMessages.setPrefHeight(sum);
     }
 
-    public void changeSizes(){
-        setAllSize();
-        setMessageField();
-
-    }
 
     ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{
         StartApplication.stageWidth = StartApplication.primaryStage.getWidth();
         StartApplication.stageHeight = StartApplication.primaryStage.getHeight();
-        changeSizes();
+        setAllSize();
     };
 
 
@@ -123,39 +111,46 @@ public class ChatViewController {
         friendAvatar.setImage(getAvatar(currentUser));
         currentFriend = currentUser;
         usersNick.setText(currentFriend.getNickname());
-        fieldForMessages.getChildren().removeAll(fieldForMessages.getChildren());
-        printMessages();
+        fieldForMessages.getChildren().clear();
+        for(ArrayList<Message> cur : friendsArraysOfMessages.get(currentFriend.getId())){
+            fieldForMessages.getChildren().add(makeMessage(cur, currentFriend));
+        }
+        setAllSize();
     }
 
 
-    Label makeMessage(ArrayList < Message > currentMessage) {
+    public static String getMessageText(ArrayList < Message > currentMessage, User user){
         StringBuilder text = new StringBuilder();
         if (Objects.equals(currentMessage.get(0).getText(), "|0|")) {
             text.append("You");
         } else {
-            text.append(currentFriend.getNickname());
+            text.append(user.getNickname());
         }
         text.append(" (" + currentMessage.get(1).getTime() + ") : " + currentMessage.get(1).getText());
-        Label textMessage = new Label(text.toString());
+        return text.toString();
+    }
+
+    static Label makeMessage(ArrayList < Message > currentMessage, User user) {
+        String text = getMessageText(currentMessage, user);
+        Label textMessage = new Label(text);
         textMessage.setFont(Font.font(15));
         textMessage.setWrapText(true);
         return textMessage;
     }
 
-    void printMessages() throws Exception {
-        ArrayList< ArrayList < Message > > currentMessages = getMessages(currentFriend.getNickname());
-        Label emptyChatLabel = new Label();
-        fieldForMessages.getChildren().add(emptyChatLabel);
-        if (currentMessages == null || currentMessages.isEmpty()) {
-            emptyChatLabel.setText("Start a conversation! Write first message to " + currentFriend.getNickname() + '!');
-            emptyChatLabel.setFont(Font.font(20));
-        } else {
-            fieldForMessages.getChildren().removeAll(fieldForMessages.getChildren());
-            for (ArrayList<Message> currentMessage : currentMessages) {
-                fieldForMessages.getChildren().add(makeMessage(currentMessage));
+    void addMessagesToVbox(User user) throws Exception {
+        ArrayList< ArrayList < Message > > currentMessages = getMessagesAfterTime((on_start ? null : StartApplication.timeOfLastMessage), user.getNickname());
+        for (ArrayList<Message> currentMessage : currentMessages) {
+            String text = getMessageText(currentMessage, user);
+            friendsMessages.get(user.getId()).add(text);
+            friendsArraysOfMessages.get(user.getId()).add(currentMessage);
+            for(int i = 400; i <= 4000; i++){
+                s.setWrappingWidth(i);
+                s.setText(text);
+                s.setFont(Font.font(15));
+                s.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
+                sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(user.getId()).get(i-400)+s.getBoundsInLocal().getHeight() + 10.0);
             }
-            changeSizes();
-
         }
     }
 
@@ -199,43 +194,61 @@ public class ChatViewController {
                 current.getNickname(),
                 Math.round(canvas.getWidth()  / 4),
                 Math.round(canvas.getHeight() / 2));
-        Button z1 = new Button("");
-        z1.setMaxSize(162, 32);
-        z1.setMinSize(162, 32);
-        z1.setGraphic(canvas);
-        z1.setOnAction(new TakeUserHandler(current));
-        return z1;
+        Button userField = new Button("");
+        userField.setMaxSize(162, 32);
+        userField.setMinSize(162, 32);
+        userField.setGraphic(canvas);
+        userField.setOnAction(new TakeUserHandler(current));
+        return userField;
     }
 
-    public void initialize() throws Exception{
-        ///init users
+    public void setUp(){
         messagesList.setHbarPolicy(ScrollBarPolicy.NEVER);
         messagesList.setVbarPolicy(ScrollBarPolicy.NEVER);
+        scrolling.setHbarPolicy(ScrollBarPolicy.NEVER);
+        scrolling.setVbarPolicy(ScrollBarPolicy.NEVER);
         fieldForMessages.setSpacing(10);
-        ArrayList<User> users;
         try{
-            users = Database.getChats();
+            StartApplication.allFriends = Database.getChats();
         }catch(Exception e){
             return;
         }
-        scrolling.setHbarPolicy(ScrollBarPolicy.NEVER);
-        scrolling.setVbarPolicy(ScrollBarPolicy.NEVER);
-        for(User user : users){
-            Button userButton = generateUserField(user);
-            chats.getChildren().add(userButton);
-        }
         chats.setSpacing(10);
-
-        ///change_size
-        changeSizes();
+        setAllSize();
         StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);
         StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
+    }
 
-        //chats.set
+    public void initialize() throws Exception{
+        if(on_start == false){
+            setUp();
+        }
+        on_start = true;
+       
+        if(friendsMessages == null){
+            friendsMessages = new HashMap<>();
+            sizeOfMessages = new HashMap<>();
+            friendsArraysOfMessages = new HashMap<>();
+            for(User user : StartApplication.allFriends){
 
+                System.out.print(user.getNickname() + " " + user.getId());
+                friendsMessages.put(user.getId(), new ArrayList<>());
+                friendsArraysOfMessages.put(user.getId(), new ArrayList<>());
+                sizeOfMessages.put(user.getId(), new ArrayList<>());              
+                for(int i = 400; i <= 4000; i++){
+                    sizeOfMessages.get(user.getId()).add(0.0);
+                }
+                addMessagesToVbox(user);
+                chats.getChildren().add(generateUserField(user));
+            }
+            on_end = true;
+        }
+        setAllSize();
         if(currentFriend != null){
             makeChatToUser(currentFriend);
         }
+        //UpdateMessages.StartThread(this);
+        
     }
 
     public void goToSettings(){

@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="599.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Scenes.Settings.SettingsPageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Scenes.Settings.SettingsPageController">
    <children>
-      <Button fx:id="Back" layoutX="14.0" layoutY="555.0" mnemonicParsing="false" onAction="#fromSettingsToChats" prefHeight="31.0" prefWidth="61.0" text="Back" />
+      <Button fx:id="Back" layoutX="15.0" layoutY="507.0" mnemonicParsing="false" onAction="#fromSettingsToChats" prefHeight="31.0" prefWidth="61.0" text="Back" />
       <ImageView fx:id="avatar" fitHeight="179.0" fitWidth="202.0" layoutX="45.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
       <TextField fx:id="nicknameChange" layoutX="272.0" layoutY="57.0" prefHeight="31.0" prefWidth="202.0" />
       <Button layoutX="488.0" layoutY="57.0" mnemonicParsing="false" onAction="#tryChangeNickname" prefHeight="31.0" prefWidth="50.0" text="Save" />

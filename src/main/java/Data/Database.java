@@ -4,6 +4,7 @@ import java.sql.SQLData;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import Application.StartApplication;
 import Data.SQLBase.SqlCommunicate;
 
 public class Database {
@@ -38,7 +39,7 @@ public class Database {
         try {
             String query = "select * from users where id = " + id + ";";
             ArrayList <String> A = SqlCommunicate.execute(query).get(1);
-            return User.makeUserFromBase(A.get(1));
+            return User.makeUserFromBase(A.get(1), id);
         }catch(Exception e) {
             e.printStackTrace();        
             throw new Exception();
@@ -91,26 +92,28 @@ public class Database {
      * .get(i).get(0) -> contains message with text "|1|" - it's not our message, and "|0|" - if we wrote this message
      * .get(i).get(1) -> message
     */
-    static public ArrayList<ArrayList<Message>> getMessages(String with) throws Exception{
-       
-
+    static public ArrayList<ArrayList<Message>> getMessagesAfterTime(Timestamp time, String with) throws Exception{
         if (User.MainUser == null) {
             return null;
         }
-      
-        
-        if (SqlCommunicate.execute("select * from users where nickname = '" + with + "';").get(0).get(0) == "0") {
-            return null;
-        }
-        
         ArrayList<ArrayList<Message>> output = new ArrayList<>();   
 
-        String query = "select * from messages where (fuser = " + getIdByNick(User.MainUser.getNickname())
+
+        String query = null;
+        if(time == null){
+             query = "select * from messages where (fuser = " + getIdByNick(User.MainUser.getNickname())
+            + " AND tuser = " + getIdByNick(with) + ") OR (fuser = " + getIdByNick(with)
+            + " AND tuser = " + getIdByNick(User.MainUser.getNickname()) + ");";
+        }
+        else{
+            ///need to fi
+            query = "select * from messages where (fuser = " + getIdByNick(User.MainUser.getNickname())
                                                     + " AND tuser = " + getIdByNick(with) + ") OR (fuser = " + getIdByNick(with)
-                                                    + " AND tuser = " + getIdByNick(User.MainUser.getNickname()) + ");";
+                                                    + " AND tuser = " + getIdByNick(User.MainUser.getNickname()) + " and cast(" + " ' "+ time + "' as datetime)" + " < tm "  + ");";
+            System.out.println(query);
+        }
 
         ArrayList<ArrayList<String>> arr = SqlCommunicate.execute(query);
-
         for (int i = 1; i < arr.size(); i++) {            
             output.add(new ArrayList<Message>());     
             String tp = "|1|";
@@ -119,15 +122,21 @@ public class Database {
             int fuser = Integer.parseInt(arr.get(i).get(2));
             int tuser = Integer.parseInt(arr.get(i).get(3));            
             Timestamp tm = Timestamp.valueOf(arr.get(i).get(4));
+            if(StartApplication.timeOfLastMessage == null){
+                StartApplication.timeOfLastMessage = tm;
+            }
+            else{
+                if(StartApplication.timeOfLastMessage.before(tm)){
+                    StartApplication.timeOfLastMessage = tm;
+                }
+            }
             if (fuser != getIdByNick(with)) tp = "|0|";            
             output.get(i - 1).add(Message.generateMessage(0, tp, 1, 1, null));            
             output.get(i - 1).add(Message.generateMessage(id, text, fuser, tuser, tm));
         }
-        
-                
         return output;
-        
     }
+
 
     public static void sendMessage(String text, String nicknameFrom, String nicknameTo) throws Exception{ 
         //add time checking please
@@ -150,7 +159,7 @@ public class Database {
         }
         //UPDATE users SET nickname = 'kostyaa' WHERE id = 3
         SqlCommunicate.update("update users set nickname = '" + Nickname + "' where id = " + getIdByNick(User.MainUser.getNickname()) + ";");
-        User.MainUser = User.makeUserFromBase(Nickname);
+        User.MainUser = User.makeUserFromBase(Nickname, User.MainUser.id);
     }
 
 }

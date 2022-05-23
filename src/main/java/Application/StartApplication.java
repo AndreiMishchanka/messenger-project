@@ -7,10 +7,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.security.Timestamp;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 
+import Data.User;
 import Data.SQLBase.SqlCommunicate;
 import Utills.LoadXML;
 
@@ -18,6 +21,8 @@ public class StartApplication extends Application {
     public static Stage primaryStage;
     public static double stageWidth = 600;
     public static double stageHeight = 600;
+    public static ArrayList<User> allFriends = null;
+    public static java.sql.Timestamp timeOfLastMessage = null;
 
     public static void setScene(FXMLLoader loader) {
         Parent root = loader.getRoot();
@@ -37,6 +42,8 @@ public class StartApplication extends Application {
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.setMinWidth(600);
         primaryStage.setMinHeight(600);
+        primaryStage.setHeight(600);
+        primaryStage.setWidth(600);
         primaryStage.show();
     }
 
