@@ -107,7 +107,6 @@ public class ChatViewController {
 
 
     public void makeChatToUser(User currentUser) throws Exception {
-        if(currentFriend == currentUser) return;
         friendAvatar.setImage(getAvatar(currentUser));
         currentFriend = currentUser;
         usersNick.setText(currentFriend.getNickname());
@@ -220,9 +219,7 @@ public class ChatViewController {
     }
 
     public void initialize() throws Exception{
-        if(on_start == false){
-            setUp();
-        }
+        setUp();
         on_start = true;
        
         if(friendsMessages == null){
@@ -242,6 +239,11 @@ public class ChatViewController {
                 chats.getChildren().add(generateUserField(user));
             }
             on_end = true;
+        }
+        else{
+            for(User user : StartApplication.allFriends){
+                chats.getChildren().add(generateUserField(user));
+            }
         }
         setAllSize();
         if(currentFriend != null){
