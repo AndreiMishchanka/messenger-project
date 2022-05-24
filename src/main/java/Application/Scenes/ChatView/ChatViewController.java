@@ -11,15 +11,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
-import javafx.scene.SubScene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -29,13 +26,13 @@ import javafx.scene.text.TextBoundsType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.SplittableRandom;
 
 import static Data.Database.getMessagesAfterTime;
 import static Data.Database.sendMessage;
 
 public class ChatViewController {
 
+    ChatViewController _this;
     @FXML
     public VBox fieldForMessages;
     @FXML
@@ -60,6 +57,46 @@ public class ChatViewController {
     @FXML
     public Button settings;
 
+     class ThreadHandler implements EventHandler<ActionEvent> {
+        @Override
+        public void handle(ActionEvent event) {
+            try {
+                for(User user : StartApplication.allFriends){
+                    int id = user.getId();
+                    if(threadFriendsArraysOfMessages.get(id).size() == 0){
+                        continue;
+                    }
+                    for(ArrayList<Message> mes : threadFriendsArraysOfMessages.get(id)){
+                        friendsArraysOfMessages.get(id).add(mes);
+                        String text = getMessageText(mes, user);
+           
+                        for(int i = 400; i <= 4000; i++){
+                            s.setWrappingWidth(i);
+                            s.setText(text);
+                            s.setFont(Font.font(15));
+                            s.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
+                            sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(user.getId()).get(i-400)+s.getBoundsInLocal().getHeight() + 10.0);
+                        }
+                        if(id == currentFriend.getId()){
+                            fieldForMessages.getChildren().add(makeMessage(mes, user));
+                        }
+                    }
+                    if(id == currentFriend.getId()){
+                        setAllSize();
+                    }
+                    threadFriendsArraysOfMessages.get(id).clear();
+                }
+
+                UpdateMessages.StartThread(_this);
+            } catch (Exception e) {
+              
+                e.printStackTrace();
+            }
+        }
+    }
+
+    static public Button xx;
+
     @FXML
     public SplitPane splitPanePageForChats;
     
@@ -67,9 +104,12 @@ public class ChatViewController {
 
     static Text s = new Text();
     static public VBox friends = new VBox();
-    static public HashMap<Integer, ArrayList<String>> friendsMessages = null;
+   
     static public HashMap<Integer, ArrayList<ArrayList<Message>>> friendsArraysOfMessages = null;
     static public HashMap<Integer, ArrayList<Double>> sizeOfMessages = null;
+
+    static public HashMap<Integer, ArrayList<ArrayList<Message>>> threadFriendsArraysOfMessages = null;
+
 
     public static Image getAvatar(User user) {
         if (StartApplication.class.getResource("Images/" + user.getNickname() + ".png") == null) {
@@ -96,6 +136,7 @@ public class ChatViewController {
                 fieldForMessages.setPrefHeight(sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400));
             }
         }
+        messagesList.setVvalue(1.0);  
     }
 
 
@@ -141,7 +182,6 @@ public class ChatViewController {
         ArrayList< ArrayList < Message > > currentMessages = getMessagesAfterTime((on_start ? null : StartApplication.timeOfLastMessage), user.getNickname());
         for (ArrayList<Message> currentMessage : currentMessages) {
             String text = getMessageText(currentMessage, user);
-            friendsMessages.get(user.getId()).add(text);
             friendsArraysOfMessages.get(user.getId()).add(currentMessage);
             for(int i = 400; i <= 4000; i++){
                 s.setWrappingWidth(i);
@@ -169,7 +209,7 @@ public class ChatViewController {
             try {
                 makeChatToUser(user);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
+    
                 e.printStackTrace();
             }
 
@@ -219,22 +259,30 @@ public class ChatViewController {
     }
 
     public void initialize() throws Exception{
+        _this = this;
         setUp();
+        xx = new Button(); xx.setOnAction(new ThreadHandler());
         on_start = true;
        
-        if(friendsMessages == null){
-            friendsMessages = new HashMap<>();
+        if(friendsArraysOfMessages == null){
             sizeOfMessages = new HashMap<>();
             friendsArraysOfMessages = new HashMap<>();
+
+
+       
+            threadFriendsArraysOfMessages = new HashMap<>();
+
             for(User user : StartApplication.allFriends){
 
                 System.out.print(user.getNickname() + " " + user.getId());
-                friendsMessages.put(user.getId(), new ArrayList<>());
                 friendsArraysOfMessages.put(user.getId(), new ArrayList<>());
                 sizeOfMessages.put(user.getId(), new ArrayList<>());              
                 for(int i = 400; i <= 4000; i++){
                     sizeOfMessages.get(user.getId()).add(0.0);
                 }
+
+                threadFriendsArraysOfMessages.put(user.getId(), new ArrayList<>());
+               
                 addMessagesToVbox(user);
                 chats.getChildren().add(generateUserField(user));
             }
@@ -249,7 +297,7 @@ public class ChatViewController {
         if(currentFriend != null){
             makeChatToUser(currentFriend);
         }
-        //UpdateMessages.StartThread(this);
+       UpdateMessages.StartThread(this);
         
     }
 

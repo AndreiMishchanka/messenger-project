@@ -7,10 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.security.Timestamp;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
+
 import java.util.ArrayList;
 
 import Data.User;

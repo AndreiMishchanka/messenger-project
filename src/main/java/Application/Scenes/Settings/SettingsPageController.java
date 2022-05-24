@@ -1,20 +1,14 @@
 package Application.Scenes.Settings;
 
-import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-
 import Application.Scenes.ChatView.ChatViewController;
 import Application.StartApplication;
 import Utills.LoadXML;
 import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -22,11 +16,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import Data.*;
-import Data.Database.UserAlreadyRegistred;
 import Data.Database.IncorrectPasswordException;
 import static Data.User.MainUser;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.stage.FileChooser;
 
 import javax.imageio.ImageIO;
 

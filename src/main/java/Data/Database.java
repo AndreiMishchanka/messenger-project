@@ -1,6 +1,5 @@
 package Data;
 
-import java.sql.SQLData;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -15,7 +14,7 @@ public class Database {
 
     static public User getUser(String nickname, String password) throws Exception{
         try{
-            Password passwordCheck = new Password(password);
+            new Password(password);
         }catch(Exception e){
             throw e;
         }
@@ -48,7 +47,7 @@ public class Database {
 
     static public void registerUser (String nickname, String password) throws Exception {
         try{
-            Password passwordCheck = new Password(password);
+           new Password(password);
         }catch(Exception e){
             throw e;
         }
@@ -107,10 +106,10 @@ public class Database {
         }
         else{
             ///need to fi
-            query = "select * from messages where (fuser = " + getIdByNick(User.MainUser.getNickname())
+            query = "select * from messages where ((fuser = " + getIdByNick(User.MainUser.getNickname())
                                                     + " AND tuser = " + getIdByNick(with) + ") OR (fuser = " + getIdByNick(with)
-                                                    + " AND tuser = " + getIdByNick(User.MainUser.getNickname()) + " and cast(" + " ' "+ time + "' as datetime)" + " < tm "  + ");";
-            System.out.println(query);
+                                                    + " AND tuser = " + getIdByNick(User.MainUser.getNickname()) + ")) AND (" + " ' "+ time + "'" + " < tm "  + ");";
+           // System.out.println(query);
         }
 
         ArrayList<ArrayList<String>> arr = SqlCommunicate.execute(query);
