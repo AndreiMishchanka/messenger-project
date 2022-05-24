@@ -64,6 +64,7 @@ public class Database {
 
     }
 
+    /*
     static public ArrayList<User> getChats() throws Exception{
         if (User.MainUser == null) {
             return null;
@@ -81,6 +82,17 @@ public class Database {
             }else {
                 output.add(getUserById(Integer.parseInt(arr.get(i).get(1))));
             }            
+        }        
+        return output;
+    }*/
+    static public ArrayList<User> getChats() throws Exception{
+        if (User.MainUser == null) {
+            return null;
+        }
+        ArrayList<User> output = new ArrayList<>();
+        ArrayList<ArrayList<String>> arr = SqlCommunicate.execute("select * from users where nickname != '" + User.MainUser.getNickname() + "';");
+        for (int i = 1; i < arr.size(); i++) {
+            output.add(getUserById(Integer.parseInt(arr.get(i).get(0))));
         }        
         return output;
     }

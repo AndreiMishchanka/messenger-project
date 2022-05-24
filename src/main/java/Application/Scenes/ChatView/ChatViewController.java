@@ -135,13 +135,8 @@ public class ChatViewController {
             if(currentFriend != null){
                 fieldForMessages.setPrefHeight(sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400));
             }
-<<<<<<< HEAD
-        }
-        messagesList.setVvalue(1.0);  
-=======
         }        
         messagesList.setVvalue(1.0);       
->>>>>>> 31e81d203cc80c0aae1d6a928a94a401e1565c6f
     }
 
 
@@ -212,14 +207,9 @@ public class ChatViewController {
         @Override
         public void handle(ActionEvent event) {            
             try {
-<<<<<<< HEAD
                 makeChatToUser(user);
             } catch (Exception e) {
     
-=======
-                makeChatToUser(user);                
-            } catch (Exception e) {                
->>>>>>> 31e81d203cc80c0aae1d6a928a94a401e1565c6f
                 e.printStackTrace();
             }                    
         }
@@ -276,7 +266,6 @@ public class ChatViewController {
         if(friendsArraysOfMessages == null){
             sizeOfMessages = new HashMap<>();
             friendsArraysOfMessages = new HashMap<>();
-<<<<<<< HEAD
 
 
        
@@ -285,10 +274,6 @@ public class ChatViewController {
             for(User user : StartApplication.allFriends){
 
                 System.out.print(user.getNickname() + " " + user.getId());
-=======
-            for(User user : StartApplication.allFriends){                
-                friendsMessages.put(user.getId(), new ArrayList<>());
->>>>>>> 31e81d203cc80c0aae1d6a928a94a401e1565c6f
                 friendsArraysOfMessages.put(user.getId(), new ArrayList<>());
                 sizeOfMessages.put(user.getId(), new ArrayList<>());              
                 for(int i = 400; i <= 4000; i++){
@@ -310,13 +295,8 @@ public class ChatViewController {
         setAllSize();
         if(currentFriend != null){
             makeChatToUser(currentFriend);
-<<<<<<< HEAD
         }
        UpdateMessages.StartThread(this);
-=======
-        }          
-        //UpdateMessages.StartThread(this);
->>>>>>> 31e81d203cc80c0aae1d6a928a94a401e1565c6f
         
     }
 
