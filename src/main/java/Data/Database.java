@@ -89,20 +89,11 @@ public class Database {
         if (User.MainUser == null) {
             return null;
         }
-        ArrayList<User> output = new ArrayList<>();        
-
-        ArrayList<ArrayList<String>> arr = SqlCommunicate.execute(
-            String.format("select * from relations where id_f = %s or id_s = %s;", 
-                            User.MainUser.getId(), 
-                            User.MainUser.getId()));
-
-        for (int i = 1; i < arr.size(); i++) {            
-            if (Integer.parseInt(arr.get(i).get(1)) == User.MainUser.getId()) {
-                output.add(getUserById(Integer.parseInt(arr.get(i).get(2))));
-            }else {
-                output.add(getUserById(Integer.parseInt(arr.get(i).get(1))));
-            }            
-        } 
+        ArrayList<User> output = new ArrayList<>();
+        ArrayList<ArrayList<String>> arr = SqlCommunicate.execute("select * from users where nickname != '" + User.MainUser.getNickname() + "';");
+        for (int i = 1; i < arr.size(); i++) {
+            output.add(getUserById(Integer.parseInt(arr.get(i).get(0))));
+        }        
         return output;
     }
 
