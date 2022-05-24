@@ -88,21 +88,22 @@ public class ChatViewController {
         textOfSending.setLayoutX(0);
         textOfSending.setPrefWidth(StartApplication.stageWidth-70-180);
         messagesList.setPrefHeight(StartApplication.stageHeight-120);
-        messagesList.setPrefWidth(StartApplication.stageWidth-190);
+        messagesList.setPrefWidth(StartApplication.stageWidth-190);        
         usersNick.setPrefWidth(fieldForMessages.getPrefWidth() - friendAvatar.getFitWidth());
         if(on_end){
             fieldForMessages.setPrefWidth(StartApplication.stageWidth-200);
             if(currentFriend != null){
                 fieldForMessages.setPrefHeight(sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400));
             }
-        }
+        }        
+        messagesList.setVvalue(1.0);       
     }
 
 
     ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{
         StartApplication.stageWidth = StartApplication.primaryStage.getWidth();
         StartApplication.stageHeight = StartApplication.primaryStage.getHeight();
-        setAllSize();
+        setAllSize();        
     };
 
 
@@ -113,8 +114,8 @@ public class ChatViewController {
         fieldForMessages.getChildren().clear();
         for(ArrayList<Message> cur : friendsArraysOfMessages.get(currentFriend.getId())){
             fieldForMessages.getChildren().add(makeMessage(cur, currentFriend));
-        }
-        setAllSize();
+        }        
+        setAllSize();        
     }
 
 
@@ -165,14 +166,12 @@ public class ChatViewController {
             this.user = new_user;
         }
         @Override
-        public void handle(ActionEvent event) {
+        public void handle(ActionEvent event) {            
             try {
-                makeChatToUser(user);
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
+                makeChatToUser(user);                
+            } catch (Exception e) {                
                 e.printStackTrace();
-            }
-
+            }                    
         }
 
     }
@@ -244,11 +243,11 @@ public class ChatViewController {
             for(User user : StartApplication.allFriends){
                 chats.getChildren().add(generateUserField(user));
             }
-        }
+        }        
         setAllSize();
         if(currentFriend != null){
             makeChatToUser(currentFriend);
-        }
+        }          
         //UpdateMessages.StartThread(this);
         
     }
