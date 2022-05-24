@@ -225,9 +225,7 @@ public class ChatViewController {
             friendsMessages = new HashMap<>();
             sizeOfMessages = new HashMap<>();
             friendsArraysOfMessages = new HashMap<>();
-            for(User user : StartApplication.allFriends){
-
-                System.out.print(user.getNickname() + " " + user.getId());
+            for(User user : StartApplication.allFriends){                
                 friendsMessages.put(user.getId(), new ArrayList<>());
                 friendsArraysOfMessages.put(user.getId(), new ArrayList<>());
                 sizeOfMessages.put(user.getId(), new ArrayList<>());              
