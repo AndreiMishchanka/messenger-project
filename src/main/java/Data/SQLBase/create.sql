@@ -16,6 +16,14 @@ create table messages
                 DEFAULT CURRENT_TIMESTAMP, 
 );
 
+create table relations
+(
+    id_rel         int           not null
+            primary key,
+    id_f int not null references users(id),
+    id_s int not null references users(id)
+);
+
 create unique index messages_id_uindex
     on messages(id);
 
