@@ -271,9 +271,7 @@ public class ChatViewController {
        
             threadFriendsArraysOfMessages = new HashMap<>();
 
-            for(User user : StartApplication.allFriends){
-
-                System.out.print(user.getNickname() + " " + user.getId());
+            for(User user : StartApplication.allFriends){                
                 friendsArraysOfMessages.put(user.getId(), new ArrayList<>());
                 sizeOfMessages.put(user.getId(), new ArrayList<>());              
                 for(int i = 400; i <= 4000; i++){
