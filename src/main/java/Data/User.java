@@ -1,6 +1,5 @@
 package Data;
 
-import java.util.ArrayList;
 
 public class User {
     public static User MainUser = null;

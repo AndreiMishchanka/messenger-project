@@ -14,18 +14,6 @@ public class UpdateMessages {
     public static ChatViewController x;
     public static class  FindMessages implements Runnable{
 
-
-        public void addMessages(User user, Timestamp time){
-            ArrayList< ArrayList < Message > > currentMessages = null;
-            try{ 
-                currentMessages =  Database.getMessagesAfterTime(time, user.getNickname());
-                //System.out.println(StartApplication.timeOfLastMessage);
-            }catch(Exception e){
-                System.out.println("GEST!!!!!!");
-            }
-           
-        }
-
         @Override
         public void run(){
             while(true){
@@ -40,7 +28,6 @@ public class UpdateMessages {
                         if(currentMessages.size() > 0){
                             need = true;
                             for (ArrayList<Message> currentMessage : currentMessages) {
-                                String text = ChatViewController.getMessageText(currentMessage, user);
                                 ChatViewController.threadFriendsArraysOfMessages.get(user.getId()).add(currentMessage);
                             }
 
@@ -65,7 +52,6 @@ public class UpdateMessages {
                         if(currentMessages.size() > 0){
                             need = true;
                             for (ArrayList<Message> currentMessage : currentMessages) {
-                                String text = ChatViewController.getMessageText(currentMessage, user);
                                 ChatViewController.threadFriendsArraysOfMessages.get(user.getId()).add(currentMessage);
                             }
 

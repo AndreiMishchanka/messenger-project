@@ -1,6 +1,8 @@
 package Data;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class Message {
     private String text;
@@ -26,7 +28,8 @@ public class Message {
     }
 
     public String getTime() {
-        return time.toString();
+        
+        return new SimpleDateFormat("dd MMMMM HH:mm", Locale.ENGLISH).format(time);
     }
     
     public int getId() {

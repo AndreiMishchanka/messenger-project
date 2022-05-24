@@ -181,5 +181,4 @@ public class Database {
         SqlCommunicate.update("update users set nickname = '" + Nickname + "' where id = " + getIdByNick(User.MainUser.getNickname()) + ";");
         User.MainUser = User.makeUserFromBase(Nickname, User.MainUser.id);
     }
-
 }

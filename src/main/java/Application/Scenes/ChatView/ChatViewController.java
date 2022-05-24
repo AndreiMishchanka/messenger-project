@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -162,11 +163,11 @@ public class ChatViewController {
     public static String getMessageText(ArrayList < Message > currentMessage, User user){
         StringBuilder text = new StringBuilder();
         if (Objects.equals(currentMessage.get(0).getText(), "|0|")) {
-            text.append("You");
+            //text.append("You");
         } else {
             text.append(user.getNickname());
         }
-        text.append(" (" + currentMessage.get(1).getTime() + ") : " + currentMessage.get(1).getText());
+        text.append(" (" + currentMessage.get(1).getTime() + ") :  " + currentMessage.get(1).getText());
         return text.toString();
     }
 
@@ -175,6 +176,14 @@ public class ChatViewController {
         Label textMessage = new Label(text);
         textMessage.setFont(Font.font(15));
         textMessage.setWrapText(true);
+
+        //String label_style = "-fx-border-color: red;-fx-padding:20;" + "-fx-border-width: 1;"
+        //        + "-fx-border-style: dotted;"
+        //        + "-fx-font: 44 sans-serif; -fx-stroke: blue; -fx-fill: blue; -fx-scale-y: 1.2;";
+
+
+        //textMessage.setBackground(Background.fill(Color.WHITE));
+        //textMessage.setStyle(" -fx-border-radius: 50%");
         return textMessage;
     }
 
