@@ -191,14 +191,14 @@ public class ChatViewController {
         fieldForMessages.setPrefWidth(StartApplication.stageWidth-190);
         if(on_end){
             if(currentFriend != null){
-                fieldForMessages.setPrefHeight(max((double)sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400), StartApplication.stageHeight-130));
+                fieldForMessages.setPrefHeight(max((double)sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400), StartApplication.stageHeight-125));
             }
             else{
-                fieldForMessages.setPrefHeight(StartApplication.stageHeight-139);
+                fieldForMessages.setPrefHeight(StartApplication.stageHeight-125);
             }
         }    
         else{
-            fieldForMessages.setPrefHeight(StartApplication.stageHeight-139);
+            fieldForMessages.setPrefHeight(StartApplication.stageHeight-125);
         }    
         fieldForMessages.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         messagesList.setVvalue(1.0);       
