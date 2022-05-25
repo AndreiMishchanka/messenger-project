@@ -103,6 +103,7 @@ public class ChatViewController {
                                 sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(user.getId()).get(i-400)+s.getBoundsInLocal().getHeight() + 10.0);
                             }
                             if(id == currentFriend.getId()){
+                                fieldForMessages.getChildren().add(makeMessage(mes, user));
                                 fieldForMessages.getChildren().add(getSticker(m.getText()));
                             }
                         }
