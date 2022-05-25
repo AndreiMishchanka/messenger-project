@@ -27,7 +27,8 @@ public class SignUpController extends StartApplication {
     private Button backButton;
 
     public void changeSizes(){
-
+        backButton.setLayoutX(StartApplication.stageWidth-75);
+        backButton.setLayoutY(10);
     }
 
     ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{

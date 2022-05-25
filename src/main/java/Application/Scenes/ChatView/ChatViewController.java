@@ -23,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
+import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -65,6 +66,17 @@ public class ChatViewController {
 
     @FXML
     public Button settings;
+
+    public static boolean isSticker(String text) {
+        if (text == null || text.isEmpty() || text.length() > 30 || text.charAt(0) != ':') {
+            return false;
+        }
+        return (StartApplication.class.getResource("Stickers/" + text.substring(1, text.length()) + ".png") != null);
+    }
+
+    public static Image getSticker(String text) {
+        return new Image(String.valueOf(StartApplication.class.getResource("Stickers/" + text.substring(1, text.length()) + ".png")));
+    }
 
      class ThreadHandler implements EventHandler<ActionEvent> {
         @Override
@@ -122,9 +134,9 @@ public class ChatViewController {
 
     public static Image getAvatar(User user) {
         if (StartApplication.class.getResource("Images/" + user.getNickname() + ".png") == null) {
-            return new Image(StartApplication.class.getResource("Images/default.png").toString());
+            return new Image(StartApplication.class.getResource("Images/default.png").toString(), 1000, 1000, false, false);
         }
-        return new Image(StartApplication.class.getResource("Images/" + user.getNickname() + ".png").toString());
+        return new Image(StartApplication.class.getResource("Images/" + user.getNickname() + ".png").toString(), 1000, 1000, false, false);
     }
 
     public void setAllSize(){
