@@ -173,7 +173,7 @@ public class ChatViewController {
     public static String getMessageText(ArrayList < Message > currentMessage, User user){
         StringBuilder text = new StringBuilder();
         if (Objects.equals(currentMessage.get(0).getText(), "|0|")) {
-            //text.append("You");
+            text.append("You");
         } else {
             text.append(user.getNickname());
         }
@@ -329,7 +329,15 @@ public class ChatViewController {
 
     @FXML
     void goToLogin(ActionEvent event) {
-
+        on_start = false;
+        on_end = false;
+        friendsArraysOfMessages = null;
+        threadFriendsArraysOfMessages = null;
+        sizeOfMessages = null;
+        currentFriend = null;
+        UpdateMessages.FinishThread();
+        FXMLLoader loader = LoadXML.load("hello-view.fxml");
+        StartApplication.setScene(loader);
     }
 
 

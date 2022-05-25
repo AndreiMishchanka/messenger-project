@@ -12,79 +12,87 @@ import javafx.application.Platform;
 
 public class UpdateMessages {
     public static ChatViewController x;
+    public static Thread find;
     public static class  FindMessages implements Runnable{
-
+   
         @Override
         public void run(){
-            while(true){
-                Timestamp time = StartApplication.timeOfLastMessage;
-                boolean need = false;
+            try{
+                while(true){
+                    Timestamp time = StartApplication.timeOfLastMessage;
+                    boolean need = false;
 
-                if(ChatViewController.currentFriend != null){
-                    User user =ChatViewController.currentFriend;
-                    ArrayList< ArrayList < Message > > currentMessages = null;
-                    try{ 
-                        currentMessages =  Database.getMessagesAfterTime(time, user.getNickname());
-                        if(currentMessages.size() > 0){
-                            need = true;
-                            for (ArrayList<Message> currentMessage : currentMessages) {
-                                ChatViewController.threadFriendsArraysOfMessages.get(user.getId()).add(currentMessage);
+                    if(ChatViewController.currentFriend != null){
+                        User user =ChatViewController.currentFriend;
+                        ArrayList< ArrayList < Message > > currentMessages = null;
+                        try{ 
+                            currentMessages =  Database.getMessagesAfterTime(time, user.getNickname());
+                            if(currentMessages.size() > 0){
+                                need = true;
+                                for (ArrayList<Message> currentMessage : currentMessages) {
+                                    ChatViewController.threadFriendsArraysOfMessages.get(user.getId()).add(currentMessage);
+                                }
+
                             }
-
+                        }catch(Exception e){
+                            return;
                         }
-                    }catch(Exception e){
-                        System.out.println("GEST!!!!!!");
+
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run(){
+                                ChatViewController.xx.fire();
+                            }
+                        });
+                        return;
                     }
 
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run(){
-                            ChatViewController.xx.fire();
-                        }
-                    });
-                    return;
-                }
+                    for(User user : StartApplication.allFriends){
+                        ArrayList< ArrayList < Message > > currentMessages = null;
+                        try{ 
+                            currentMessages =  Database.getMessagesAfterTime(time, user.getNickname());
+                            if(currentMessages.size() > 0){
+                                need = true;
+                                for (ArrayList<Message> currentMessage : currentMessages) {
+                                    ChatViewController.threadFriendsArraysOfMessages.get(user.getId()).add(currentMessage);
+                                }
 
-                for(User user : StartApplication.allFriends){
-                    ArrayList< ArrayList < Message > > currentMessages = null;
-                    try{ 
-                        currentMessages =  Database.getMessagesAfterTime(time, user.getNickname());
-                        if(currentMessages.size() > 0){
-                            need = true;
-                            for (ArrayList<Message> currentMessage : currentMessages) {
-                                ChatViewController.threadFriendsArraysOfMessages.get(user.getId()).add(currentMessage);
                             }
-
+                        }catch(Exception e){
+                        return;
                         }
+                    }
+                
+                    if(need){
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run(){
+                                ChatViewController.xx.fire();
+                            }
+                        });
+                        return;
+                    }
+
+                    try{
+                        Thread.sleep(1000);
                     }catch(Exception e){
-                        System.out.println("GEST!!!!!!");
+                        return;
                     }
                 }
-               
-                if(need){
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run(){
-                            ChatViewController.xx.fire();
-                        }
-                    });
-                    return;
-                }
-
-                try{
-                    Thread.sleep(1000);
-                }catch(Exception e){
-
-                }
+            }catch(Exception e){
+                return;
             }
         }
     }
 
     static public void StartThread(ChatViewController xx){
         x = xx;
-        Thread find = new Thread(new FindMessages());
+        find = new Thread(new FindMessages());
         find.setDaemon(true);
         find.start();
+    }
+    static public void FinishThread(){
+        find.interrupt();
     }
 
 }
