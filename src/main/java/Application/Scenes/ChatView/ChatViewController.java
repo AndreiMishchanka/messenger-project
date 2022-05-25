@@ -17,6 +17,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -171,12 +173,14 @@ public class ChatViewController {
         messagesList.setPrefHeight(StartApplication.stageHeight-120);
         messagesList.setPrefWidth(StartApplication.stageWidth-190);        
         usersNick.setPrefWidth(fieldForMessages.getPrefWidth() - friendAvatar.getFitWidth());
+        
         if(on_end){
             fieldForMessages.setPrefWidth(StartApplication.stageWidth-200);
             if(currentFriend != null){
                 fieldForMessages.setPrefHeight(sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400));
             }
         }        
+        //fieldForMessages.setBackground();
         messagesList.setVvalue(1.0);       
     }
 

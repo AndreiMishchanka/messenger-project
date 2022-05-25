@@ -23,7 +23,8 @@ public class Database {
             int id = Integer.parseInt(SqlCommunicate.execute(query).get(1).get(0));
             return Database.getUserById(id);
         }catch(Exception e) {
-            e.printStackTrace();        
+           //  throw new IncorrectUserException();
+           // e.printStackTrace();        
             
         }
         throw new IncorrectUserException();

@@ -21,7 +21,7 @@ public class UpdateMessages {
                 while(true){
                     Timestamp time = StartApplication.timeOfLastMessage;
                     boolean need = false;
-
+                    /*
                     if(ChatViewController.currentFriend != null){
                         User user =ChatViewController.currentFriend;
                         ArrayList< ArrayList < Message > > currentMessages = null;
@@ -46,7 +46,7 @@ public class UpdateMessages {
                         });
                         return;
                     }
-
+                    */
                     for(User user : StartApplication.allFriends){
                         ArrayList< ArrayList < Message > > currentMessages = null;
                         try{ 
