@@ -194,11 +194,11 @@ public class ChatViewController {
                 fieldForMessages.setPrefHeight(max((double)sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400), StartApplication.stageHeight-130));
             }
             else{
-                fieldForMessages.setPrefHeight(StartApplication.stageHeight-130);
+                fieldForMessages.setPrefHeight(StartApplication.stageHeight-139);
             }
         }    
         else{
-            fieldForMessages.setPrefHeight(StartApplication.stageHeight-130);
+            fieldForMessages.setPrefHeight(StartApplication.stageHeight-139);
         }    
         fieldForMessages.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         messagesList.setVvalue(1.0);       
@@ -343,7 +343,7 @@ public class ChatViewController {
       
         try{
             boolean is_read = friendsArraysOfMessages.get(current.getId()).get(friendsArraysOfMessages.get(current.getId()).size()-1).getIsRead();
-            System.out.println(current.getNickname() + " " + is_read);
+           
             if(is_read == false){
                 gc.setFill(Color.BLUE);
                 gc.fillOval(150, 20, 5, 5);
