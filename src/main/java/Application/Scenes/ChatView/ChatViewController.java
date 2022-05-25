@@ -34,6 +34,14 @@ import static Data.Database.sendMessage;
 public class ChatViewController {
 
     ChatViewController _this;
+
+
+    @FXML
+    public Button BackToLoginButton;
+
+    @FXML
+    public Button FindFriends;
+
     @FXML
     public VBox fieldForMessages;
     @FXML
@@ -123,6 +131,8 @@ public class ChatViewController {
         splitPanePageForChats.setDividerPosition(0, 180.0/StartApplication.stageWidth);
         scrolling.setPrefHeight(StartApplication.stageHeight-120);
         settings.setLayoutY(StartApplication.stageHeight-75);
+        BackToLoginButton.setLayoutY(StartApplication.stageHeight-75);
+        FindFriends.setLayoutY(StartApplication.stageHeight-75);
         sendMessageButton.setLayoutY(StartApplication.stageHeight-75);
         sendMessageButton.setLayoutX(StartApplication.stageWidth-70-180);
         textOfSending.setLayoutY(StartApplication.stageHeight-75);
@@ -311,5 +321,16 @@ public class ChatViewController {
         FXMLLoader loader = LoadXML.load("Scenes/Settings/SettingsPage.fxml");
         StartApplication.setScene(loader);
     }
+
+    @FXML
+    void goToFindFriends(ActionEvent event) {
+
+    }
+
+    @FXML
+    void goToLogin(ActionEvent event) {
+
+    }
+
 
 }
