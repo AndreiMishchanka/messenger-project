@@ -9,18 +9,20 @@ public class Message {
     private int fromUser, toUser;
     private Timestamp time;
     private int id;
+    private boolean is_read;
 
 
-    private Message(int id, String text, int fromUser, int toUser, Timestamp time) {
+    private Message(int id, String text, int fromUser, int toUser, Timestamp time, boolean is_read) {
         this.id = id;
         this.text = text;
         this.time = time;
         this.fromUser = fromUser;
         this.toUser = toUser;
+        this.is_read = is_read;
     }
 
-    static public Message generateMessage(int id, String text, int fromUser, int toUser, Timestamp time) {
-        return new Message(id, text, fromUser, toUser, time);
+    static public Message generateMessage(int id, String text, int fromUser, int toUser, Timestamp time, boolean is_read) {
+        return new Message(id, text, fromUser, toUser, time, is_read);
     }
 
     public String getText() {
@@ -42,5 +44,9 @@ public class Message {
 
     public int getToUser() {
         return toUser;
+    }
+
+    public boolean getIsRead() {
+        return this.is_read;
     }
 }
