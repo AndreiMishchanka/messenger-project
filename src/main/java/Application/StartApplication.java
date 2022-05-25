@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import Data.User;
 import Data.SQLBase.SqlCommunicate;
@@ -19,6 +20,7 @@ public class StartApplication extends Application {
     public static double stageWidth = 600;
     public static double stageHeight = 600;
     public static ArrayList<User> allFriends = null;
+    public static HashMap<Integer, User> friendsNames = null;
     public static java.sql.Timestamp timeOfLastMessage = null;
 
     public static void setScene(FXMLLoader loader) {

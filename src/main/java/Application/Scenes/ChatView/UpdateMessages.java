@@ -14,46 +14,32 @@ public class UpdateMessages {
     public static ChatViewController x;
     public static Thread find;
     public static class  FindMessages implements Runnable{
-   
+    public static int k = 0;
         @Override
         public void run(){
             try{
                 while(true){
                     Timestamp time = StartApplication.timeOfLastMessage;
-                    boolean need = false;
-                    /*
-                    if(ChatViewController.currentFriend != null){
-                        User user =ChatViewController.currentFriend;
-                        ArrayList< ArrayList < Message > > currentMessages = null;
-                        try{ 
-                            currentMessages =  Database.getMessagesAfterTime(time, user.getNickname());
-                            if(currentMessages.size() > 0){
-                                need = true;
-                                for (ArrayList<Message> currentMessage : currentMessages) {
-                                    ChatViewController.threadFriendsArraysOfMessages.get(user.getId()).add(currentMessage);
-                                }
-
-                            }
+                    boolean need = false;    
+                    /*        
+                    if(k == 100){
+                        try{
+                            StartApplication.allFriends = Database.getChats();
                         }catch(Exception e){
+
                             return;
                         }
-
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run(){
-                                ChatViewController.xx.fire();
-                            }
-                        });
-                        return;
+                        k = 0;
                     }
                     */
+                    k++;
                     for(User user : StartApplication.allFriends){
-                        ArrayList< ArrayList < Message > > currentMessages = null;
+                        ArrayList< Message > currentMessages = null;
                         try{ 
                             currentMessages =  Database.getMessagesAfterTime(time, user.getNickname());
                             if(currentMessages.size() > 0){
                                 need = true;
-                                for (ArrayList<Message> currentMessage : currentMessages) {
+                                for (Message currentMessage : currentMessages) {
                                     ChatViewController.threadFriendsArraysOfMessages.get(user.getId()).add(currentMessage);
                                 }
 
@@ -74,7 +60,7 @@ public class UpdateMessages {
                     }
 
                     try{
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     }catch(Exception e){
                         return;
                     }
@@ -93,16 +79,6 @@ public class UpdateMessages {
     }
     static public void FinishThread(){
         find.interrupt();
-    }
-
-    static public class ScrollDown implements Runnable{
-
-        @Override
-        public void run() {
-          
-         //    x.
-        }
-
     }
 
 }

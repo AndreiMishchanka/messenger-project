@@ -27,9 +27,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextBoundsType;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Objects;
 
 import static Data.Database.getMessagesAfterTime;
 import static Data.Database.sendMessage;
@@ -93,18 +95,19 @@ public class ChatViewController {
                     if(threadFriendsArraysOfMessages.get(id).size() == 0){
                         continue;
                     }
-                    for(ArrayList<Message> mes : threadFriendsArraysOfMessages.get(id)){
+                    for(Message mes : threadFriendsArraysOfMessages.get(id)){
                         friendsArraysOfMessages.get(id).add(mes);
                         String text = getMessageText(mes, user);
-                        Message m = mes.get(1);
+                        Message m = mes;
+                        
                         if(isSticker(m.getText())){
                             for(int i = 400; i <= 4000; i++){
-                                sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(user.getId()).get(i-400)+ 100.0 + 10.0);
+                                sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(id).get(i-400)+ 100.0 + 10.0);
                                 s.setWrappingWidth(i);
                                 s.setText(text);
                                 s.setFont(Font.font(15));
                                 s.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
-                                sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(user.getId()).get(i-400)+s.getBoundsInLocal().getHeight() + 10.0);
+                                sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(id).get(i-400)+s.getBoundsInLocal().getHeight() + 10.0);
                             }
                             if(id == currentFriend.getId()){
                                 fieldForMessages.getChildren().add(makeMessage(mes, user));
@@ -117,20 +120,30 @@ public class ChatViewController {
                                 s.setText(text);
                                 s.setFont(Font.font(15));
                                 s.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
-                                sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(user.getId()).get(i-400)+s.getBoundsInLocal().getHeight() + 10.0);
+                                sizeOfMessages.get(id).set(i-400, sizeOfMessages.get(id).get(i-400)+s.getBoundsInLocal().getHeight() + 10.0);
                             }
                             if(id == currentFriend.getId()){
                                 fieldForMessages.getChildren().add(makeMessage(mes, user));
+                                if(!m.isIamSender()) {
+                                    Database.makeReadMessage(m.getId());
+                                    mes.read();
+                                }
                             }
                         }
                     }
                     if(id == currentFriend.getId()){
+
+                       
                         setAllSize();
                         messagesList.setVvalue(1.0);
                     }
                     threadFriendsArraysOfMessages.get(id).clear();
                 }
-                
+                Collections.sort(StartApplication.allFriends, new Compar());
+                chats.getChildren().clear();
+                for(User user : StartApplication.allFriends){                   
+                    chats.getChildren().add(generateUserField(user));
+                }
                 UpdateMessages.StartThread(_this);
             } catch (Exception e) {
               
@@ -148,10 +161,10 @@ public class ChatViewController {
 
     static Text s = new Text();
    
-    static public HashMap<Integer, ArrayList<ArrayList<Message>>> friendsArraysOfMessages = null;
+    static public HashMap<Integer, ArrayList<Message>> friendsArraysOfMessages = null;
     static public HashMap<Integer, ArrayList<Double>> sizeOfMessages = null;
 
-    static public HashMap<Integer, ArrayList<ArrayList<Message>>> threadFriendsArraysOfMessages = null;
+    static public HashMap<Integer, ArrayList<Message>> threadFriendsArraysOfMessages = null;
 
 
     public static Image getAvatar(User user) {
@@ -178,14 +191,14 @@ public class ChatViewController {
         fieldForMessages.setPrefWidth(StartApplication.stageWidth-190);
         if(on_end){
             if(currentFriend != null){
-                fieldForMessages.setPrefHeight(max((double)sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400), StartApplication.stageHeight-100));
+                fieldForMessages.setPrefHeight(max((double)sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400), StartApplication.stageHeight-130));
             }
             else{
-                fieldForMessages.setPrefHeight(StartApplication.stageHeight-100);
+                fieldForMessages.setPrefHeight(StartApplication.stageHeight-130);
             }
         }    
         else{
-            fieldForMessages.setPrefHeight(StartApplication.stageHeight-100);
+            fieldForMessages.setPrefHeight(StartApplication.stageHeight-130);
         }    
         fieldForMessages.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         messagesList.setVvalue(1.0);       
@@ -210,8 +223,8 @@ public class ChatViewController {
         currentFriend = currentUser;
         usersNick.setText(currentFriend.getNickname());
         fieldForMessages.getChildren().clear();
-        for(ArrayList<Message> cur : friendsArraysOfMessages.get(currentFriend.getId())){
-            Message m = cur.get(1);
+        for(Message cur : friendsArraysOfMessages.get(currentFriend.getId())){
+            Message m = cur;
             if(isSticker(m.getText())){
                 fieldForMessages.getChildren().add(makeMessage(cur, currentFriend));
                 fieldForMessages.getChildren().add(getSticker(m.getText()));
@@ -219,24 +232,31 @@ public class ChatViewController {
             else{
                 fieldForMessages.getChildren().add(makeMessage(cur, currentFriend));
             }
+            if(cur.getIsRead() || cur.isIamSender()) continue;
+            Database.makeReadMessage(cur.getId());
+            cur.read();
         }        
-        setAllSize();        
+        setAllSize(); 
+        chats.getChildren().clear();
+        for(User user : StartApplication.allFriends){                   
+            chats.getChildren().add(generateUserField(user));
+        }       
     }
 
 
-    public static String getMessageText(ArrayList < Message > currentMessage, User user){
+    public static String getMessageText( Message  currentMessage, User user){
         StringBuilder text = new StringBuilder();
-        if (Objects.equals(currentMessage.get(0).getText(), "|0|")) {
+        if (currentMessage.isIamSender()) {
             text.append("You");
         } else {
             text.append(user.getNickname());
         }
 
-        text.append(" (" + currentMessage.get(1).getTime() + ") :  "); text.append(isSticker(currentMessage.get(1).getText()) ? "" : currentMessage.get(1).getText());
+        text.append(" (" + currentMessage.getTime() + ") :  "); text.append(isSticker(currentMessage.getText()) ? "" : currentMessage.getText());
         return text.toString();
     }
 
-    static Label makeMessage(ArrayList < Message > currentMessage, User user) {
+    static Label makeMessage(Message  currentMessage, User user) {
         String text = getMessageText(currentMessage, user);
         Label textMessage = new Label(text);
         textMessage.setFont(Font.font(15));
@@ -253,12 +273,12 @@ public class ChatViewController {
     }
 
     void addMessagesToVbox(User user) throws Exception {
-        ArrayList< ArrayList < Message > > currentMessages = getMessagesAfterTime((on_start ? null : StartApplication.timeOfLastMessage), user.getNickname());
-        for (ArrayList<Message> currentMessage : currentMessages) {
+        ArrayList < Message > currentMessages = getMessagesAfterTime((on_start ? null : StartApplication.timeOfLastMessage), user.getNickname());
+        for (Message currentMessage : currentMessages) {
             String text = getMessageText(currentMessage, user);
             friendsArraysOfMessages.get(user.getId()).add(currentMessage);
 
-            Message m = currentMessage.get(1);
+            Message m = currentMessage;
             if(isSticker(m.getText())){
                 for(int i = 400; i <= 4000; i++){
                     sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(user.getId()).get(i-400)+ 100.0 + 10.0);
@@ -291,6 +311,8 @@ public class ChatViewController {
         public void handle(ActionEvent event) {            
             try {
                 makeChatToUser(user);
+
+                
             } catch (Exception e) {
     
                 e.printStackTrace();
@@ -318,6 +340,17 @@ public class ChatViewController {
         Button userField = new Button("");
         userField.setMaxSize(162, 32);
         userField.setMinSize(162, 32);
+      
+        try{
+            boolean is_read = friendsArraysOfMessages.get(current.getId()).get(friendsArraysOfMessages.get(current.getId()).size()-1).getIsRead();
+            System.out.println(current.getNickname() + " " + is_read);
+            if(is_read == false){
+                gc.setFill(Color.BLUE);
+                gc.fillOval(150, 20, 5, 5);
+            }
+        }catch(Exception e){
+
+        }
         userField.setGraphic(canvas);
         userField.setOnAction(new TakeUserHandler(current));
         return userField;
@@ -349,11 +382,8 @@ public class ChatViewController {
         if(friendsArraysOfMessages == null){
             sizeOfMessages = new HashMap<>();
             friendsArraysOfMessages = new HashMap<>();
-
-
-       
             threadFriendsArraysOfMessages = new HashMap<>();
-
+           
             for(User user : StartApplication.allFriends){                
                 friendsArraysOfMessages.put(user.getId(), new ArrayList<>());
                 sizeOfMessages.put(user.getId(), new ArrayList<>());              
@@ -364,6 +394,9 @@ public class ChatViewController {
                 threadFriendsArraysOfMessages.put(user.getId(), new ArrayList<>());
                
                 addMessagesToVbox(user);
+            }
+            Collections.sort(StartApplication.allFriends, new Compar());
+            for(User user : StartApplication.allFriends){                   
                 chats.getChildren().add(generateUserField(user));
             }
             on_end = true;
@@ -403,6 +436,32 @@ public class ChatViewController {
         FXMLLoader loader = LoadXML.load("hello-view.fxml");
         StartApplication.setScene(loader);
     }
+
+    static public class Compar implements Comparator<User>{
+        public int compare(User s1, User s2)
+        {
+            Timestamp t1 = null;
+            Timestamp t2 = null;
+            try{
+                t1 = friendsArraysOfMessages.get(s1.getId()).get(friendsArraysOfMessages.get(s1.getId()).size()-1).getTimeStamp();
+            }catch(Exception e){
+
+            }
+            try{
+                t2 = friendsArraysOfMessages.get(s2.getId()).get(friendsArraysOfMessages.get(s2.getId()).size()-1).getTimeStamp();
+            }catch(Exception e){
+                
+            }
+            if(t1 == null && t2 == null){
+                return 0;
+            }
+            if(t1 == null) return 1;
+            if(t2 == null) return -1;
+            if(t1.after(t2)) return -1;
+            if(t1.before(t2)) return 1;
+            return 0;
+        }
+    } 
 
 
 }

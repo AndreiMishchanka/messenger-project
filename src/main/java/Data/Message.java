@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import Application.StartApplication;
+
 public class Message {
     private String text;
     private int fromUser, toUser;
@@ -29,9 +31,18 @@ public class Message {
         return text;
     }
 
+
+    public void read(){
+        is_read = true;
+    }
+
     public String getTime() {
         
         return new SimpleDateFormat("dd MMMMM HH:mm", Locale.ENGLISH).format(time);
+    }
+    public Timestamp getTimeStamp() {
+        
+        return time;
     }
     
     public int getId() {
@@ -49,4 +60,11 @@ public class Message {
     public boolean getIsRead() {
         return this.is_read;
     }
+    public boolean isIamSender(){
+        if(fromUser == User.MainUser.getId()){
+            return true;
+        }
+        return false;
+    }
+
 }

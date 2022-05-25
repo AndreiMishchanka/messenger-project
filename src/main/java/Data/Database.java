@@ -1,6 +1,5 @@
 package Data;
 
-import java.sql.SQLClientInfoException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -114,11 +113,11 @@ public class Database {
      * .get(i).get(0) -> contains message with text "|1|" - it's not our message, and "|0|" - if we wrote this message
      * .get(i).get(1) -> message
     */
-    static public ArrayList<ArrayList<Message>> getMessagesAfterTime(Timestamp time, String with) throws Exception{
+    static public ArrayList<Message> getMessagesAfterTime(Timestamp time, String with) throws Exception{
         if (User.MainUser == null) {
             return null;
         }
-        ArrayList<ArrayList<Message>> output = new ArrayList<>();   
+        ArrayList<Message> output = new ArrayList<>();   
 
 
         String query = null;
@@ -137,8 +136,6 @@ public class Database {
 
         ArrayList<ArrayList<String>> arr = SqlCommunicate.execute(query);
         for (int i = 1; i < arr.size(); i++) {            
-            output.add(new ArrayList<Message>());     
-            String tp = "|1|";
             int id = Integer.parseInt(arr.get(i).get(0));
             String text = arr.get(i).get(1);
             int fuser = Integer.parseInt(arr.get(i).get(2));
@@ -154,9 +151,8 @@ public class Database {
                     StartApplication.timeOfLastMessage = tm;
                 }
             }
-            if (fuser != getIdByNick(with)) tp = "|0|";            
-            output.get(i - 1).add(Message.generateMessage(0, tp, 1, 1, null, is_read));            
-            output.get(i - 1).add(Message.generateMessage(id, text, fuser, tuser, tm, is_read));
+            if (fuser != getIdByNick(with)) {is_read = true;}           
+            output.add(Message.generateMessage(id, text, fuser, tuser, tm, is_read));
         }
         return output;
     }
