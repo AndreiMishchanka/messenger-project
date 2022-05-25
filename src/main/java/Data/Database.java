@@ -1,5 +1,6 @@
 package Data;
 
+import java.sql.SQLClientInfoException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
@@ -142,6 +143,8 @@ public class Database {
             int fuser = Integer.parseInt(arr.get(i).get(2));
             int tuser = Integer.parseInt(arr.get(i).get(3));            
             Timestamp tm = Timestamp.valueOf(arr.get(i).get(4));
+            boolean is_read = false;
+            if(arr.get(i).get(5).equals("1")) is_read = true;
             if(StartApplication.timeOfLastMessage == null){
                 StartApplication.timeOfLastMessage = tm;
             }
@@ -151,8 +154,8 @@ public class Database {
                 }
             }
             if (fuser != getIdByNick(with)) tp = "|0|";            
-            output.get(i - 1).add(Message.generateMessage(0, tp, 1, 1, null));            
-            output.get(i - 1).add(Message.generateMessage(id, text, fuser, tuser, tm));
+            output.get(i - 1).add(Message.generateMessage(0, tp, 1, 1, null, is_read));            
+            output.get(i - 1).add(Message.generateMessage(id, text, fuser, tuser, tm, is_read));
         }
         return output;
     }
@@ -163,7 +166,7 @@ public class Database {
 
         if (isUserConsist(nicknameFrom) && isUserConsist(nicknameTo) && User.MainUser.getNickname().equals(nicknameFrom)) {
             int id = SqlCommunicate.execute("select * from messages;").size();
-            Message nw = Message.generateMessage(id, text, getIdByNick(nicknameFrom), getIdByNick(nicknameTo), new Timestamp(System.currentTimeMillis()));        
+            Message nw = Message.generateMessage(id, text, getIdByNick(nicknameFrom), getIdByNick(nicknameTo), new Timestamp(System.currentTimeMillis()), false);        
             SqlCommunicate.update("insert into messages(id, text, fuser, tuser) values(" + nw.getId() 
                                                                  + ", '" + nw.getText() 
                                                                  + "', " + nw.getFromUser()
@@ -180,5 +183,27 @@ public class Database {
         //UPDATE users SET nickname = 'kostyaa' WHERE id = 3
         SqlCommunicate.update("update users set nickname = '" + Nickname + "' where id = " + getIdByNick(User.MainUser.getNickname()) + ";");
         User.MainUser = User.makeUserFromBase(Nickname, User.MainUser.id);
+    }
+
+    public static boolean isReadMessage(int id) throws Exception {
+        ArrayList<ArrayList<String>> arr = SqlCommunicate.execute(String.format("select is_read from messages where id = %s;", id));
+        if (arr.size() != 2) {
+            return false;
+        }
+        if (arr.get(1).get(0).equals("1")) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void makeReadMessage(int id) throws Exception {
+        SqlCommunicate.update(String.format("update messages set is_read = 1 where id = %s;", id));
+    }
+
+    public static void makeFriend(int id) throws Exception{
+        if (User.MainUser != null && User.MainUser.getId() != id 
+            && SqlCommunicate.execute(String.format("select count(*) from users where id = %s;", id)).get(1).get(0).equals(1)) {
+                SqlCommunicate.update(String.format("insert into relations values(select count(*) from relations, %s, %s);", User.MainUser.getClass(), id));
+            }
     }
 }
