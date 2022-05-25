@@ -51,6 +51,9 @@ public class ChatViewController {
     public Button usersNick;
     @FXML
     public VBox chats;
+   // ArrayList
+
+
     @FXML
     public TextField searchInChats;
     @FXML
@@ -104,10 +107,11 @@ public class ChatViewController {
                     }
                     if(id == currentFriend.getId()){
                         setAllSize();
+                        messagesList.setVvalue(1.0);
                     }
                     threadFriendsArraysOfMessages.get(id).clear();
                 }
-
+                
                 UpdateMessages.StartThread(_this);
             } catch (Exception e) {
               
@@ -124,7 +128,6 @@ public class ChatViewController {
     static boolean on_start = false, on_end = false;
 
     static Text s = new Text();
-    static public VBox friends = new VBox();
    
     static public HashMap<Integer, ArrayList<ArrayList<Message>>> friendsArraysOfMessages = null;
     static public HashMap<Integer, ArrayList<Double>> sizeOfMessages = null;
