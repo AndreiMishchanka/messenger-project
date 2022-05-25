@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -19,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -173,15 +175,26 @@ public class ChatViewController {
         messagesList.setPrefHeight(StartApplication.stageHeight-120);
         messagesList.setPrefWidth(StartApplication.stageWidth-190);        
         usersNick.setPrefWidth(fieldForMessages.getPrefWidth() - friendAvatar.getFitWidth());
-        
+        fieldForMessages.setPrefWidth(StartApplication.stageWidth-190);
         if(on_end){
-            fieldForMessages.setPrefWidth(StartApplication.stageWidth-200);
             if(currentFriend != null){
-                fieldForMessages.setPrefHeight(sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400));
+                fieldForMessages.setPrefHeight(max((double)sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400), StartApplication.stageHeight-100));
             }
-        }        
-        //fieldForMessages.setBackground();
+            else{
+                fieldForMessages.setPrefHeight(StartApplication.stageHeight-100);
+            }
+        }    
+        else{
+            fieldForMessages.setPrefHeight(StartApplication.stageHeight-100);
+        }    
+        fieldForMessages.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         messagesList.setVvalue(1.0);       
+    }
+
+
+    private double max(double d, double e) {
+        if(d > e) return d;
+        return e; 
     }
 
 

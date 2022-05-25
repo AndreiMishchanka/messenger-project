@@ -17,7 +17,7 @@
          <children>
             <ScrollPane fx:id="scrolling" layoutX="5.0" layoutY="46.0" prefHeight="510.0" prefWidth="165.0">
                <content>
-                  <VBox fx:id="chats" prefHeight="374.0" prefWidth="165.0" />
+                  <VBox fx:id="chats" prefHeight="493.0" prefWidth="154.0" />
                </content>
             </ScrollPane>
             <TextField fx:id="searchInChats" layoutX="58.0" layoutY="13.0" prefHeight="25.0" prefWidth="92.0" promptText="Write user name">
@@ -56,7 +56,7 @@
             </ImageView>
             <ScrollPane fx:id="messagesList" layoutY="43.0" prefHeight="510.0" prefWidth="438.0">
                <content>
-                  <VBox fx:id="fieldForMessages" prefHeight="420.0" prefWidth="435.0" />
+                  <VBox fx:id="fieldForMessages" prefHeight="508.0" prefWidth="435.0" />
                </content>
             </ScrollPane>
          </children></AnchorPane>
