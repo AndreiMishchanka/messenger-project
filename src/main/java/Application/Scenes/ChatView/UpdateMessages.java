@@ -95,4 +95,14 @@ public class UpdateMessages {
         find.interrupt();
     }
 
+    static public class ScrollDown implements Runnable{
+
+        @Override
+        public void run() {
+          
+         //    x.
+        }
+
+    }
+
 }
