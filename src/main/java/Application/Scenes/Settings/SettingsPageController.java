@@ -38,10 +38,28 @@ public class SettingsPageController {
     public ImageView avatar;
 
     @FXML
+    private Button Back;
+
+    @FXML
     private Label URLError;
 
     @FXML
+    private ImageView backIcon;
+
+    @FXML
     private Button openButton;
+
+    @FXML
+    private ImageView saveIcon;
+
+    @FXML
+    private ImageView saveIcon2;
+
+    @FXML
+    private Button saveNick;
+
+    @FXML
+    private Button savePassword;
 
     public void changeSizes(){
 
@@ -54,6 +72,9 @@ public class SettingsPageController {
     };
 
     public void initialize(){
+        Back.setGraphic(backIcon);
+        savePassword.setGraphic(saveIcon2);
+        saveNick.setGraphic(saveIcon);
         ///change_size
         avatar.setImage(ChatViewController.getAvatar(MainUser));
         StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);
