@@ -6,7 +6,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Scenes.Settings.SettingsPageController">
    <children>
@@ -21,12 +20,7 @@
       <PasswordField layoutX="272.0" layoutY="197.0" prefHeight="31.0" prefWidth="202.0" promptText="Write new password" />
       <Label fx:id="nicknameError" layoutX="272.0" layoutY="88.0" prefHeight="24.0" prefWidth="202.0" />
       <Label fx:id="passwordError" layoutX="272.0" layoutY="228.0" prefHeight="24.0" prefWidth="202.0" />
-      <TextField fx:id="imageURL" layoutX="45.0" layoutY="237.0" prefHeight="31.0" prefWidth="202.0" promptText="Write URL to upload new profile image">
-         <font>
-            <Font size="10.0" />
-         </font>
-      </TextField>
-      <Button fx:id="uploadImageButton" layoutX="45.0" layoutY="275.0" mnemonicParsing="false" onAction="#tryChangeAvatar" prefHeight="17.0" prefWidth="77.0" text="Upload" />
-      <Label fx:id="URLError" layoutX="130.0" layoutY="275.0" prefHeight="24.0" prefWidth="117.0" />
+      <Label fx:id="URLError" layoutX="44.0" layoutY="265.0" prefHeight="24.0" prefWidth="129.0" />
+      <Button fx:id="openButton" layoutX="44.0" layoutY="240.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="129.0" text="Choose new avatar!" />
    </children>
 </Pane>
