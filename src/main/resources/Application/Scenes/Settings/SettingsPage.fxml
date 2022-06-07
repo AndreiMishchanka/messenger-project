@@ -16,8 +16,8 @@
       <Label layoutX="272.0" layoutY="40.0" prefHeight="17.0" prefWidth="202.0" text="Here you can change your nickname" />
       <Label layoutX="272.0" layoutY="131.0" prefHeight="17.0" prefWidth="202.0" text="Here you can change your password" />
       <Button layoutX="488.0" layoutY="197.0" mnemonicParsing="false" onAction="#tryChangePassword" prefHeight="31.0" prefWidth="50.0" text="Save" />
-      <PasswordField layoutX="272.0" layoutY="154.0" prefHeight="31.0" prefWidth="202.0" promptText="Write your old password" />
-      <PasswordField layoutX="272.0" layoutY="197.0" prefHeight="31.0" prefWidth="202.0" promptText="Write new password" />
+      <PasswordField fx:id="oldPassword" layoutX="272.0" layoutY="154.0" prefHeight="31.0" prefWidth="202.0" promptText="Write your old password" />
+      <PasswordField fx:id="newPassword" layoutX="272.0" layoutY="197.0" prefHeight="31.0" prefWidth="202.0" promptText="Write new password" />
       <Label fx:id="nicknameError" layoutX="272.0" layoutY="88.0" prefHeight="24.0" prefWidth="202.0" />
       <Label fx:id="passwordError" layoutX="272.0" layoutY="228.0" prefHeight="24.0" prefWidth="202.0" />
       <Label fx:id="URLError" layoutX="44.0" layoutY="265.0" prefHeight="24.0" prefWidth="129.0" />

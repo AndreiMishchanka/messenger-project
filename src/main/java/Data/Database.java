@@ -176,10 +176,25 @@ public class Database {
     public static void changeNickname(String Nickname) throws Exception{
         if (isUserConsist(Nickname)) {
             throw new UserAlreadyRegistred();
-        }
-        //UPDATE users SET nickname = 'kostyaa' WHERE id = 3
+        }                
         SqlCommunicate.update("update users set nickname = '" + Nickname + "' where id = " + getIdByNick(User.MainUser.getNickname()) + ";");
         User.MainUser = User.makeUserFromBase(Nickname, User.MainUser.id);
+    }
+
+    public static void changePassword(String oldPassword, String Password) throws Exception{
+        try{
+            new Password(Password);
+         }catch(Exception e){
+             throw e;
+         }
+
+        try {
+            getUser(User.MainUser.getNickname(), oldPassword);
+        }catch (Exception e) {            
+            throw e;
+        }                        
+        SqlCommunicate.update("update users set password = '" + Password + "' where id = " + getIdByNick(User.MainUser.getNickname()) + ";");
+        User.MainUser = User.makeUserFromBase(User.MainUser.getNickname(), User.MainUser.id);
     }
 
     public static boolean isReadMessage(int id) throws Exception {

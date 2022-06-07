@@ -29,3 +29,25 @@ create table relations
 create unique index messages_id_uindex
     on messages(id);
 
+
+create table groups
+(
+    id          int          not null
+        constraint groups_pk
+            primary key,
+    name        varchar(100) not null,
+    description varchar(100)
+);
+
+create unique index groups_id_uindex
+    on groups (id);
+
+create table group_users
+(
+    group_id int not null,
+    user_id  int not null
+);
+
+
+
+

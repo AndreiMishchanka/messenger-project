@@ -11,8 +11,10 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,6 +38,11 @@ public class SettingsPageController {
     public Label nicknameError;
     public Label passwordError;
     public ImageView avatar;
+
+    @FXML
+    private PasswordField oldPassword;
+    @FXML
+    private PasswordField newPassword;
 
     @FXML
     private Label URLError;
@@ -72,9 +79,10 @@ public class SettingsPageController {
                         File file = fileChooser.showOpenDialog(stage);
                         if (file != null) {
                             try {
+                                System.out.println(file.getCanonicalPath());
                                 Image newAvatar = new Image(file.getPath());
                                 File newImage = new File("src/main/resources/Application/Images/" + MainUser.getNickname() + ".png");
-                                ImageIO.write(SwingFXUtils.fromFXImage(newAvatar, null), "png", newImage);
+                               // ImageIO.write(SwingFXUtils.fromFXImage(newAvatar, null), "png", newImage);
                             } catch (Exception ex) {
                                 URLError.setText("Incorrect URL!");
                                 URLError.setTextFill(Color.RED);
@@ -105,19 +113,25 @@ public class SettingsPageController {
 
     }
 
-    public void tryChangePassword(){
+    public void tryChangePassword() throws Exception{
         try{
-            throw new IncorrectPasswordException();
-        }catch(IncorrectPasswordException e){
+            Database.getUser(User.MainUser.getNickname(), oldPassword.getText());            
+        }catch(Exception e){         
+            passwordError.setTextFill(Color.RED);   
             passwordError.setText("Incorrect old password");
+            // e.printStackTrace();
            // return;
+           return;           
         }
         try{
-            throw new IncorrectPasswordException();
-        }catch(IncorrectPasswordException e){
+            Database.changePassword(oldPassword.getText(), newPassword.getText());        
+        }catch(Exception e){
+            passwordError.setTextFill(Color.RED);   
             passwordError.setText("Incorrect new password");
             return;
         }
+        passwordError.setTextFill(Color.web("#1EA624", 0.8));
+        passwordError.setText("Password has been changed");
     }
 
     public void fromSettingsToChats(){
