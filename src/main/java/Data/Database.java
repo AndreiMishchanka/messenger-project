@@ -218,4 +218,58 @@ public class Database {
                 SqlCommunicate.update(String.format("insert into relations values(select count(*) from relations, %s, %s);", User.MainUser.getClass(), id));
             }
     }
+
+    public static ArrayList<Integer> getGroups() throws Exception{
+        if (User.MainUser == null) {
+            return null;
+        }        
+        try{
+            ArrayList<Integer> res = new ArrayList<>();
+            ArrayList<ArrayList<String>> cache = SqlCommunicate.execute(String.format("selec group_id from group_users where users_d = %s;", User.MainUser.getId()));
+            for (int i = 1; i < cache.size(); i++) {
+                res.add(Integer.parseInt(cache.get(i).get(0)));
+            }
+            return res;
+        }catch (Exception e) {
+            e.printStackTrace();
+        }    
+        return null;    
+    }
+
+    static public ArrayList<Message> getMessagesAfterTimeFromGroup(Timestamp time, Integer with) throws Exception{
+        if (User.MainUser == null) {
+            return null;
+        }
+        ArrayList<Message> output = new ArrayList<>();   
+
+        ArrayList<ArrayList<String>> arr;
+
+        if(time == null){            
+                arr = SqlCommunicate.execute(String.format
+                    ("select * from group_messages where group_id = %s;", with));                                        
+        }
+        else{
+            arr = SqlCommunicate.execute(String.format
+                    ("select * from group_messages where group_id = %s AND %s < tm;", with, time));                                                    
+        }
+        for (int i = 1; i < arr.size(); i++) {            
+            int id = Integer.parseInt(arr.get(i).get(0));
+            int fuser = Integer.parseInt(arr.get(i).get(1));
+            String text = arr.get(i).get(2);            
+            Timestamp tm = Timestamp.valueOf(arr.get(i).get(3));
+            int tuser = -with;                        
+            boolean is_read = true;            
+            if(StartApplication.timeOfLastMessage == null){
+                StartApplication.timeOfLastMessage = tm;
+            }
+            else{
+                if(StartApplication.timeOfLastMessage.before(tm)){
+                    StartApplication.timeOfLastMessage = tm;
+                }
+            }
+            // if (fuser != getIdByNick(with)) {is_read = true;}           
+            output.add(Message.generateMessage(id, text, fuser, tuser, tm, is_read));
+        }
+        return output;
+    }
 }

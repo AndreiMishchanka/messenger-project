@@ -48,6 +48,17 @@ create table group_users
     user_id  int not null
 );
 
+create table group_messages
+(
+    group_id     int not null,
+    from_id      int not null,
+    message_text varchar(1000),
+    tm DATETIME NOT NULL
+                DEFAULT CURRENT_TIMESTAMP, 
+);
+
+
+
 
 
 
