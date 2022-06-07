@@ -7,6 +7,8 @@ import Application.Scenes.ChatView.ChatViewController;
 import Application.StartApplication;
 import Utills.LoadXML;
 import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -18,9 +20,14 @@ import javafx.scene.paint.Color;
 import Data.*;
 import Data.Database.IncorrectPasswordException;
 import static Data.User.MainUser;
+
 import javafx.embed.swing.SwingFXUtils;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 
 public class SettingsPageController {
@@ -31,13 +38,10 @@ public class SettingsPageController {
     public ImageView avatar;
 
     @FXML
-    private Button uploadImageButton;
-
-    @FXML
-    private TextField imageURL;
-
-    @FXML
     private Label URLError;
+
+    @FXML
+    private Button openButton;
 
     public void changeSizes(){
 
@@ -56,6 +60,31 @@ public class SettingsPageController {
         StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
         changeSizes();
         nicknameChange.setText(MainUser.getNickname());
+
+        FileChooser fileChooser = new FileChooser();
+        openButton.setOnAction(
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(final ActionEvent e) {
+                        Window stage = new Stage();
+                        stage.setHeight(600);
+                        stage.setWidth(600);
+                        File file = fileChooser.showOpenDialog(stage);
+                        if (file != null) {
+                            try {
+                                Image newAvatar = new Image(file.getPath());
+                                File newImage = new File("src/main/resources/Application/Images/" + MainUser.getNickname() + ".png");
+                                ImageIO.write(SwingFXUtils.fromFXImage(newAvatar, null), "png", newImage);
+                            } catch (Exception ex) {
+                                URLError.setText("Incorrect URL!");
+                                URLError.setTextFill(Color.RED);
+                                return;
+                            }
+                            URLError.setTextFill(Color.web("#1EA624", 0.8));
+                            URLError.setText("Avatar has changed!");
+                        }
+                    }
+                });
     }
 
     public void tryChangeNickname(){
@@ -89,19 +118,6 @@ public class SettingsPageController {
             passwordError.setText("Incorrect new password");
             return;
         }
-    }
-
-    public void tryChangeAvatar() throws IOException {
-        try {
-            Image newAvatar = new Image(imageURL.getText());
-            File newImage = new File("src/main/resources/Application/Images/" + MainUser.getNickname() + ".png");
-            ImageIO.write(SwingFXUtils.fromFXImage(newAvatar, null), "png", newImage);
-        } catch (Exception e) {
-            URLError.setText("Incorrect URL!");
-            return;
-        }
-        URLError.setTextFill(Color.web("#1EA624", 0.8));
-        URLError.setText("Avatar has changed!");
     }
 
     public void fromSettingsToChats(){
