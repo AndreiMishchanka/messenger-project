@@ -68,6 +68,14 @@ public class ChatViewController {
     public Button sendMessageButton;
     @FXML
     public ImageView friendAvatar;
+    @FXML
+    private ImageView exitIcon;
+    @FXML
+    private ImageView settingsIcon;
+    @FXML
+    private ImageView searchIcon;
+    @FXML
+    private ImageView sendIcon;
 
     static User currentFriend = null;
 
@@ -374,6 +382,10 @@ public class ChatViewController {
     }
 
     public void initialize() throws Exception{
+        BackToLoginButton.setGraphic(exitIcon);
+        settings.setGraphic(settingsIcon);
+        FindFriends.setGraphic(searchIcon);
+        sendMessageButton.setGraphic(sendIcon);
         _this = this;
         setUp();
         xx = new Button(); xx.setOnAction(new ThreadHandler());
