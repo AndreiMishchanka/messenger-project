@@ -3,6 +3,7 @@ package Application.Scenes.ChatView;
 import Application.StartApplication;
 import Data.Database;
 import Data.Message;
+import Data.Sticker;
 import Data.User;
 import Utills.LoadXML;
 import javafx.beans.value.ChangeListener;
@@ -40,6 +41,10 @@ public class ChatViewController {
 
     ChatViewController _this;
 
+    public static String StickerChooser;
+
+    @FXML
+    private Button chooseStickerButton;
 
     @FXML
     public Button BackToLoginButton;
@@ -79,12 +84,7 @@ public class ChatViewController {
             return false;
         }
         return (StartApplication.class.getResource("Stickers/" + text.substring(1, text.length()) + ".png") != null);
-    }
-
-    public static ImageView getSticker(String text) {
-        ImageView striker = new ImageView(new Image(String.valueOf(StartApplication.class.getResource("Stickers/" + text.substring(1, text.length()) + ".png")), 100, 100, false, false));
-        return striker;
-    }
+    }    
 
      class ThreadHandler implements EventHandler<ActionEvent> {
         @Override
@@ -111,7 +111,7 @@ public class ChatViewController {
                             }
                             if(id == currentFriend.getId()){
                                 fieldForMessages.getChildren().add(makeMessage(mes, user));
-                                fieldForMessages.getChildren().add(getSticker(m.getText()));
+                                fieldForMessages.getChildren().add(Sticker.getSticker(m.getText()));
                             }
                         }
                         else{
@@ -227,7 +227,7 @@ public class ChatViewController {
             Message m = cur;
             if(isSticker(m.getText())){
                 fieldForMessages.getChildren().add(makeMessage(cur, currentFriend));
-                fieldForMessages.getChildren().add(getSticker(m.getText()));
+                fieldForMessages.getChildren().add(Sticker.getSticker(m.getText()));
             }
             else{
                 fieldForMessages.getChildren().add(makeMessage(cur, currentFriend));
@@ -373,7 +373,7 @@ public class ChatViewController {
         StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
     }
 
-    public void initialize() throws Exception{
+    public void initialize() throws Exception{        
         _this = this;
         setUp();
         xx = new Button(); xx.setOnAction(new ThreadHandler());
@@ -411,11 +411,20 @@ public class ChatViewController {
             makeChatToUser(currentFriend);
         }
        UpdateMessages.StartThread(this);
-        
+       if (StickerChooser != null) {
+           textOfSending.setText(StickerChooser);
+           StickerChooser = null;
+       }
     }
 
     public void goToSettings(){
         FXMLLoader loader = LoadXML.load("Scenes/Settings/SettingsPage.fxml");
+        StartApplication.setScene(loader);
+    }
+
+    @FXML
+    void chooseSticker(ActionEvent event) {
+        FXMLLoader loader = LoadXML.load("Scenes/Settings/StickerChoosing.fxml");
         StartApplication.setScene(loader);
     }
 
