@@ -212,11 +212,30 @@ public class Database {
         SqlCommunicate.update(String.format("update messages set is_read = 1 where id = %s;", id));
     }
 
-    public static void makeFriend(int id) throws Exception{
+    public static void makeFriend(int id) throws Exception{        
         if (User.MainUser != null && User.MainUser.getId() != id 
-            && SqlCommunicate.execute(String.format("select count(*) from users where id = %s;", id)).get(1).get(0).equals(1)) {
-                SqlCommunicate.update(String.format("insert into relations values(select count(*) from relations, %s, %s);", User.MainUser.getClass(), id));
+            && SqlCommunicate.execute(String.format("select count(*) from users where id = %s;", id)).get(1).get(0).equals("1")) {                
+                SqlCommunicate.update(String.format("insert into relations values((select count(*) from relations), %s, %s);", User.MainUser.getId(), id));                
+            }else {
+                throw new Exception();
             }
+    }
+
+    public static boolean isFriend(String Name) throws Exception {
+        try{
+            int id = getIdByNick(Name);
+            int count  = Integer.parseInt(SqlCommunicate.execute(String.format(
+                "select count(*) from relations where (id_f = %s and id_s = %s) or (id_f = %s and id_s = %s);",
+                User.MainUser.getId(), 
+                id, 
+                id, 
+                User.MainUser.getId())).get(1).get(0)
+            );
+            return count == 1;
+        }catch(Exception e) {
+            e.printStackTrace();
+            return false;
+        }                
     }
 
     public static ArrayList<Integer> getGroups() throws Exception{

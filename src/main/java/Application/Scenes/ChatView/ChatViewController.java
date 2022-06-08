@@ -421,7 +421,8 @@ public class ChatViewController {
 
     @FXML
     void goToFindFriends(ActionEvent event) {
-
+        FXMLLoader loader = LoadXML.load("Scenes/Settings/FindFriend.fxml");
+        StartApplication.setScene(loader);
     }
 
     @FXML

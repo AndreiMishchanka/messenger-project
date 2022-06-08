@@ -56,9 +56,3 @@ create table group_messages
     tm DATETIME NOT NULL
                 DEFAULT CURRENT_TIMESTAMP, 
 );
-
-
-
-
-
-
