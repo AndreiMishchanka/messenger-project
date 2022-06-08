@@ -20,18 +20,15 @@ public class UpdateMessages {
             try{
                 while(true){
                     Timestamp time = StartApplication.timeOfLastMessage;
-                    boolean need = false;    
-                    /*        
+                    boolean need = false;                                
                     if(k == 100){
                         try{
                             StartApplication.allFriends = Database.getChats();
                         }catch(Exception e){
-
                             return;
                         }
                         k = 0;
-                    }
-                    */
+                    }                    
                     k++;
                     for(User user : StartApplication.allFriends){
                         ArrayList< Message > currentMessages = null;

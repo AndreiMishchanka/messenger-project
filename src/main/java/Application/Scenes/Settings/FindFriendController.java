@@ -85,7 +85,8 @@ public class FindFriendController {
         }
         try{
             Database.makeFriend(Database.getIdByNick(Name));
-            ErrorField.setText("Yeaah. You are friends");
+            StartApplication.allFriends = Database.getChats();            
+            ErrorField.setText("Yeaah. You are friends");            
             ErrorField.setTextFill(Color.GREEN);
         }catch(Exception e) {            
             ErrorField.setText("Cannot add to friends");
