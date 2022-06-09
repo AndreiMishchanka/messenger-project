@@ -262,6 +262,7 @@ public class ChatViewController {
             Database.makeReadMessage(cur.getId());
             cur.read();
         }         
+        Collections.sort(StartApplication.allFriends, new Compar());
         chats.getChildren().clear();
         for(User user : StartApplication.allFriends){                   
             chats.getChildren().add(generateUserField(user));
@@ -438,6 +439,7 @@ public class ChatViewController {
             on_end = true;
         }
         else{
+            Collections.sort(StartApplication.allFriends, new Compar());
             for(User user : StartApplication.allFriends){
                 chats.getChildren().add(generateUserField(user));
             }
