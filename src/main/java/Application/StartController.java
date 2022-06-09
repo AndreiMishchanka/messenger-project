@@ -29,14 +29,15 @@ public class StartController extends StartApplication{
     }
 
     ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{
-        StartApplication.stageWidth = StartApplication.primaryStage.getWidth();
-        StartApplication.stageHeight = StartApplication.primaryStage.getHeight();
+      //  StartApplication.stageWidth = StartApplication.primaryStage.getWidth();
+      //  StartApplication.stageHeight = StartApplication.primaryStage.getHeight();
         changeSizes();
 
     };
 
     public void initialize(){
         ///change_size
+        System.out.println(StartApplication.primaryStage.getHeight() + " " + StartApplication.primaryStage.getWidth());
         StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);
         StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
         changeSizes();

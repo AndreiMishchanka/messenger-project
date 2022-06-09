@@ -1,8 +1,5 @@
 package Application.Scenes.Settings;
 
-
-import java.io.File;
-import java.io.IOException;
 import Application.Scenes.ChatView.ChatViewController;
 import Application.StartApplication;
 import Utills.LoadXML;
@@ -13,30 +10,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import Data.*;
-import Data.Database.IncorrectPasswordException;
-import static Data.User.MainUser;
 
-import javafx.embed.swing.SwingFXUtils;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 
 
 public class StickerChoosingController{
@@ -92,17 +75,34 @@ public class StickerChoosingController{
         StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);        
         changeSizes();        
 
+        Back.setGraphic(new ImageView(new Image(String.valueOf(StartApplication.class.getResource("ButtonsImages/back.png")), 50, 50, false, false)));
+
+
         StickerPane.setHbarPolicy(ScrollBarPolicy.NEVER);
         StickerPane.setVbarPolicy(ScrollBarPolicy.NEVER);
-
+        int i = 0;
+        HBox hbox = new HBox();
+        hbox.setPrefWidth(400);
+        hbox.setPrefHeight(100);
         for (String Name : Sticker.allStickers) {
+            if(i == 3){
+                ForStickers.getChildren().add(hbox); 
+                hbox = new HBox();
+                hbox.setPrefWidth(400);
+                hbox.setPrefHeight(100);
+                i = 0;
+                continue;
+            }
             try {
-                ImageView mySticker = Sticker.getSticker(":" + Name);                               
-                ForStickers.getChildren().add(generateStickerButton(mySticker.getImage(), Name));
+                ImageView mySticker = Sticker.getSticker(":" + Name);                        
+                hbox.getChildren().add(generateStickerButton(mySticker.getImage(), Name));
+                i++;
             }catch (Exception e) {
 
             }
         }
+        ForStickers.getChildren().add(hbox); 
+        
     }
   
 

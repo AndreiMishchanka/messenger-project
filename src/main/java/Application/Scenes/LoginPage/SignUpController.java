@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 public class SignUpController extends StartApplication {
@@ -27,8 +29,8 @@ public class SignUpController extends StartApplication {
     private Button backButton;
 
     public void changeSizes(){
-        backButton.setLayoutX(StartApplication.stageWidth-75);
-        backButton.setLayoutY(10);
+        //backButton.setLayoutX(StartApplication.stageWidth-75);
+       // backButton.setLayoutY(10);
     }
 
     ChangeListener<Number> stageSizeListener = (observable, oldValue, newValue) ->{
@@ -43,6 +45,8 @@ public class SignUpController extends StartApplication {
         StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);
         StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
         changeSizes();
+        backButton.setGraphic(new ImageView(new Image(String.valueOf(StartApplication.class.getResource("ButtonsImages/back.png")), 50, 50, false, false)));
+
     }
 
     @FXML

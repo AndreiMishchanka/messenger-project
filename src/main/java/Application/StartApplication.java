@@ -43,6 +43,9 @@ public class StartApplication extends Application {
         primaryStage.setMinHeight(600);
         primaryStage.setHeight(600);
         primaryStage.setWidth(600);
+        System.setProperty("prism.allowhidpi", "false");
+        System.setProperty( "sun.java2d.uiScale", "0.0" );
+        System.out.println(primaryStage.getMinHeight() + "ffasfa");
         primaryStage.show();
     }
 

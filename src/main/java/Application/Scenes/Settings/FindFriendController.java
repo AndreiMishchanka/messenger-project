@@ -1,35 +1,18 @@
 package Application.Scenes.Settings;
 
-
-import java.io.File;
-import java.io.IOException;
-import Application.Scenes.ChatView.ChatViewController;
 import Application.StartApplication;
 import Utills.LoadXML;
 import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.PieChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import Data.*;
-import Data.Database.IncorrectPasswordException;
-import static Data.User.MainUser;
-
-import javafx.embed.swing.SwingFXUtils;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
 
 
 public class FindFriendController {
@@ -60,6 +43,8 @@ public class FindFriendController {
         ///change_size        
         StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);
         StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
+        addButton.setGraphic(new ImageView(new Image(String.valueOf(StartApplication.class.getResource("ButtonsImages/find.png")), 50, 50, false, false)));
+        Back.setGraphic(new ImageView(new Image(String.valueOf(StartApplication.class.getResource("ButtonsImages/back.png")), 50, 50, false, false)));
         changeSizes();        
     }
   
@@ -84,8 +69,7 @@ public class FindFriendController {
             return;
         }
         try{
-            Database.makeFriend(Database.getIdByNick(Name));
-            StartApplication.allFriends = Database.getChats();            
+            Database.makeFriend(Database.getIdByNick(Name));    
             ErrorField.setText("Yeaah. You are friends");            
             ErrorField.setTextFill(Color.GREEN);
         }catch(Exception e) {            

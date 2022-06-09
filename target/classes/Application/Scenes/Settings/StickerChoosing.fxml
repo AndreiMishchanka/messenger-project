@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Scenes.Settings.StickerChoosingController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #B3E5FC;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Scenes.Settings.StickerChoosingController">
    <children>
-      <Button fx:id="Back" layoutX="15.0" layoutY="507.0" mnemonicParsing="false" onAction="#fromSettingsToChats" prefHeight="31.0" prefWidth="61.0" text="Back" />
-      <ScrollPane fx:id="StickerPane" layoutX="178.0" layoutY="32.0" prefHeight="463.0" prefWidth="189.0">
+      <ScrollPane fx:id="StickerPane" layoutX="13.0" layoutY="44.0" prefHeight="463.0" prefWidth="582.0">
          <content>
             <VBox fx:id="ForStickers" prefHeight="464.0" prefWidth="168.0" />
          </content>
-      </ScrollPane>      
+      </ScrollPane>
+      <Button fx:id="Back" layoutX="14.0" layoutY="507.0" mnemonicParsing="false" onAction="#fromSettingsToChats" prefHeight="63.0" prefWidth="69.0" style="-fx-background-color: #B3E5FC;" />      
    </children>
 </Pane>

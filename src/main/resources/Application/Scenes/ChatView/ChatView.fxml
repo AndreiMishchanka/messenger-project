@@ -1,52 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #B3E5FC; -fx-border-width: 3; -fx-border-color: #03A9F4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Scenes.ChatView.ChatViewController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #B3E5FC; -fx-border-width: 3; -fx-border-color: #03A9F4;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.Scenes.ChatView.ChatViewController">
    <children>
-      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="200.0" styleClass="-fx-bord">
+      <AnchorPane fx:id="friendPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="200.0" style="-fx-border-width: 3; -fx-border-color: #03A9F4;">
          <children>
-            <Button fx:id="BackToLoginButton" layoutX="7.0" layoutY="533.0" mnemonicParsing="false" onAction="#goToLogin" prefHeight="40.0" prefWidth="42.0" text="B" />
-            <Button fx:id="settings" layoutX="50.0" layoutY="534.0" mnemonicParsing="false" onAction="#goToSettings" prefHeight="40.0" prefWidth="42.0" text="S" />
-            <Button fx:id="FindFriends" layoutX="138.0" layoutY="534.0" mnemonicParsing="false" onAction="#goToFindFriends" prefHeight="40.0" prefWidth="42.0" text="F" />
-            <ScrollPane fx:id="scrolling" layoutX="4.0" layoutY="3.0" prefHeight="514.0" prefWidth="193.0">
+            <ScrollPane fx:id="scrolling" layoutX="4.0" layoutY="3.0" prefHeight="514.0" prefWidth="191.0">
                <content>
-                  <VBox fx:id="chats" prefHeight="411.0" prefWidth="104.0" />
+                  <VBox fx:id="chats" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="190.0" style="-fx-background-color: #81D4FA;" />
                </content>
             </ScrollPane>
+            <Button fx:id="FindFriends" layoutX="132.0" layoutY="543.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#goToFindFriends" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #E1F5FE;" />
+            <Button fx:id="settings" layoutX="70.0" layoutY="542.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#goToSettings" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #E1F5FE;" />
+            <Button fx:id="BackToLoginButton" layoutX="17.0" layoutY="543.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#goToLogin" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #E1F5FE;" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="197.0" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="400.0">
+      <AnchorPane fx:id="anch1" layoutX="197.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0">
          <children>
-            <ImageView fx:id="friendAvatar" fitHeight="50.0" fitWidth="50.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../../Users/48884/Desktop/avatar-159236_640.png" />
-               </image>
-            </ImageView>
-            <TextField fx:id="textOfSending" layoutY="558.0" prefHeight="40.0" prefWidth="316.0" promptText="Write a message..." style="-fx-background-color: #03A9F4,#E1F5FE; -fx-background-insets: 0,2 2 0 2,9,10,11; -fx-background-radius: 6; -fx-font-size: 18px; -fx-text-fill: #311c09; -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1);">
-               <cursor>
-                  <Cursor fx:constant="DEFAULT" />
-               </cursor>
-               <font>
-                  <Font name="System Italic" size="14.0" />
-               </font>
-            </TextField>
-            <Button fx:id="usersNick" layoutX="51.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="350.0" text="user_name" />
+            <Pane fx:id="writepane" layoutY="555.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="400.0" style="-fx-background-color: #03A9F4,#E1F5FE; -fx-background-insets: 0,2 2 0 2,9,10,11;">
+               <children>
+                  <TextField fx:id="textOfSending" layoutX="3.0" layoutY="4.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="302.0" promptText="Write a message..." style="-fx-background-color: #E1F5FE; -fx-font-size: 18px; -fx-text-fill: #311c09;">
+                     <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                     </cursor>
+                     <font>
+                        <Font name="System Italic" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="sendMessageButton" layoutX="365.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#sendingMessage" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #E1F5FE;" />
+                  <Button fx:id="chooseStickerButton" layoutX="334.0" layoutY="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#chooseSticker" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: #E1F5FE;" />
+               </children>
+            </Pane>
+            <ScrollPane fx:id="messagesList" layoutX="3.0" layoutY="55.0" prefHeight="487.0" prefWidth="395.0" style="-fx-background-color: #B3E5FC;">
+               <content>
+                  <VBox fx:id="fieldForMessages" prefHeight="486.0" prefWidth="379.0" style="-fx-background-color: #B3E5FC;">
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
+            <Button fx:id="usersNick" layoutX="1.0" layoutY="3.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="400.0" visible="false" />
          </children>
       </AnchorPane>
-      <ScrollPane fx:id="messagesList" layoutX="627.0" layoutY="34.0" prefHeight="476.0" prefWidth="327.0" style="-fx-background-color: #B3E5FC;">
-         <content>
-            <VBox fx:id="fieldForMessages" prefHeight="504.0" prefWidth="406.0" style="-fx-background-color: #B3E5FC;" />
-         </content>
-      </ScrollPane>
    </children>
 </Pane>

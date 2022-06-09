@@ -11,8 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -21,9 +21,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -63,7 +62,8 @@ public class ChatViewController {
     @FXML
     public VBox chats;
    // ArrayList
-
+    public AnchorPane anch1;
+    public Pane writepane, friendPane;
 
     @FXML
     public TextField searchInChats;
@@ -80,6 +80,20 @@ public class ChatViewController {
 
     @FXML
     public Button settings;
+
+    static public Button xx;
+
+    @FXML
+    public SplitPane splitPanePageForChats;
+    
+    static boolean on_start = false, on_end = false;
+
+    static Text s = new Text();
+   
+    static public HashMap<Integer, ArrayList<Message>> friendsArraysOfMessages = null;
+
+    static public HashMap<Integer, ArrayList<Message>> threadFriendsArraysOfMessages = null;
+
 
     public static boolean isSticker(String text) {
         if (text == null || text.isEmpty() || text.length() > 30 || text.charAt(0) != ':') {
@@ -103,27 +117,12 @@ public class ChatViewController {
                         Message m = mes;
                         
                         if(isSticker(m.getText())){
-                            for(int i = 400; i <= 4000; i++){
-                                sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(id).get(i-400)+ 100.0 + 10.0);
-                                s.setWrappingWidth(i);
-                                s.setText(text);
-                                s.setFont(Font.font(15));
-                                s.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
-                                sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(id).get(i-400)+s.getBoundsInLocal().getHeight() + 10.0);
-                            }
                             if(currentFriend != null && id == currentFriend.getId()){
                                 fieldForMessages.getChildren().add(makeMessage(mes, user));
                                 fieldForMessages.getChildren().add(Sticker.getSticker(m.getText()));
                             }
                         }
                         else{
-                            for(int i = 400; i <= 4000; i++){
-                                s.setWrappingWidth(i);
-                                s.setText(text);
-                                s.setFont(Font.font(15));
-                                s.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
-                                sizeOfMessages.get(id).set(i-400, sizeOfMessages.get(id).get(i-400)+s.getBoundsInLocal().getHeight() + 10.0);
-                            }
                             if(currentFriend != null && id == currentFriend.getId()){
                                 fieldForMessages.getChildren().add(makeMessage(mes, user));
                                 if(!m.isIamSender()) {
@@ -154,21 +153,6 @@ public class ChatViewController {
         }
     }
 
-    static public Button xx;
-
-    @FXML
-    public SplitPane splitPanePageForChats;
-    
-    static boolean on_start = false, on_end = false;
-
-    static Text s = new Text();
-   
-    static public HashMap<Integer, ArrayList<Message>> friendsArraysOfMessages = null;
-    static public HashMap<Integer, ArrayList<Double>> sizeOfMessages = null;
-
-    static public HashMap<Integer, ArrayList<Message>> threadFriendsArraysOfMessages = null;
-
-
     public static Image getAvatar(User user) {
         if (StartApplication.class.getResource("Images/" + user.getNickname() + ".png") == null) {
             return new Image(StartApplication.class.getResource("Images/default.png").toString(), 1000, 1000, false, false);
@@ -177,33 +161,71 @@ public class ChatViewController {
     }
 
     public void setAllSize(){
-       // splitPanePageForChats.setDividerPosition(0, 180.0/StartApplication.stageWidth);
-        scrolling.setPrefHeight(StartApplication.stageHeight-120);
-        settings.setLayoutY(StartApplication.stageHeight-75);
-        BackToLoginButton.setLayoutY(StartApplication.stageHeight-75);
-        FindFriends.setLayoutY(StartApplication.stageHeight-75);
-        //sendMessageButton.setLayoutY(StartApplication.stageHeight-75);
-        //sendMessageButton.setLayoutX(StartApplication.stageWidth-70-180);
-        textOfSending.setLayoutY(StartApplication.stageHeight-75);
+        anch1.setPrefHeight(StartApplication.stageHeight-30);
+        anch1.setPrefWidth(StartApplication.stageWidth-200);
+        anch1.setLayoutX(200);
+        anch1.setLayoutY(0);
+        writepane.setPrefWidth(anch1.getPrefWidth());
+        writepane.setPrefHeight(40);
+        writepane.setLayoutY(anch1.getPrefHeight() - 40);
         textOfSending.setLayoutX(0);
-        textOfSending.setPrefWidth(StartApplication.stageWidth-70-180);
-        messagesList.setPrefHeight(StartApplication.stageHeight-120);
-        messagesList.setPrefWidth(StartApplication.stageWidth-190);        
-        usersNick.setPrefWidth(fieldForMessages.getPrefWidth() - friendAvatar.getFitWidth());
-        fieldForMessages.setPrefWidth(StartApplication.stageWidth-190);
-        if(on_end){
-            if(currentFriend != null){
-                fieldForMessages.setPrefHeight(max((double)sizeOfMessages.get(currentFriend.getId()).get((int)(fieldForMessages.getPrefWidth())-400), StartApplication.stageHeight-125));
-            }
-            else{
-                fieldForMessages.setPrefHeight(StartApplication.stageHeight-125);
-            }
-        }    
-        else{
-            fieldForMessages.setPrefHeight(StartApplication.stageHeight-125);
-        }    
-        fieldForMessages.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
-        messagesList.setVvalue(1.0);       
+        textOfSending.setLayoutY(4);
+        chooseStickerButton.setLayoutX(writepane.getPrefWidth() -90);
+        sendMessageButton.setLayoutX(writepane.getPrefWidth() -40);
+        friendPane.setPrefHeight(StartApplication.stageHeight-30);
+        friendPane.setPrefWidth(200);
+        friendPane.setLayoutX(0);
+        friendPane.setLayoutY(0);
+        settings.setLayoutX(150);
+        FindFriends.setLayoutX(80);
+        BackToLoginButton.setLayoutX(10);
+        settings.setLayoutY(friendPane.getPrefHeight()-50);
+        FindFriends.setLayoutY(friendPane.getPrefHeight()-50);
+        BackToLoginButton.setLayoutY(friendPane.getPrefHeight()-50);
+        messagesList.setLayoutY(52);
+        messagesList.setPrefHeight(anch1.getPrefHeight()-100);
+        messagesList.setPrefWidth(anch1.getPrefWidth()-5);
+        fieldForMessages.setPrefHeight(anch1.getPrefHeight()-100);
+        fieldForMessages.setPrefWidth(anch1.getPrefWidth()-5);
+        scrolling.setPrefHeight(friendPane.getPrefHeight()-60);
+        chats.setPrefHeight(friendPane.getPrefHeight()-60);
+
+       if(currentFriend != null){
+                Canvas canvas = new Canvas(anch1.getPrefWidth()-5, 50);
+                GraphicsContext gc = canvas.getGraphicsContext2D();
+                gc.setTextBaseline(VPos.CENTER);
+                gc.setStroke(Color.BLACK);
+                gc.setFill(Color.web("#E1F5FE"));
+                gc.setLineWidth(1);
+                gc.fillRect(0, 0, anch1.getPrefWidth()-5, 50);
+                gc.drawImage(getAvatar(currentFriend), 5, 5, 50, 50);
+                gc.setFill(Color.BLACK);
+                gc.setFont(new Font(15));
+                gc.fillText(
+                    currentFriend.getNickname(),
+                        Math.round(canvas.getWidth()  / 4),
+                        Math.round(canvas.getHeight() / 2));
+                usersNick.setMaxSize(anch1.getPrefWidth()-5, 50);
+                usersNick.setMinSize(anch1.getPrefWidth()-5, 50);
+                usersNick.setGraphic(canvas);
+                usersNick.setVisible(true);
+                double h = 0;
+                for(Node i : fieldForMessages.getChildren()){
+                    try{
+                        Label z = (Label)i;
+                        z.setPrefWidth(fieldForMessages.getPrefWidth());
+                        s.setWrappingWidth(fieldForMessages.getPrefWidth());
+                        s.setText(z.getText());
+                        s.setFont(Font.font(15));
+                        s.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
+                        h += s.getBoundsInLocal().getHeight() + 10.0;
+                    }catch(Exception e){
+                        h += 110.0;
+                    }
+                }
+                fieldForMessages.setPrefHeight(max(h, fieldForMessages.getPrefHeight()));
+       }
+
     }
 
 
@@ -221,9 +243,7 @@ public class ChatViewController {
 
 
     public void makeChatToUser(User currentUser) throws Exception {
-        friendAvatar.setImage(getAvatar(currentUser));
         currentFriend = currentUser;
-        usersNick.setText(currentFriend.getNickname());
         fieldForMessages.getChildren().clear();
         for(Message cur : friendsArraysOfMessages.get(currentFriend.getId())){
             Message m = cur;
@@ -237,12 +257,14 @@ public class ChatViewController {
             if(cur.getIsRead() || cur.isIamSender()) continue;
             Database.makeReadMessage(cur.getId());
             cur.read();
-        }        
-        setAllSize(); 
+        }         
         chats.getChildren().clear();
         for(User user : StartApplication.allFriends){                   
             chats.getChildren().add(generateUserField(user));
-        }       
+        }  
+        setAllSize(); 
+        messagesList.setVvalue(1.0);   
+        writepane.setVisible(true); 
     }
 
 
@@ -263,14 +285,6 @@ public class ChatViewController {
         Label textMessage = new Label(text);
         textMessage.setFont(Font.font(15));
         textMessage.setWrapText(true);
-
-        //String label_style = "-fx-border-color: red;-fx-padding:20;" + "-fx-border-width: 1;"
-        //        + "-fx-border-style: dotted;"
-        //        + "-fx-font: 44 sans-serif; -fx-stroke: blue; -fx-fill: blue; -fx-scale-y: 1.2;";
-
-
-        //textMessage.setBackground(Background.fill(Color.WHITE));
-        //textMessage.setStyle(" -fx-border-radius: 50%");
         return textMessage;
     }
 
@@ -279,26 +293,14 @@ public class ChatViewController {
         for (Message currentMessage : currentMessages) {
             String text = getMessageText(currentMessage, user);
             friendsArraysOfMessages.get(user.getId()).add(currentMessage);
-
-            Message m = currentMessage;
-            if(isSticker(m.getText())){
-                for(int i = 400; i <= 4000; i++){
-                    sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(user.getId()).get(i-400)+ 100.0 + 10.0);
-                }
-            }
-           
-            for(int i = 400; i <= 4000; i++){
-                s.setWrappingWidth(i);
-                s.setText(text);
-                s.setFont(Font.font(15));
-                s.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
-                sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(user.getId()).get(i-400)+s.getBoundsInLocal().getHeight() + 10.0);
-            }
-            
+            Message m = currentMessage; 
         }
     }
 
     public void sendingMessage() throws Exception {
+        if(textOfSending.getText() == "" || textOfSending.getText().charAt(0) == ' '){
+            return;
+        }
         String text = textOfSending.getText();
         sendMessage(text, User.MainUser.getNickname(), currentFriend.getNickname());
         textOfSending.clear();
@@ -325,14 +327,14 @@ public class ChatViewController {
 
 
     public Button generateUserField(User current){
-        Canvas canvas = new Canvas(160, 30);
+        Canvas canvas = new Canvas(195, 40);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setTextBaseline(VPos.CENTER);
         gc.setStroke(Color.BLACK);
-        gc.setFill(Color.WHITE);
+        gc.setFill(Color.web("#E1F5FE"));
         gc.setLineWidth(1);
-        gc.fillRect(0, 0, 160, 30);
-        gc.drawImage(getAvatar(current), 5, 5, 20, 20);
+        gc.fillRect(0, 0, 195, 40);
+        gc.drawImage(getAvatar(current), 5, 5, 30, 30);
         gc.setFill(Color.BLACK);
         gc.setFont(new Font(15));
         gc.fillText(
@@ -340,15 +342,15 @@ public class ChatViewController {
                 Math.round(canvas.getWidth()  / 4),
                 Math.round(canvas.getHeight() / 2));
         Button userField = new Button("");
-        userField.setMaxSize(162, 32);
-        userField.setMinSize(162, 32);
+        userField.setMaxSize(195, 40);
+        userField.setMinSize(195, 40);
       
         try{
             boolean is_read = friendsArraysOfMessages.get(current.getId()).get(friendsArraysOfMessages.get(current.getId()).size()-1).getIsRead();
            
             if(is_read == false){
                 gc.setFill(Color.BLUE);
-                gc.fillOval(150, 20, 5, 5);
+                gc.fillOval(190, 20, 5, 5);
             }
         }catch(Exception e){
 
@@ -377,7 +379,12 @@ public class ChatViewController {
 
       
     public void initialize() throws Exception{
-
+        writepane.setVisible(false); 
+        sendMessageButton.setGraphic(new ImageView(new Image(String.valueOf(StartApplication.class.getResource("ButtonsImages/send.png")), 30, 30, false, false)));
+        chooseStickerButton.setGraphic(new ImageView(new Image(String.valueOf(StartApplication.class.getResource("ButtonsImages/stik.png")), 30, 30, false, false)));
+        FindFriends.setGraphic(new ImageView(new Image(String.valueOf(StartApplication.class.getResource("ButtonsImages/find.png")), 30, 30, false, false)));
+        settings.setGraphic(new ImageView(new Image(String.valueOf(StartApplication.class.getResource("ButtonsImages/set.png")), 30, 30, false, false)));
+        BackToLoginButton.setGraphic(new ImageView(new Image(String.valueOf(StartApplication.class.getResource("ButtonsImages/bl.png")), 30, 30, false, false)));
 
         textOfSending.setOnKeyPressed(new EventHandler<KeyEvent>() {
         @Override
@@ -395,7 +402,7 @@ public class ChatViewController {
                 textOfSending.clear();
             }
         }
-    });
+        });
 
         _this = this;
         setUp();
@@ -403,17 +410,11 @@ public class ChatViewController {
         on_start = true;
        
         if(friendsArraysOfMessages == null){
-            sizeOfMessages = new HashMap<>();
             friendsArraysOfMessages = new HashMap<>();
             threadFriendsArraysOfMessages = new HashMap<>();
            
             for(User user : StartApplication.allFriends){                
                 friendsArraysOfMessages.put(user.getId(), new ArrayList<>());
-                sizeOfMessages.put(user.getId(), new ArrayList<>());              
-                for(int i = 400; i <= 4000; i++){
-                    sizeOfMessages.get(user.getId()).add(0.0);
-                }
-
                 threadFriendsArraysOfMessages.put(user.getId(), new ArrayList<>());
                
                 addMessagesToVbox(user);
@@ -457,13 +458,12 @@ public class ChatViewController {
         StartApplication.setScene(loader);
     }
 
-    @FXML
-    void goToLogin(ActionEvent event) {
+  
+    public void goToLogin() {
         on_start = false;
         on_end = false;
         friendsArraysOfMessages = null;
         threadFriendsArraysOfMessages = null;
-        sizeOfMessages = null;
         currentFriend = null;
         UpdateMessages.FinishThread();
         FXMLLoader loader = LoadXML.load("hello-view.fxml");
