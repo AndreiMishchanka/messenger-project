@@ -11,3 +11,7 @@
   - Stickers 
   - fix changing size of app
   - basic friend list  
+- **Version 1.2**
+  - Contribute 33/33/33
+  -[Application.jar](target/messenger-project-1.0-SNAPSHOT-jar-with-dependencies.jar)
+  -....
