@@ -369,16 +369,18 @@ public class ChatViewController {
         scrolling.setHbarPolicy(ScrollBarPolicy.NEVER);
         scrolling.setVbarPolicy(ScrollBarPolicy.NEVER);
         fieldForMessages.setSpacing(10);
-        
         try{
             StartApplication.allFriends = Database.getChats();
-            for(User u : StartApplication.allFriends){
-                if(!ChatViewController.friendsArraysOfMessages.keySet().contains(u.getId())){
-                    ChatViewController.friendsArraysOfMessages.put(u.getId(), new ArrayList<>());
-                    ChatViewController.threadFriendsArraysOfMessages.put(u.getId(), new ArrayList<>());
+            if(friendsArraysOfMessages != null){
+                for(User u : StartApplication.allFriends){
+                    if(!ChatViewController.friendsArraysOfMessages.keySet().contains(u.getId())){
+                        ChatViewController.friendsArraysOfMessages.put(u.getId(), new ArrayList<>());
+                        ChatViewController.threadFriendsArraysOfMessages.put(u.getId(), new ArrayList<>());
+                    }
                 }
             }
         }catch(Exception e){
+            e.printStackTrace();
             return;
         }
         chats.setSpacing(10);
@@ -415,10 +417,10 @@ public class ChatViewController {
         });
 
         _this = this;
-        setUp();
+       
         xx = new Button(); xx.setOnAction(new ThreadHandler());
         on_start = true;
-       
+        setUp();
         if(friendsArraysOfMessages == null){
             friendsArraysOfMessages = new HashMap<>();
             threadFriendsArraysOfMessages = new HashMap<>();
