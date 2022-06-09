@@ -369,8 +369,15 @@ public class ChatViewController {
         scrolling.setHbarPolicy(ScrollBarPolicy.NEVER);
         scrolling.setVbarPolicy(ScrollBarPolicy.NEVER);
         fieldForMessages.setSpacing(10);
+        
         try{
             StartApplication.allFriends = Database.getChats();
+            for(User u : StartApplication.allFriends){
+                if(!ChatViewController.friendsArraysOfMessages.keySet().contains(u.getId())){
+                    ChatViewController.friendsArraysOfMessages.put(u.getId(), new ArrayList<>());
+                    ChatViewController.threadFriendsArraysOfMessages.put(u.getId(), new ArrayList<>());
+                }
+            }
         }catch(Exception e){
             return;
         }
