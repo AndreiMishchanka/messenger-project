@@ -37,7 +37,6 @@ public class StartController extends StartApplication{
 
     public void initialize(){
         ///change_size
-        System.out.println(StartApplication.primaryStage.getHeight() + " " + StartApplication.primaryStage.getWidth());
         StartApplication.primaryStage.widthProperty().addListener(stageSizeListener);
         StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
         changeSizes();

@@ -246,6 +246,9 @@ public class ChatViewController {
         currentFriend = currentUser;
         fieldForMessages.getChildren().clear();
         for(Message cur : friendsArraysOfMessages.get(currentFriend.getId())){
+            Pane pane = new Pane(); pane.setStyle("-fx-background-color: #0277BD,#039BE5; -fx-background-insets: 0,9 9 8 9,9,10,11; -fx-background-radius: 50; -fx-padding: 15 30 15 30; -fx-font-size: 18px; -fx-text-fill: #311c09; -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.1) , 2, 0.0 , 0 , 1");
+            pane.setPrefWidth(400);
+
             Message m = cur;
             if(isSticker(m.getText())){
                 fieldForMessages.getChildren().add(makeMessage(cur, currentFriend));
@@ -347,10 +350,9 @@ public class ChatViewController {
       
         try{
             boolean is_read = friendsArraysOfMessages.get(current.getId()).get(friendsArraysOfMessages.get(current.getId()).size()-1).getIsRead();
-           
             if(is_read == false){
                 gc.setFill(Color.BLUE);
-                gc.fillOval(190, 20, 5, 5);
+                gc.fillOval(170, 25, 5, 5);
             }
         }catch(Exception e){
 

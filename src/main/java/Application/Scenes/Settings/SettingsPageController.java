@@ -2,10 +2,15 @@ package Application.Scenes.Settings;
 
 
 import java.io.File;
+
+import javax.imageio.ImageIO;
+
 import Application.Scenes.ChatView.ChatViewController;
 import Application.StartApplication;
 import Utills.LoadXML;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -74,17 +79,24 @@ public class SettingsPageController {
                         File file = fileChooser.showOpenDialog(stage);
                         if (file != null) {
                             try {
-                                System.out.println(file.getCanonicalPath());
-                                Image newAvatar = new Image(file.getPath());
+                                Image newAvatar = new Image("file:"+file.getCanonicalPath());
                                 File newImage = new File("src/main/resources/Application/Images/" + MainUser.getNickname() + ".png");
-                               // ImageIO.write(SwingFXUtils.fromFXImage(newAvatar, null), "png", newImage);
+                                ImageIO.write(SwingFXUtils.fromFXImage(newAvatar, null), "png", newImage);
                             } catch (Exception ex) {
+                                ex.printStackTrace();
                                 URLError.setText("Incorrect URL!");
                                 URLError.setTextFill(Color.RED);
                                 return;
                             }
                             URLError.setTextFill(Color.web("#1EA624", 0.8));
                             URLError.setText("Avatar has changed!");
+                            
+                            Platform.runLater(new Runnable() {
+                                public void run(){
+                                    avatar.setImage(ChatViewController.getAvatar(MainUser));
+                                }
+                            });
+                            
                         }
                     }
                 });
