@@ -39,7 +39,7 @@ public class UpdateMessages {
                     for(User user : StartApplication.allFriends){
                         ArrayList< Message > currentMessages = null;
                         try{ 
-                            currentMessages =  Database.getMessagesAfterTime(time, user.getNickname());
+                            currentMessages =  Database.getMessagesAfterTime(time, user.getId());
                             if(currentMessages.size() > 0){
                                 need = true;
                                 for (Message currentMessage : currentMessages) {

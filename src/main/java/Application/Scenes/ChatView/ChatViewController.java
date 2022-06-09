@@ -294,7 +294,7 @@ public class ChatViewController {
     }
 
     void addMessagesToVbox(User user) throws Exception {
-        ArrayList < Message > currentMessages = getMessagesAfterTime((on_start ? null : StartApplication.timeOfLastMessage), user.getNickname());
+        ArrayList < Message > currentMessages = getMessagesAfterTime((on_start ? null : StartApplication.timeOfLastMessage), user.getId());
         for (Message currentMessage : currentMessages) {
             String text = getMessageText(currentMessage, user);
             friendsArraysOfMessages.get(user.getId()).add(currentMessage);
@@ -307,7 +307,7 @@ public class ChatViewController {
             return;
         }
         String text = textOfSending.getText();
-        sendMessage(text, User.MainUser.getNickname(), currentFriend.getNickname());
+        sendMessage(text, User.MainUser.getId(), currentFriend.getId());
         textOfSending.clear();
     }
 
@@ -408,7 +408,7 @@ public class ChatViewController {
             if (ke.getCode().equals(KeyCode.ENTER)) {
                 String text = textOfSending.getText();
                 try {
-                    sendMessage(text, User.MainUser.getNickname(), currentFriend.getNickname());
+                    sendMessage(text, User.MainUser.getId(), currentFriend.getId());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -101,7 +101,7 @@ public class Database {
      * .get(i).get(0) -> contains message with text "|1|" - it's not our message, and "|0|" - if we wrote this message
      * .get(i).get(1) -> message
     */
-    static public ArrayList<Message> getMessagesAfterTime(Timestamp time, String with) throws Exception{
+    static public ArrayList<Message> getMessagesAfterTime(Timestamp time, Integer id) throws Exception{
         if (User.MainUser == null) {
             return null;
         }
@@ -111,20 +111,20 @@ public class Database {
         String query = null;
         if(time == null){
              query = "select * from messages where (fuser = " + getIdByNick(User.MainUser.getNickname())
-            + " AND tuser = " + getIdByNick(with) + ") OR (fuser = " + getIdByNick(with)
-            + " AND tuser = " + getIdByNick(User.MainUser.getNickname()) + ");";
+            + " AND tuser = " + id + ") OR (fuser = " + id
+            + " AND tuser = " + User.MainUser.getId() + ");";
         }
         else{
             ///need to fi
             query = "select * from messages where ((fuser = " + getIdByNick(User.MainUser.getNickname())
-                                                    + " AND tuser = " + getIdByNick(with) + ") OR (fuser = " + getIdByNick(with)
-                                                    + " AND tuser = " + getIdByNick(User.MainUser.getNickname()) + ")) AND (" + " ' "+ time + "'" + " < tm "  + ");";
+                                                    + " AND tuser = " +id + ") OR (fuser = " + id
+                                                    + " AND tuser = " +  User.MainUser.getId() + ")) AND (" + " ' "+ time + "'" + " < tm "  + ");";
            // System.out.println(query);
         }
 
         ArrayList<ArrayList<String>> arr = SqlCommunicate.execute(query);
         for (int i = 1; i < arr.size(); i++) {            
-            int id = Integer.parseInt(arr.get(i).get(0));
+            int idd = Integer.parseInt(arr.get(i).get(0));
             String text = arr.get(i).get(1);
             int fuser = Integer.parseInt(arr.get(i).get(2));
             int tuser = Integer.parseInt(arr.get(i).get(3));            
@@ -139,19 +139,19 @@ public class Database {
                     StartApplication.timeOfLastMessage = tm;
                 }
             }
-            if (fuser != getIdByNick(with)) {is_read = true;}           
-            output.add(Message.generateMessage(id, text, fuser, tuser, tm, is_read));
+            if (fuser != id) {is_read = true;}           
+            output.add(Message.generateMessage(idd, text, fuser, tuser, tm, is_read));
         }
         return output;
     }
 
 
-    public static void sendMessage(String text, String nicknameFrom, String nicknameTo) throws Exception{ 
+    public static void sendMessage(String text, Integer id_sender, Integer id_usera) throws Exception{ 
         //add time checking please
 
-        if (isUserConsist(nicknameFrom) && isUserConsist(nicknameTo) && User.MainUser.getNickname().equals(nicknameFrom)) {
+        if (true) {
             int id = SqlCommunicate.execute("select * from messages;").size();
-            Message nw = Message.generateMessage(id, text, getIdByNick(nicknameFrom), getIdByNick(nicknameTo), new Timestamp(System.currentTimeMillis()), false);        
+            Message nw = Message.generateMessage(id, text, id_sender,id_usera, new Timestamp(System.currentTimeMillis()), false);        
             SqlCommunicate.update("insert into messages(id, text, fuser, tuser) values(" + nw.getId() 
                                                                  + ", '" + nw.getText() 
                                                                  + "', " + nw.getFromUser()
