@@ -1,21 +1,27 @@
+drop table users;
+drop table messages;
+drop table relations;
+drop table groups;
+drop table group_users;
+drop table group_messages;
+
 create table users (
     id integer primary key,
     nickname varchar(100) not null,
     password varchar(100) not null
 );
 
-create table messages
-(
-    id         int           not null
-        constraint messages_pk
-            primary key,
+create table messages(
+    id         int           not null,
     text       varchar(1000) not null,
     fUser int           not null,
     tUser   int           not null,
-    tm DATETIME NOT NULL
+    tm timestamp NOT NULL
                 DEFAULT CURRENT_TIMESTAMP, 
     is_read varchar(1) not null
-				DEFAULT 0
+				DEFAULT 0,
+                constraint messages_pk
+            primary key(id)
 );
 
 create table relations
@@ -53,6 +59,6 @@ create table group_messages
     group_id     int not null,
     from_id      int not null,
     message_text varchar(1000),
-    tm DATETIME NOT NULL
-                DEFAULT CURRENT_TIMESTAMP, 
+    tm timestamp NOT NULL
+                DEFAULT CURRENT_TIMESTAMP
 );

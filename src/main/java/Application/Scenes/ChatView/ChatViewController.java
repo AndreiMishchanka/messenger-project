@@ -19,6 +19,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -109,7 +111,7 @@ public class ChatViewController {
                                 s.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
                                 sizeOfMessages.get(user.getId()).set(i-400, sizeOfMessages.get(id).get(i-400)+s.getBoundsInLocal().getHeight() + 10.0);
                             }
-                            if(id == currentFriend.getId()){
+                            if(currentFriend != null && id == currentFriend.getId()){
                                 fieldForMessages.getChildren().add(makeMessage(mes, user));
                                 fieldForMessages.getChildren().add(Sticker.getSticker(m.getText()));
                             }
@@ -122,7 +124,7 @@ public class ChatViewController {
                                 s.setBoundsType(TextBoundsType.LOGICAL_VERTICAL_CENTER);
                                 sizeOfMessages.get(id).set(i-400, sizeOfMessages.get(id).get(i-400)+s.getBoundsInLocal().getHeight() + 10.0);
                             }
-                            if(id == currentFriend.getId()){
+                            if(currentFriend != null && id == currentFriend.getId()){
                                 fieldForMessages.getChildren().add(makeMessage(mes, user));
                                 if(!m.isIamSender()) {
                                     Database.makeReadMessage(m.getId());
@@ -131,7 +133,7 @@ public class ChatViewController {
                             }
                         }
                     }
-                    if(id == currentFriend.getId()){
+                    if(currentFriend != null && id == currentFriend.getId()){
 
                        
                         setAllSize();
@@ -175,13 +177,13 @@ public class ChatViewController {
     }
 
     public void setAllSize(){
-        splitPanePageForChats.setDividerPosition(0, 180.0/StartApplication.stageWidth);
+       // splitPanePageForChats.setDividerPosition(0, 180.0/StartApplication.stageWidth);
         scrolling.setPrefHeight(StartApplication.stageHeight-120);
         settings.setLayoutY(StartApplication.stageHeight-75);
         BackToLoginButton.setLayoutY(StartApplication.stageHeight-75);
         FindFriends.setLayoutY(StartApplication.stageHeight-75);
-        sendMessageButton.setLayoutY(StartApplication.stageHeight-75);
-        sendMessageButton.setLayoutX(StartApplication.stageWidth-70-180);
+        //sendMessageButton.setLayoutY(StartApplication.stageHeight-75);
+        //sendMessageButton.setLayoutX(StartApplication.stageWidth-70-180);
         textOfSending.setLayoutY(StartApplication.stageHeight-75);
         textOfSending.setLayoutX(0);
         textOfSending.setPrefWidth(StartApplication.stageWidth-70-180);
@@ -373,7 +375,28 @@ public class ChatViewController {
         StartApplication.primaryStage.heightProperty().addListener(stageSizeListener);
     }
 
-    public void initialize() throws Exception{        
+      
+    public void initialize() throws Exception{
+
+
+        textOfSending.setOnKeyPressed(new EventHandler<KeyEvent>() {
+        @Override
+        public void handle(KeyEvent ke) {
+            if(textOfSending.getText() == "" || textOfSending.getText().charAt(0) == ' '){
+                return;
+            }
+            if (ke.getCode().equals(KeyCode.ENTER)) {
+                String text = textOfSending.getText();
+                try {
+                    sendMessage(text, User.MainUser.getNickname(), currentFriend.getNickname());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                textOfSending.clear();
+            }
+        }
+    });
+
         _this = this;
         setUp();
         xx = new Button(); xx.setOnAction(new ThreadHandler());
